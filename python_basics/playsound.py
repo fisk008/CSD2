@@ -6,7 +6,7 @@ print("welkom",username," ik ga nu een audio bestand afspelen")
 afspelen = input("hoe vaak wil je het horen?")
 
 int_afspelen = int(afspelen)
-print("dat is het goede antwoord het wordt nu ",int_afspelen,"keer afgespeeld!")
+print("Dat is het goede antwoord het wordt nu ",int_afspelen,"keer afgespeeld!")
 int_afspelen + 1
 while i < int_afspelen :   
     print("Het loopje wordt nu voor de",i+1,"de keer afgespeeld")
