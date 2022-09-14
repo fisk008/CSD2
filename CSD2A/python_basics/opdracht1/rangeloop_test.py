@@ -1,6 +1,5 @@
+user_input = input('Enter space-separated integers: ').split()
 
-test=input("?")
-float_test= int(test)
-r = list(0,float_test)
-[test]
-print(r)
+list_of_integers = [int(item) for item in user_input]
+
+print(list_of_integers)
