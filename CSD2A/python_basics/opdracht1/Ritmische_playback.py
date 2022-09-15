@@ -16,7 +16,8 @@ for i in range(int_playback):
     wave_obj = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/CSD2/audio_files/test1.wav")
     play_obj = wave_obj.play()
     play_obj.wait_done()
-    time.sleep(loop)
+    list_of_rithms.append(1)
+    time.sleep("heo push ik de lijst in deze functie?")
     i=i+1
       
 
