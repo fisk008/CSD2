@@ -3,22 +3,25 @@
 import simpleaudio as sa
 import time 
 i=0
-
+#all the inputs 
 playback = int(input("how many times would you like to hear it?"))
 ritm = input('Enter space-separated floats : ').split()
-inputbpm= int(input("bpm?:"))
-bpm = 60/inputbpm
+inputbpm= 60/int(input("bpm?:"))
+
+#list for the rithms
 list_of_rithms = [float(item) for item in ritm]
+#sum of total Rithms
 total_rithms= sum(list_of_rithms)
 playback + 1
-print(total_rithms)
-
+#here is a forloop that loops everytime on basis from the user inputs above
 for i in range(playback):
-    print("loop:",i+1,"     ","time in ms betweem samples:",list_of_rithms[i]*bpm)
+    print("loop:",i+1,"     ","time in sec betweem samples:",list_of_rithms[i]*inputbpm)
     wave_obj = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/CSD2/audio_files/test1.wav")
+    #plays sample
     play_obj = wave_obj.play()
     play_obj.wait_done()
     list_of_rithms.append(1)
-    time.sleep(list_of_rithms[i]*bpm)
+    #program sleeps at every loop 
+    time.sleep(list_of_rithms[i]*inputbpm)
     i=i+1
       
