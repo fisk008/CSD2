@@ -5,19 +5,19 @@ import time
 i=0
 
 playback = input("how many times would you like to hear it?")
-ritm = input('Enter space-separated : ').split()
+ritm = input('Enter space-separated floats : ').split()
 int_playback = int(playback)
-list_of_rithms = [int(item) for item in ritm]
+list_of_rithms = [float(item) for item in ritm]
  
 int_playback + 1
   
 for i in range(int_playback):
-    print(i+1)
+    print("loop:",i+1,"     ","time betweem samples:",list_of_rithms[i])
     wave_obj = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/CSD2/audio_files/test1.wav")
     play_obj = wave_obj.play()
     play_obj.wait_done()
     list_of_rithms.append(1)
-    time.sleep("heo push ik de lijst in deze functie?")
+    time.sleep(list_of_rithms[i])
     i=i+1
       
 
