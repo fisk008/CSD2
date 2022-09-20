@@ -17,7 +17,7 @@ playback + 1
 for i in range(playback):
     print("loop:",i+1,"     ","time in sec betweem samples:",list_of_rithms[i]*inputbpm)
     wave_obj = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/CSD2/audio_files/test1.wav")
-    #plays sample
+    #plays samplesenzo
     play_obj = wave_obj.play()
     play_obj.wait_done()
     list_of_rithms.append(1)
