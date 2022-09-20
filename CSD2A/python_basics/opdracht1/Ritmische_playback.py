@@ -10,17 +10,20 @@ inputbpm= 60/int(input("bpm?:"))
 
 #list for the rithms
 list_of_rithms = [float(item) for item in ritm]
+
 #sum of total Rithms
 total_rithms= sum(list_of_rithms)
 playback + 1
+
 #here is a forloop that loops everytime on basis from the user inputs above
 for i in range(playback):
     print("loop:",i+1,"     ","time in sec betweem samples:",list_of_rithms[i]*inputbpm)
     wave_obj = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/CSD2/audio_files/test1.wav")
-    #plays samplesenzo
+    
+    #plays samples
     play_obj = wave_obj.play()
-    play_obj.wait_done()
     list_of_rithms.append(1)
+   
     #program sleeps at every loop 
     time.sleep(list_of_rithms[i]*inputbpm)
     i=i+1

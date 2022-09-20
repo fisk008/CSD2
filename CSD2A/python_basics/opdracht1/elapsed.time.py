@@ -7,9 +7,9 @@ import simpleaudio as sa
 import time 
 i=0
 #all the inputs 
-playback = int(input("how many times would you like to hear it?"))
+playback = float(input("how many times would you like to hear it?"))
 ritm = input('Enter space-separated floats : ').split()
-inputbpm= 60/int(input("bpm?:"))
+inputbpm= 60/float(input("bpm?:"))
 
 #list for the rithms
 list_of_rithms = [float(item) for item in ritm]
