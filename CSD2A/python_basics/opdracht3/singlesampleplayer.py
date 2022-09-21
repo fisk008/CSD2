@@ -50,3 +50,7 @@ while True :
     else:
         break
     time.sleep(0.001)        
+
+
+
+time.sleep(1)
