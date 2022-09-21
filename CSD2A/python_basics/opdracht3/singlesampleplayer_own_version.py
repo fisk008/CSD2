@@ -1,14 +1,14 @@
 #my version of the assignment 
 
 bpm = 120
-
-print("default bpm;",bpm,"would you like too keep it? type: yes or no ")
-bpmInput=input(int())
-if(bpmInput == "yes"):
-    bpmInput=input(int())
-    bpmInput=bpm
-
+bpmInput= input('hi...default bpm:120 would you like too keep it? type: yes or no \n')
 
 if(bpmInput == "no"):
-    print("okay default bpm",bpm, "is used ")
+    print('what bpm would you like?:')
+    customBpm = int(input())
+    bpm = customBpm
+    print('okay bpm is now:',bpm)
+
+if(bpmInput == "yes"):
+    print("okay default bpm:",bpm, "is used ")
 
