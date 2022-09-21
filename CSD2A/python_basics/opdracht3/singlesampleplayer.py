@@ -1,9 +1,13 @@
+#importent!!
+#this patch is a remake of the patch of ciska, as I was strungling to make this assignment i decided to walk trough the patch and rewrite it so i could understand everyting done in the patch
+#so understand this is not my work but just a remake of the example
+
 
 import simpleaudio as sa
 import time
 
 bpm = 120.0
-note_dur = [1, 1.5, 1.2,0.8]
+note_dur = [1, 1, 1,1]
 
 quartnote_dur = 60.0 / bpm
 
@@ -17,20 +21,30 @@ for dur in note_dur:
 print(timelist)    
 
 
-#todo make a list of time segments
+#makes a list of time segments by adding up the time segments before and so on
 timeseg = []
+#timesum is a variable to save the last int and 0 because our loop start on the first count
 timesum= 0
 for times in timelist:
     timeseg.append(timesum)
-    timesum = timesum+ times    
-print(timeseg)
+    timesum = timesum + times    
 
 
+#this removes each time stamp from the list till its empty and then stops if empty
+if timeseg :
+    tseg = timeseg.pop(0)
+else:    
+    print("list empty")
+    exit()
 
-# while True :
-#     if 
-
-
-# timestamps = []
-# ts=0
-# timestamps.append(ts)
+current= time.time()
+#here the sample gets played it checks everytime if enough time has passed til the next sample 
+while True :
+   now = time.time() - current
+   if(now >= tseg):
+    loadSample.play()
+    if timeseg:
+        tseg= timeseg.pop(0)
+    else:
+        break
+    time.sleep(0.001)        
