@@ -41,8 +41,10 @@ current= time.time()
 #here the sample gets played it checks everytime if enough time has passed til the next sample 
 while True :
    now = time.time() - current
+   #checks if enough time has passed to play next sample
    if(now >= tseg):
     loadSample.play()
+    #removes sample from list 
     if timeseg:
         tseg= timeseg.pop(0)
     else:
