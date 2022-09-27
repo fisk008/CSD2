@@ -16,6 +16,8 @@ total_rithms= sum(list_of_rithms)
 playback + 1
 length_notes= list_of_rithms[i]*inputbpm
 #here is a forloop that loops everytime on basis from the user inputs above
+
+
 for i in range(playback):
     print("loop:",i+1,"     ","time in sec betweem samples:",length_notes)
     wave_obj = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/CSD2/audio_files/test1.wav")
