@@ -1,7 +1,12 @@
 import simpleaudio as sa
 import time
 import random
-
+#fucntionalities additions
+#-input check
+#-src and dst
+#multiple samples and lists
+#dictionary voor list
+# function sort
 
 bpm=60/140
 noteV=[0.5,1,1.5,2.0]
@@ -27,7 +32,7 @@ timestamp = []
 i=0
 for ts in timelist:
     timestamp.append(i)
-    i = i + ts
+    i =+ ts
 
 print(timestamp)
 
@@ -38,7 +43,7 @@ samples = [ sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/C
             sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2_lesStof/CSD_22-23/blok2a/assigment_3/audioFiles/Dog2.wav")]
 
 
-
+#code from the lesson
 if timestamp :
     tseg = timestamp.pop(0)
 else:    
@@ -57,6 +62,7 @@ def Playing():
         exit()   
     current = time.time()
     while True :
+        #choose a int between 0 and 2 to choose random samples
         samplerand=random.randint(0,2)
         now = time.time() - current
     #checks if enough time has passed to play next sample
