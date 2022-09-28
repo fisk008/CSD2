@@ -11,9 +11,9 @@ import random
 # function sort
 correctInput = False
 bpm = 120
-bpmInput= input('hi...default bpm:120 would you like too keep it? type: yes or no \n')
+bpmInput= input('hi...default bpm: 120 would you like too keep it? [y/n] \n')
 
-if(bpmInput == "no"):
+if(bpmInput == "n"):
 #based on code from the class    
     while (not correctInput):
         
@@ -24,21 +24,21 @@ if(bpmInput == "no"):
             # empty string --> use default
             correctInput = True
         else:
+            
             try:
                 bpm = float(bpmInput)
                 correctInput = True
             except:
                 print("Incorrect input - please enter a bpm (or enter nothing - default bpm)")
-    
-    bpm = bpmInput
+    bpmInput= float(bpmInput)
     print('okay bpm is now:',bpm)
     
-if(bpmInput == "yes"):
+if(bpmInput == "y"):
     print("okay default bpm:",bpm, "is used ")
 
 
-bpmNow = 60 /bpm
-noteV=[0.25,0.5,1,]
+bpmNow = 60 / bpmInput
+noteV=[0.25,0.5,1]
 rithms=[]
 
 #creates a random list of note values
