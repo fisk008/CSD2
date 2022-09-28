@@ -1,30 +1,55 @@
 import simpleaudio as sa
 import time
 import random
+
+
 #fucntionalities additions
 #-input check
 #-src and dst
 #multiple samples and lists
 #dictionary voor list
 # function sort
+correctInput = False
+bpm = 120
+bpmInput= input('hi...default bpm:120 would you like too keep it? type: yes or no \n')
 
-bpm=60/140
-noteV=[0.5,1,1.5,2.0]
+if(bpmInput == "no"):
+#based on code from the class    
+    while (not correctInput):
+        
+        bpmInput = input("what bpm would you like?\n")
+
+        # check if we 'received' an empty string
+        if not bpmInput:
+            # empty string --> use default
+            correctInput = True
+        else:
+            try:
+                bpm = float(bpmInput)
+                correctInput = True
+            except:
+                print("Incorrect input - please enter a bpm (or enter nothing - default bpm)")
+    
+    bpm = bpmInput
+    print('okay bpm is now:',bpm)
+    
+if(bpmInput == "yes"):
+    print("okay default bpm:",bpm, "is used ")
+
+
+bpmNow = 60 /bpm
+noteV=[0.25,0.5,1,]
 rithms=[]
-rithms2=[]
-rithms3=[]
+
 #creates a random list of note values
 for i in range(16):
     rithms.append(random.choice(noteV))
-    rithms2.append(random.uniform(0.5, 1.5))
-    rithms3.append(random.uniform(0.5, 1.5))
-
 #print(rithms)
 
 timelist= []
 for dur in rithms:
-    timelist.append(bpm * dur)
-#print(timelist)  
+    timelist.append(bpmNow * dur)
+print(timelist)  
 #converts timelist into time stamps
 
 
@@ -32,15 +57,15 @@ timestamp = []
 i=0
 for ts in timelist:
     timestamp.append(i)
-    i =+ ts
+    i = i + ts
 
 print(timestamp)
 
 
 #samples to choose from
-samples = [ sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2_lesStof/CSD_22-23/blok2a/assigment_3/audioFiles/Pop.wav"),
-            sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2_lesStof/CSD_22-23/blok2a/assigment_3/audioFiles/Laser1.wav"),
-            sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2_lesStof/CSD_22-23/blok2a/assigment_3/audioFiles/Dog2.wav")]
+samples = [ sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/Plop.wav"),
+            sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/snare.wav"),
+            sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/kick.wav")]
 
 
 #code from the lesson
