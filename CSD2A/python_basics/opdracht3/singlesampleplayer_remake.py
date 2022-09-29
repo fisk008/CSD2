@@ -31,12 +31,12 @@ for times in timelist:
     timesum = timesum + times    
 print(timeseg)
 
-#this removes each time stamp from the list till its empty and then stops if empty
-# if timeseg :
-#     tseg = timeseg.pop(0)
-# else:    
-#     print("list empty")
-#     exit()
+# this removes each time stamp from the list till its empty and then stops if empty
+if timeseg :
+    tseg = timeseg.pop(0)
+else:    
+    print("list empty")
+    exit()
 
 current= time.time()
 #here the sample gets played it checks everytime if enough time has passed til the next sample 
