@@ -4,9 +4,9 @@ import simpleaudio as sa
 import time
 import random
 
-timestamp = []
-noteV= []
-global tseg
+
+
+
 samples = [ sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/Plop.wav"),
             sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/snare.wav"),
             sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/kick.wav")]
@@ -17,7 +17,7 @@ samples = [ sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/C
 
 #multiple samples and lists/
 
-#dictionary voor list
+#dictionary for list
 # function sort?
 
 correctInput = False
@@ -55,11 +55,14 @@ def userInput(bpmAsk,correctInput):
 # def bpmGen(bpmInput):
 #     bpmNow = 60 / bpmInput
     
-    
+
 
 #creates a random list of note values
 def noteGen(bpmInput):
+    global timelist 
+    global noteV
     rithms=[]
+    
     noteV=[0.25,0.5,1]
     bpmNow = 60 / bpmInput
     for i in range(16):
@@ -68,21 +71,25 @@ def noteGen(bpmInput):
     timelist= []
     for dur in rithms:
         timelist.append(bpmNow * dur)
-      
-    #converts timelist into time stamps
+    return(timelist)  
+
+def tStamps(timelist):    #converts timelist into time stamps
+    global time_seq
+    global timestamp
+    
     timestamp = []
     i=0
     for ts in timelist:
         timestamp.append(i)
         i = i + ts
     if timestamp :
-        tseg = timestamp.pop(0)
+        time_seq = timestamp.pop(0)
     else:    
         # print("list empty")
         exit()
-    return(tseg)
+    return(time_seq,timelist)
 
-def Playing(timestamp,tseg):
+def Playing(timestamp,time_seq):
     print(timestamp)  
     current = time.time()
     while True :
@@ -90,11 +97,11 @@ def Playing(timestamp,tseg):
         samplerand=random.randint(0,2)
         now = time.time() - current
     #checks if enough time has passed to play next sample
-        if(now >= tseg):
+        if(now >= time_seq):
             samples[samplerand].play()
             #removes sample from list when timestamp=true
             if timestamp:
-                tseg= timestamp.pop(0)
+                time_seq= timestamp.pop(0)
             else:
                 break
             time.sleep(0.001)        
@@ -106,4 +113,5 @@ def Playing(timestamp,tseg):
 
 userInput(bpmAsk,correctInput)
 noteGen(bpmInput)
-Playing(timestamp,tseg)
+tStamps(timelist)
+Playing(timestamp,time_seq)
