@@ -12,23 +12,26 @@ snare = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_2
 kick = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/kick.wav")
 
 snare_event = {
-   ' instrument':snare,
+   'name': 'snare',
+   'instrument':snare,
 }
 kick_event = {
-   ' instrument':kick,
+   'name': 'kick',
+   'instrument':kick,
 }
-hat_event = {
-   ' instrument':hihat
+hihat_event = {
+    'name': 'hihat',
+   'instrument':hihat
 }
-eventSum = [snare_event,kick_event,hat_event]
+
+eventSum = [snare_event,kick_event,hihat_event]
 sampleEvent = random.choice(list(eventSum))
+print(sampleEvent)
 
-
-def eventPlay(eventSum):
-    # print(sampleEvent['instrument'])
-    sampleRand=random.randint(0,2)
-    eventSum[sampleRand].play()
-    return(sampleEvent)
+def eventPlay(sampleEvent):
+    print(sampleEvent['name'])
+    sampleEvent['instrument'].play()
+    # return(sampleEvent)
 
 
 
@@ -60,7 +63,7 @@ def userInput(correctInput): # here the user is asked for input
     if(bpmAsk == "y"):
         bpmInput = 120
         print("okay default bpm:",bpmInput, "is used ")
-    return(bpmInput)       
+        return(bpmInput)       
 
 def noteGen(bpmInput):#creates a random list of note values
     global timeList 
@@ -84,7 +87,7 @@ def tStamps(timeList):    #converts timeList into time stamps
     timeStamp = []
     i=0
     for ts in timeList:
-        timeStamp.append(i)
+        timeStamp.append(i)#here 
         i = i + ts
     if timeStamp :
         timeSeq = timeStamp.pop(0)
@@ -114,7 +117,8 @@ def Playing(timeStamp,timeSeq):#handles the note palying part
 
     #lets the sample play out
     time.sleep(1)
-eventPlay(sampleEvent)
+
+
 userInput(correctInput)
 noteGen(bpmInput)
 tStamps(timeList)
