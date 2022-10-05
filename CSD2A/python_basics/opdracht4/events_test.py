@@ -1,5 +1,7 @@
-from inspect import istraceback
-from turtle import right
+# from inspect import istraceback
+# from sqlite3 import Timestamp
+# from turtle import right
+from unicodedata import name
 import simpleaudio as sa
 import time
 import random
@@ -11,26 +13,18 @@ hihat = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_2
 snare = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/snare.wav")
 kick = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/kick.wav")
 
-snare_event = {
-   'name': 'snare',
-   'instrument':snare,
-}
-kick_event = {
-   'name': 'kick',
-   'instrument':kick,
-}
-hihat_event = {
-    'name': 'hihat',
-   'instrument':hihat
-}
+# playEvents = [
+# {'name': 'snare','instrument':snare,'timeS':timeListS},
+# {'name': 'kick','instrument':kick,'timeS':timeListK} ,
+# {'name': 'hihat','instrument':hihat,'timeS':timeListH}]
 
-eventSum = [snare_event,kick_event,hihat_event]
-sampleEvent = random.choice(list(eventSum))
-print(sampleEvent)
 
-def eventPlay(sampleEvent):
-    print(sampleEvent['name'])
-    sampleEvent['instrument'].play()
+
+
+
+def eventPlay(playEvent):
+    print(playEvent['name'])
+    playEvent['instrument'].play()
     # return(sampleEvent)
 
 
@@ -66,23 +60,68 @@ def userInput(correctInput): # here the user is asked for input
         return(bpmInput)       
 
 def noteGen(bpmInput):#creates a random list of note values
-    global timeList 
+    global timeListK,timeListS,timeListH
     global noteV
-    rithms=[]
+
     
-    noteV=[0.25,0.5,1]
+    noteV=[0.25,0.5,1]    
     bpmNow = 60 / bpmInput
-    for i in range(16):
-        rithms.append(random.choice(noteV))
+
+    kickR  = [random.choice(noteV) for i in range(16)]
+    snareR = [random.choice(noteV) for i in range(16)]
+    hihatR = [random.choice(noteV) for i in range(16)]  
+
+    # for i in range(16):
+    #     rithms.append(random.choice(noteV))
     
-    timeList= []
-    for dur in rithms:
-        timeList.append(bpmNow * dur)
-    return(timeList)  
+    timeListK = []
+    timeListS = []
+    timeListH = []
+    
+    for dur in kickR:
+        timeListK.append(bpmNow * dur)#creates the timelist for the three samples 
+
+    for dur in snareR:
+        timeListS.append(bpmNow * dur)
+        
+    for dur in hihatR:
+        timeListH.append(bpmNow * dur)       
+    
+    return(timeListK,timeListS,timeListH)  
+
+
+playEvents = []
+
+
+def createEvent(name,instrument, timestamp):
+    newEvent = {}
+    newEvent['name'] = name
+    newEvent['instrument'] = instrument
+    newEvent['timeS'] = timestamp
+    playEvents.append(newEvent)
+    
+
+def createEvents(timeListH,timeListK,timeListS):
+    for ts in timeListH:
+        createEvent('hat',hihat, ts)
+        print('HIHAT',ts)
+    for ts in timeListK:
+        createEvent('kick',kick, ts)
+        print('kick',ts)
+    for ts in timeListS:
+        createEvent('snare',snare, ts)
+        print('snare',ts)
+
+    
+
+
 
 def tStamps(timeList):    #converts timeList into time stamps
     global timeSeq
     global timeStamp
+
+
+    
     
     timeStamp = []
     i=0
@@ -96,7 +135,7 @@ def tStamps(timeList):    #converts timeList into time stamps
         exit()
     return(timeSeq,timeList)
 
-def Playing(timeStamp,timeSeq):#handles the note palying part 
+def Playing(timeStamp,timeSeq):#handles the note palying part  and handles de deg eventPlay
     print(timeStamp)  
     current = time.time()
     while True :
@@ -121,5 +160,6 @@ def Playing(timeStamp,timeSeq):#handles the note palying part
 
 userInput(correctInput)
 noteGen(bpmInput)
-tStamps(timeList)
-Playing(timeStamp,timeSeq)
+createEvents(timeListH,timeListK,timeListS)
+#tStamps(timeList)
+#Playing(timeStamp,timeSeq)
