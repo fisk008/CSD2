@@ -2,6 +2,7 @@
 # from sqlite3 import Timestamp
 # from turtle import right
 from unicodedata import name
+from venv import create
 import simpleaudio as sa
 import time
 import random
@@ -92,7 +93,7 @@ def noteGen(bpmInput):#creates a random list of note values
 
 playEvents = []
 
-
+# here a function that creates dicts with name instrument en timestamp
 def createEvent(name,instrument, timestamp):
     newEvent = {}
     newEvent['name'] = name
@@ -100,19 +101,20 @@ def createEvent(name,instrument, timestamp):
     newEvent['timeS'] = timestamp
     playEvents.append(newEvent)
     
-
+#here the function create event pushes everyeting into a list with all the different samples
 def createEvents(timeListH,timeListK,timeListS):
     for ts in timeListH:
         createEvent('hat',hihat, ts)
-        print('HIHAT',ts)
+        #print('HIHAT',ts)
     for ts in timeListK:
         createEvent('kick',kick, ts)
-        print('kick',ts)
+        #print('kick',ts)
     for ts in timeListS:
         createEvent('snare',snare, ts)
-        print('snare',ts)
+        #print('snare',ts)
 
-    
+
+    print(playEvents[1]['name']['timeS'])  
 
 
 
@@ -161,5 +163,6 @@ def Playing(timeStamp,timeSeq):#handles the note palying part  and handles de de
 userInput(correctInput)
 noteGen(bpmInput)
 createEvents(timeListH,timeListK,timeListS)
+
 #tStamps(timeList)
 #Playing(timeStamp,timeSeq)
