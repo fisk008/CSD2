@@ -1,8 +1,4 @@
-# from inspect import istraceback
-# from sqlite3 import Timestamp
-# from turtle import right
-from unicodedata import name
-from venv import create
+from operator import itemgetter
 import simpleaudio as sa
 import time
 import random
@@ -91,9 +87,20 @@ def noteGen(bpmInput):#creates a random list of note values
     return(timeListK,timeListS,timeListH)  
 
 
+
+
+
+
+
+
 playEvents = []
 
-# here a function that creates dicts with name instrument en timestamp
+
+
+
+
+
+# here a list is created with all the
 def createEvent(name,instrument, timestamp):
     newEvent = {}
     newEvent['name'] = name
@@ -101,7 +108,7 @@ def createEvent(name,instrument, timestamp):
     newEvent['timeS'] = timestamp
     playEvents.append(newEvent)
     
-#here the function create event pushes everyeting into a list with all the different samples
+
 def createEvents(timeListH,timeListK,timeListS):
     for ts in timeListH:
         createEvent('hat',hihat, ts)
@@ -114,28 +121,22 @@ def createEvents(timeListH,timeListK,timeListS):
         #print('snare',ts)
 
 
-    print(playEvents[1]['name']['timeS'])  
-
-
 
 def tStamps(timeList):    #converts timeList into time stamps
     global timeSeq
-    global timeStamp
+    list=[]
 
-
-    
-    
-    timeStamp = []
     i=0
+    list.append(0.0)
     for ts in timeList:
-        timeStamp.append(i)#here 
+        list.append(i)#here 
         i = i + ts
-    if timeStamp :
-        timeSeq = timeStamp.pop(0)
+    if list :
+        timeSeq = list.pop(0)
     else:    
         # print("list empty")
-        exit()
-    return(timeSeq,timeList)
+        exit()   
+    return(list)
 
 def Playing(timeStamp,timeSeq):#handles the note palying part  and handles de deg eventPlay
     print(timeStamp)  
@@ -162,7 +163,17 @@ def Playing(timeStamp,timeSeq):#handles the note palying part  and handles de de
 
 userInput(correctInput)
 noteGen(bpmInput)
-createEvents(timeListH,timeListK,timeListS)
 
-#tStamps(timeList)
+kickList= tStamps(timeListK)
+snareList=tStamps(timeListS)
+hatList=tStamps(timeListH)
+
+
+
+createEvents(kickList,snareList,hatList)
+
+
+sortedPlayEvents = sorted(playEvents, key=itemgetter('timeS'))
+print(sortedPlayEvents)
+
 #Playing(timeStamp,timeSeq)
