@@ -1,60 +1,56 @@
 from operator import itemgetter
+from tkinter import Y
 import simpleaudio as sa
 import time
 import random
 correctInput = False
-
+correctInputYN= False
 
 
 hihat = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/hihat.wav")
 snare = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/snare.wav")
 kick = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/kick.wav")
 
-# playEvents = [
-# {'name': 'snare','instrument':snare,'timeS':timeListS},
-# {'name': 'kick','instrument':kick,'timeS':timeListK} ,
-# {'name': 'hihat','instrument':hihat,'timeS':timeListH}]
 
 
 
-
-
-def eventPlay(playEvent):
-    print(playEvent['name'])
-    playEvent['instrument'].play()
-    # return(sampleEvent)
-
-
-
-
-def userInput(correctInput): # here the user is asked for input   
+def userInput(correctInput,correctInputYN): # here the user is asked for input   
     bpm = 120
     global bpmInput
-    bpmAsk= input('hi...default bpm: 120 would you like too keep it? [y/n] \n')
-    if(bpmAsk == "n"):
-    #based on code from the class    
-        while (not correctInput):
-            
-            bpmInput = input("what bpm would you like?\n")
-
-            # check if we 'received' an empty string
-            if not bpmInput:
-                # empty string --> use default
-                correctInput = True
-            else:
-                
-                try:
-                    bpm = float(bpmInput)
-                    correctInput = True
-                except:
-                    print("Incorrect input - please enter a bpm (or enter nothing - default bpm)")
-        bpmInput= float(bpmInput)
-        print('okay bpm is now:',bpm)
     
-    if(bpmAsk == "y"):
-        bpmInput = 120
-        print("okay default bpm:",bpmInput, "is used ")
-        return(bpmInput)       
+    while (not correctInputYN):   
+        bpmAsk= input('hi...default bpm: 120 would you like too keep it? [y/n] \n')
+        
+        if(bpmAsk == "n"):
+        #based on code from the class    
+            while (not correctInput):
+                
+                bpmInput = input("what bpm would you like?\n")
+
+                # check if we 'received' an empty string
+                if not bpmInput:
+                    # empty string --> use default
+                    correctInput = True
+                else:
+                    
+                    try:
+                        bpm = float(bpmInput)
+                        correctInput = True
+                    except:
+                        print("Incorrect input - please enter a bpm (or enter nothing - default bpm)")
+            bpmInput= float(bpmInput)
+            print('okay bpm is now:',bpm)
+            correctInputYN = True
+        else:
+            print("input is incorrect please enter [y/n]")
+            correctInputYN = False
+        
+        if(bpmAsk == "y"):
+            bpmInput = 120
+            print("okay default bpm:",bpmInput, "is used ")
+            correctInputYN = True
+            return(bpmInput)       
+
 
 def noteGen(bpmInput):#creates a random list of note values
     global timeListK,timeListS,timeListH
@@ -86,20 +82,7 @@ def noteGen(bpmInput):#creates a random list of note values
     
     return(timeListK,timeListS,timeListH)  
 
-
-
-
-
-
-
-
 playEvents = []
-
-
-
-
-
-
 # here a list is created with all the
 def createEvent(name,instrument, timestamp):
     newEvent = {}
@@ -118,7 +101,7 @@ def createEvents(timeListH,timeListK,timeListS):
         #print('kick',ts)
     for ts in timeListS:
         createEvent('snare',snare, ts)
-        #print('snare',ts)
+       
 
 
 
@@ -131,14 +114,23 @@ def tStamps(timeList):    #converts timeList into time stamps
     for ts in timeList:
         list.append(i)#here 
         i = i + ts
-    if list :
-        timeSeq = list.pop(0)
-    else:    
-        # print("list empty")
-        exit()   
+  
     return(list)
 
-def Playing(timeStamp,timeSeq):#handles the note palying part  and handles de deg eventPlay
+
+
+def eventPlay(sortedPlayEvents):
+    
+    keys = [k for k, v in sortedPlayEvents[1].items() if v == 'kick']
+    print(keys)
+
+    # print(sortedPlayEvents[1]['timeS']['name'])
+    # print(sortedPlayEvents[1]['name'])
+
+
+
+
+def Playing(timeStamp):#handles the note palying part  and handles de deg eventPlay
     print(timeStamp)  
     current = time.time()
     while True :
@@ -146,8 +138,8 @@ def Playing(timeStamp,timeSeq):#handles the note palying part  and handles de de
         #samplerand=random.randint(0,2)
         now = time.time() - current
     #checks if enough time has passed to play next sample
-        if(now >= timeSeq):
-            eventPlay(sampleEvent)
+        if(now >= 0.0):
+            
             #removes sample from list when timeStamp=true
             if timeStamp:
                 timeSeq= timeStamp.pop(0)
@@ -161,19 +153,18 @@ def Playing(timeStamp,timeSeq):#handles the note palying part  and handles de de
     time.sleep(1)
 
 
-userInput(correctInput)
+userInput(correctInput,correctInputYN)
 noteGen(bpmInput)
 
 kickList= tStamps(timeListK)
 snareList=tStamps(timeListS)
 hatList=tStamps(timeListH)
 
-
-
 createEvents(kickList,snareList,hatList)
 
 
 sortedPlayEvents = sorted(playEvents, key=itemgetter('timeS'))
-print(sortedPlayEvents)
+eventPlay(sortedPlayEvents)
+
 
 #Playing(timeStamp,timeSeq)
