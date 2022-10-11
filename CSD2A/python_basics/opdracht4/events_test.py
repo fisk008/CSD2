@@ -1,11 +1,10 @@
 from operator import itemgetter
-from tkinter import Y
 import simpleaudio as sa
 import time
 import random
 correctInput = False
 correctInputYN= False
-
+playEvents = []
 
 hihat = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/hihat.wav")
 snare = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/snare.wav")
@@ -82,7 +81,7 @@ def noteGen(bpmInput):#creates a random list of note values
     
     return(timeListK,timeListS,timeListH)  
 
-playEvents = []
+
 # here a list is created with all the
 def createEvent(name,instrument, timestamp):
     newEvent = {}
@@ -119,27 +118,23 @@ def tStamps(timeList):    #converts timeList into time stamps
 
 
 
-def eventPlay(sortedPlayEvents):
+def eventPlay(sortedPlayEvents,i):
+    sortedPlayEvents[i]['instrument'].play()
+    print(sortedPlayEvents[i]['name'],sortedPlayEvents[i]['timeS'])
     
-    keys = [k for k, v in sortedPlayEvents[1].items() if v == 'kick']
-    print(keys)
-
-    # print(sortedPlayEvents[1]['timeS']['name'])
-    # print(sortedPlayEvents[1]['name'])
-
-
-
 
 def Playing(timeStamp):#handles the note palying part  and handles de deg eventPlay
     print(timeStamp)  
     current = time.time()
+    i = 0
     while True :
         #choose a int between 0 and 2 to choose random samples
         #samplerand=random.randint(0,2)
+        
         now = time.time() - current
     #checks if enough time has passed to play next sample
-        if(now >= 0.0):
-            
+        if(now >= sortedPlayEvents[i]['timeS']):
+            eventPlay(sortedPlayEvents,i)
             #removes sample from list when timeStamp=true
             if timeStamp:
                 timeSeq= timeStamp.pop(0)
@@ -164,7 +159,5 @@ createEvents(kickList,snareList,hatList)
 
 
 sortedPlayEvents = sorted(playEvents, key=itemgetter('timeS'))
-eventPlay(sortedPlayEvents)
 
-
-#Playing(timeStamp,timeSeq)
+Playing(sortedPlayEvents)
