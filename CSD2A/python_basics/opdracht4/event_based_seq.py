@@ -1,9 +1,8 @@
-from inspect import istraceback
-from turtle import right
+
 import simpleaudio as sa
 import time
 import random
-
+import pyautogui
 
 
 
