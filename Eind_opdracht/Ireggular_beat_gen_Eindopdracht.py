@@ -1,10 +1,10 @@
-from itertools import count
+
 from operator import itemgetter
 import simpleaudio as sa
 import time
 import random
 import pyautogui
-
+import numpy as np
 
 correctInput = False
 correctInputYN= False
@@ -15,52 +15,6 @@ playEvents = []
 hihat = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/hihat.wav")
 snare = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/snare.wav")
 kick = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/kick.wav")
-
-
-def userInput(correctInput,correctInputYN,correctInputV): # here the user is asked for input   
-    bpm = 120
-    global bpmInput
-    
-    while (not correctInputYN):   
-        bpmAsk= input('hi...default bpm: 120 would you like too keep it? [y/n] \n')
-        
-        if(bpmAsk == "n"):
-        #based on code from the class    
-            while (not correctInput):
-                
-                bpmInput = input("what bpm would you like?\n")
-                # while (not correctInputV):
-                #     bpmInput= float(bpmInput)
-                #     if(bpmInput >= 30 or bpmInput <= 250 ):
-                #        correctInputV=True 
-                #     else:
-                #         correctInputV = False
-                #         print("please enter a value between: [30-250] ")
-
-                # check if we 'received' an empty string
-                if not bpmInput:
-                    # empty string --> use default
-                    correctInput = True
-                else:
-                    
-                    try:
-                        bpm = float(bpmInput)
-                        correctInput = True
-                    except:
-                        print("Incorrect input - please enter a bpm (or enter nothing - default bpm)")
-            
-            bpmInput= float(bpmInput)
-            print('okay bpm is now:',bpm)
-            correctInputYN = True
-        else:
-            print("input is incorrect please enter [y/n]")
-            correctInputYN = False
-        
-        if(bpmAsk == "y"):
-            bpmInput = 120
-            print("okay default bpm:",bpmInput, "is used ")
-            correctInputYN = True
-            return(bpmInput)       
 
 
 #altered code based on jochem practicum lesson we made toghether 
@@ -97,6 +51,7 @@ def askQuestion(type: str, questionString: str, options: dict = {}):
         # Check if the answer is an allowed value
         if (result not in [
             'y', 'Y','YES', 'yes', 'ja',  'j', 'true',  'True',  'TRUE',
+            'def','default'
             'n', 'N','NO', 'no',  'nee', 'n', 'false', 'False', 'FALSE'
         ]):
             isError = True
@@ -107,7 +62,7 @@ def askQuestion(type: str, questionString: str, options: dict = {}):
             return askQuestion(type, questionString, options)
 
         # Check if the answer is yes
-        result = result in ['y', 'Y', 'yes', 'ja', 'j', 'true', 'True', 'TRUE']
+        result = result in ['y', 'Y', 'yes', 'ja', 'j', 'true', 'True', 'TRUE','custom','cus']
 
     # Check if the requested type is an integer
     elif type == 'int':
@@ -201,7 +156,6 @@ def eventPlay(sortedPlayEvents,i):
     
 
 def Playing(timeStamp):#handles the note palying part  and handles de deg eventPlay
-    print(timeStamp)  
     current = time.time()
     i = 0
    
@@ -229,39 +183,27 @@ def Playing(timeStamp):#handles the note palying part  and handles de deg eventP
     #lets the sample play out
     time.sleep(1)
 
-#user input is requested
-#userInput(correctInput,correctInputYN,correctInputV)
 
 answerYN = askQuestion('bool','HI today we are making a irregular beat, would you like to hear one?')
 
 if (answerYN): 
-    customBpm = askQuestion('bool','OKAY GREAT!!!!!, I have A default BPM:120. Or would you like to choose a custom one [Y=custom/N=Default]')
+    customBpm = askQuestion('bool','OKAY GREAT!, I have A default BPM:120. Or would you like to choose a custom one ?')
     
     if (customBpm):
         bpmInput = askQuestion('int','I see, custom Bpm is much beter anyway then the boring 120.. tell me what would you like to replace it with. ',{'min': 50, 'max': 200})
-    
+        print('allright bpm:',bpmInput, 'is a great choise')
     else:
         bpmInput=120
-
+        print('okay default bpm',bpmInput, 'is used')
+        bpmInput=120
+        
     if(bpmInput):
         askReady = askQuestion('bool','are you ready to play it?') 
     #noteEvent is generated on requested input
         if(askReady):
-            noteGen(bpmInput)
-
-            #function for all the timestamps per sample
-            kickList= tStamps(timeListK)
-            snareList=tStamps(timeListS)
-            hatList=tStamps(timeListH)
-
-            createEvents(kickList,snareList,hatList)
-
-            sortedPlayEvents = sorted(playEvents, key=itemgetter('timeS'))
-
-            Playing(sortedPlayEvents)
-        else:
-            print('okay, il wait...5 seconds')
+            print('okay, ready? the sequence will play in:')
             print('Starting in ', end=''); pyautogui.countdown(5)
+            
             noteGen(bpmInput)
 
             #function for all the timestamps per sample
@@ -274,6 +216,22 @@ if (answerYN):
             sortedPlayEvents = sorted(playEvents, key=itemgetter('timeS'))
 
             Playing(sortedPlayEvents)
+        elif(not askReady):
+            print('Okay ill wait...... type: [yes] if you are ready to play!')
+            notReady = askQuestion('bool','ready?')
+            if (notReady):
+                noteGen(bpmInput)
+
+                #function for all the timestamps per sample
+                kickList= tStamps(timeListK)
+                snareList=tStamps(timeListS)
+                hatList=tStamps(timeListH)
+
+                createEvents(kickList,snareList,hatList)
+
+                sortedPlayEvents = sorted(playEvents, key=itemgetter('timeS'))
+
+                Playing(sortedPlayEvents)
 else:           
                 
-    print(':(     okay, next time maybe...')
+    print(':(     okay, next time maybe...bye')
