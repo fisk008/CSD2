@@ -10,9 +10,9 @@ probSample = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]]
 
 
 def noteSeq(notes):
-    # Choose the starting state
+    #choose the starting sample!
     noteNow = "kick"
-    # Shall store the sequence of states taken. So, this only has the starting state for now.
+    #allways start on a kick!
     sampleList = [noteNow]
     
     
@@ -75,20 +75,20 @@ def noteSeq(notes):
         i += 1  
     return(sampleList)
 
-def noteValueGen():
-    probValue = [0.15,0.3,0.55]
-    noteValue = [0.25,0.5,1]
+def noteValueGen():#this function generates a list of notevalues 
+    probValue = [0.15,0.3,0.55] #these are the probalilities a notevalue can be chosen
+    noteValue = [0.25,0.5,1]#these are the possible note values
     noteVList = np.random.choice(noteValue,replace=True,p=probValue)
-    return(noteVList)
+    return(noteVList)#returns the list of notevalues
 
-def bpmAdjusted(bpmInput):
+def bpmAdjusted(bpmInput):#this function adjusts the bpm to match the note value 
     bpmAdjust = 60/bpmInput
     return(bpmAdjust)
 
-def tStamps(noteValues):    #converts timeList into time stamps
+def tStamps(noteValues):    #converts timeList into time stamps to be played
     list=[]
     i=0
-    for ts in noteValues:
+    for ts in noteValues: # it adds up the last note to the next one to create a list 
         list.append(i)
         i = i + ts
     return(list)
@@ -96,38 +96,43 @@ def tStamps(noteValues):    #converts timeList into time stamps
 
 noteListTimes=[]
 
-def createEvent(name,instrument, timestamp):
+def TimeStampGen(bpmInput):#this function combines the process of all the functions 
+    noteValuesList=[]
+    
+    for samples in sampleList:#here the List of values is created depending on the number of notes 
+        noteValue = noteValueGen()
+        noteValuesList.append(noteValue)#its appends it to one list of noteValues
+    noteList =[]
+    for dur in noteValuesList:#here the noteValueList is adjusted with the function depeding on bpnm
+        noteList.append(bpmAdjusted(bpmInput) * dur)#appends it to a list for the next function
+
+    for values in noteList:#here the adjusted notevalues are converted to timestamps 
+        tStampsArr =tStamps(noteList)
+    return(tStampsArr) #the timestamps are returned to the function 
+
+def createEvent(name,instrument, timestamp):#this function creates the events 
     newEvent = {}
     newEvent['name'] = name
     newEvent['instrument'] = instrument
     newEvent['timeS'] = timestamp
     noteListTimes.append(newEvent)
 
-def createEvents():
+def createEvents(tStampsArr):#this function creates the event per timestamp and sample and makes one big event out of it
     i=0
     for samples in sampleList:
         createEvent(samples,samples,tStampsArr[i])
         i += 1
 
 
-sampleList = noteSeq(8)   
-print(sampleList)
 
 
-noteValuesList=[]
-for samples in sampleList:
-    noteValue = noteValueGen()
-    noteValuesList.append(noteValue)
-noteList =[]
-for dur in noteValuesList:
-    noteList.append(bpmAdjusted(140) * dur)
 
-for values in noteList:
-    tStampsArr =tStamps(noteList)
+sampleList = noteSeq(8)
+   
+timeStamps = TimeStampGen(140)
 
-createEvents()
+createEvents(timeStamps)
 
 print(noteListTimes)
 
     
-# print(noteListTimes)``
