@@ -106,9 +106,9 @@ def createEvent(name,instrument, timestamp):
 def createEvents():
     i=0
     for samples in sampleList:
-        createEvent(samples,samples,)
-        for samples in tStampsArr:
-            createEvent()
+        createEvent(samples,samples,tStampsArr[i])
+        i += 1
+
 
 sampleList = noteSeq(8)   
 print(sampleList)
@@ -128,6 +128,6 @@ for values in noteList:
 createEvents()
 
 print(noteListTimes)
-print(tStampsArr)
+
     
 # print(noteListTimes)``
