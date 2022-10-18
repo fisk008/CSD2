@@ -1,4 +1,5 @@
 
+from socket import ntohl
 import numpy as np
 import random as rm
 states = ["kick","snare","hat"]
@@ -9,7 +10,6 @@ transitionMatrix = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]]
 def noteSeq(notes):
     # Choose the starting state
     noteNow = "kick"
-
     # Shall store the sequence of states taken. So, this only has the starting state for now.
     noteList = [noteNow]
     i = 0
@@ -35,10 +35,11 @@ def noteSeq(notes):
             if change == "SS":
                 prob = prob * 0.5
                 noteList.append("snare")
-            elif change == "SK":
-                prob = prob * 0.2
-                noteNow = "kick"
-                noteList.append("kick")
+            # commented this out bc i dont want kick after snare
+            # elif change == "SK":
+            #     prob = prob * 0.2
+            #     noteNow = "kick"
+            #     noteList.append("kick")
             else:
                 prob = prob * 0.3
                 noteNow = "hat"
@@ -58,7 +59,29 @@ def noteSeq(notes):
                 noteNow = "kick"
                 noteList.append("kick")
         i += 1  
-    print(noteList)    
+    return(noteList)
 
-noteSeq(5)        
+noteList = noteSeq(4)        
+noteListTimes=[]
 
+def createEvent(name, timestamp):
+    newEvent = {}
+    newEvent['name'] = name
+    newEvent['timeS'] = timestamp
+    noteListTimes.append(newEvent)
+
+def createEvents(noteList):       
+    if(noteList == 'kick'):
+        createEvent('kick',0.5)
+    elif(noteList == 'snare'):
+        createEvent('snare',0.25) 
+    else:
+        createEvent('hat',0.2)  
+
+for notes in noteList:
+    createEvents(notes)
+
+
+
+    
+print(noteListTimes)
