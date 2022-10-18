@@ -88,7 +88,6 @@ def askQuestion(type: str, questionString: str, options: dict = {}):
 
 def noteGen(bpmInput):#creates a random list of note values
     global timeListK,timeListS,timeListH
-    global noteV
 
     
     noteV=[0.25,0.5,1]    
@@ -115,6 +114,16 @@ def noteGen(bpmInput):#creates a random list of note values
         timeListH.append(bpmNow * dur)       
     
     return(timeListK,timeListS,timeListH)  
+def tStamps(timeList):    #converts timeList into time stamps
+    list=[]
+
+    i=0
+    
+    for ts in timeList:
+        list.append(i)#here 
+        i = i + ts
+  
+    return(list)
 
 playEvents = []
 # here a list is created with all the
@@ -137,17 +146,6 @@ def createEvents(timeListH,timeListK,timeListS):
         createEvent('snare',snare, ts)
     
 
-def tStamps(timeList):    #converts timeList into time stamps
-    global timeSeq
-    list=[]
-
-    i=0
-    
-    for ts in timeList:
-        list.append(i)#here 
-        i = i + ts
-  
-    return(list)
 
 
 def eventPlay(sortedPlayEvents,i):
