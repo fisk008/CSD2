@@ -2,20 +2,18 @@
 
 import numpy as np
 import random as rm
-states = ["kick","snare","hat"]
-
-transitionName = [["KK","KS","KH"],["SS","SK","SH"],["HH","HS","HK"]]
-
-probSample = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]]
 
 
-def noteSeq(notes):
+
+
+def markovSampleGen(notes):
     #choose the starting sample!
     noteNow = "kick"
     #allways start on a kick!
     sampleList = [noteNow]
     
-    
+    transitionName = [["KK","KS","KH"],["SS","SK","SH"],["HH","HS","HK"]]
+    probSample = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]]    
     
     i = 0
     # To calculate the probability of the sampleList
@@ -127,12 +125,13 @@ def createEvents(tStampsArr):#this function creates the event per timestamp and 
 
 
 
-sampleList = noteSeq(8)
+sampleList = markovSampleGen(8)
    
 timeStamps = TimeStampGen(140)
 
 createEvents(timeStamps)
-
 print(noteListTimes)
+
+noteListTimes[1]['instrument'].play()
 
     
