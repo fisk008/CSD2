@@ -12,14 +12,21 @@ correctInputV= False
 playEvents = []
 
 
-hat = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/hihat.wav")
-snare = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/snare.wav")
-kick = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD_22-23/blok2a/assets/kick.wav")
+hat = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/hihat.wav")
+kick = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/kick.wav")
+snare = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/snare.wav")
+chord = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/chord.wav")
+jit = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/jit.wav")
+perc= sa.WaveObject.from_wave_file('/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/perc.wav')
+
 
 instruments = {
     "hat": hat,
     "snare": snare,
-    "kick": kick
+    "kick": kick,
+    "chord":chord,
+    "jit":jit,
+    "perc":perc
 }
 
 #altered code based on jochem practicum lesson we made toghether 
@@ -95,9 +102,9 @@ def markovSampleGen(notes):
     noteNow = "kick"
     #allways start on a kick!
     sampleList = [noteNow]
-    
-    transitionName = [["KK","KS","KH"],["SS","SK","SH"],["HH","HS","HK"]]
-    probSample = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]]    
+    #possible transition of samples that come after the sample 
+    transitionName = [["KK","KS","KH","KC"],["SS","SK","SH","SP"],["HH","HS","HK","HJ",]]
+    probSample =     [[0.15,0.6,0.15,0.1],   [0.1,0.55,0.25,0.1],      [0.2,0.6,0.1,0.1]] #chances of the transition happening    
     
     i = 0
     # To calculate the probability of the sampleList
@@ -107,18 +114,21 @@ def markovSampleGen(notes):
         if noteNow == "kick":
             change = np.random.choice(transitionName[0],replace=True,p=probSample[0])
             if change == "KK":
-                prob = prob * 0.2
+                prob = prob * 0.15
                 sampleList.append("kick")
                 
             elif change == "KS":
                 prob = prob * 0.6
                 noteNow = "snare"
                 sampleList.append("snare")
-                
-            else:
-                prob = prob * 0.2
+            elif change == "KH":
+                prob = prob * 0.15
                 noteNow = "hat"
                 sampleList.append("hat")
+            else :
+                prob = prob * 0.1
+                noteNow = "chord"  
+                sampleList.append("chord") 
                 
         elif noteNow == "snare":
             change = np.random.choice(transitionName[1],replace=True,p=probSample[1])
@@ -128,15 +138,18 @@ def markovSampleGen(notes):
                 
             # commented this out bc i dont want kick after snare
             elif change == "SK":
-                prob = prob * 0.6
+                prob = prob * 0.55
                 noteNow = "kick"
                 sampleList.append("kick")
                 
-            else:
-                prob = prob * 0.3
+            elif change == "SH":
+                prob = prob * 0.25
                 noteNow = "hat"
                 sampleList.append("hat")
-                
+            else:
+                prob = prob* 0.1
+                noteNow = "SP"
+                sampleList.append("perc")   
         
         elif noteNow == "hat":
             change = np.random.choice(transitionName[2],replace=True,p=probSample[2])
@@ -145,14 +158,19 @@ def markovSampleGen(notes):
                 sampleList.append("hat")
                 
             elif change == "HS":
-                prob = prob * 0.7
+                prob = prob * 0.6
                 noteNow = "snare"
                 sampleList.append("snare")
                 
-            else:
-                prob = prob * 0.1
+            elif change == "HK":
+                prob = prob * 0.15
                 noteNow = "kick"
                 sampleList.append("kick")
+            
+            else:
+                prob= prob  * 0.05
+                noteNow = "jit"
+                sampleList.append("jit")
                 
         i += 1  
     return(sampleList)
@@ -216,12 +234,12 @@ def createEvents(tStampsArr):#this function creates the event per timestamp and 
         createEvent(samples,tStampsArr[i],noteValuesList[i])
         i += 1
 
-def eventPlay(noteListTimes,i):
+def eventPlay(noteListTimes,i):# this function makes the note play and also print it when played
     noteListTimes[i]['instrument'].play()
     print(noteListTimes[i]['name'],noteListTimes[i]['timeS'])
     
 
-def Playing():#handles the note palying part  and handles de deg eventPlay
+def Playing():#handles the note palying part and handles de def eventPlay
     current = time.time()
     i = 0
    
@@ -235,7 +253,7 @@ def Playing():#handles the note palying part  and handles de deg eventPlay
         if(now >= noteListTimes[i]['timeS']):
             eventPlay(noteListTimes,i)
             
-            if noteListTimes:
+            if noteListTimes:# empty's the list 
                 noteListTimes.pop(0)   
 
         if(i == len(noteListTimes)):
@@ -303,35 +321,22 @@ if (answerYN):
             print('Okay ill wait...... type: [yes] if you are ready to play!')
             # notReady = askQuestion('bool','ready?')
         
-        print('okay, ready? the sequence will play in:', end=''); pyautogui.countdown(5)
-        
-        
+        print('okay, ready? the sequence will play in:', end=''); pyautogui.countdown(3)
+    
         sampleList = markovSampleGen(15)
-        
+        print(sampleList)
         timeStamps = TimeStampGen(bpmInput)
         
         createEvents(timeStamps)
-        print(noteListTimes)
+        
         Playing()
         
-        storeToMidi=askQuestion('bool','would you like to store this rithm to a midi file?')
-        if (storeToMidi):
-             midiGen()  
-             
-        else:
-               print('hoi')
-        # elif(not askReady):
-        #     if (notReady):
-            
-        #         sampleList = markovSampleGen(15)
-    
-        #         timeStamps = TimeStampGen(bpmInput)
-
-        #         createEvents(timeStamps)
-
-        #         Playing()
-
-                
+        # storeToMidi = askQuestion('bool','would you like to store this rithm to a midi file?')
+        # if (storeToMidi):
+        #      midiGen()          
+        # else:
+        #       newrithm = askQuestion('bool','would you like to generate a new rithm?')
+                         
 else:           
                 
     print(':(     okay, next time maybe...bye')
