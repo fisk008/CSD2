@@ -104,7 +104,7 @@ def markovSampleGen(notes):
     sampleList = [noteNow]
     #possible transition of samples that come after the sample 
     transitionName = [["KK","KS","KH","KC"],["SS","SK","SH","SP"],["HH","HS","HK","HJ",]]
-    probSample =     [[0.15,0.6,0.15,0.1],   [0.1,0.55,0.25,0.1],      [0.2,0.6,0.1,0.1]] #chances of the transition happening    
+    probSample =     [[0.15,0.6,0.15,0.1],   [0.2,0.3,0.4,0.1],      [0.2,0.6,0.1,0.1]] #chances of the transition happening    
     
     i = 0
     # To calculate the probability of the sampleList
@@ -136,7 +136,7 @@ def markovSampleGen(notes):
                 prob = prob * 0.1
                 sampleList.append("snare")
                 
-            # commented this out bc i dont want kick after snare
+           
             elif change == "SK":
                 prob = prob * 0.55
                 noteNow = "kick"
@@ -148,7 +148,7 @@ def markovSampleGen(notes):
                 sampleList.append("hat")
             else:
                 prob = prob* 0.1
-                noteNow = "SP"
+                noteNow = "perc"
                 sampleList.append("perc")   
         
         elif noteNow == "hat":
@@ -171,8 +171,24 @@ def markovSampleGen(notes):
                 prob= prob  * 0.05
                 noteNow = "jit"
                 sampleList.append("jit")
+                   
+        elif noteNow == "chord":        
                 
+            noteNow = "kick"
+            sampleList.append("kick")
+            
+        elif noteNow == "perc": 
+      
+            noteNow = "hat"
+            sampleList.append("hat") 
+            
+        elif noteNow == "jit": 
+            
+            noteNow = "snare"
+            sampleList.append("snare")       
+             
         i += 1  
+    print("Probability of the possible seqeunce " + str(prob))        
     return(sampleList)
 
 
@@ -205,11 +221,11 @@ def TimeStampGen(bpmInput):#this function combines the process of all the functi
     for samples in sampleList:#here the List of values is created depending on the number of notes 
         noteValue = noteValueGen()
         noteValuesList.append(noteValue)#its appends it to one list of noteValues
-    
+    print(noteValuesList)
     noteList =[]
     for dur in noteValuesList:#here the noteValueList is adjusted with the function depeding on bpnm
         noteList.append(bpmAdjusted(bpmInput) * dur)#appends it to a list for the next function
-
+    print(noteList)
     for values in noteList: #here the adjusted notevalues are converted to timestamps 
         tStampsArr =tStamps(noteList)
     return(tStampsArr) #the timestamps are returned to the function 
@@ -265,7 +281,7 @@ def Playing():#handles the note palying part and handles de def eventPlay
 #samples to choose from
 
     #lets the sample play out
-    time.sleep(1)
+    time.sleep(2)
 
 
 def midiGen():
@@ -323,7 +339,7 @@ if (answerYN):
         
         print('okay, ready? the sequence will play in:', end=''); pyautogui.countdown(3)
     
-        sampleList = markovSampleGen(15)
+        sampleList = markovSampleGen(31)
         print(sampleList)
         timeStamps = TimeStampGen(bpmInput)
         
