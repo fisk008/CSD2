@@ -10,7 +10,9 @@ correctInput = False
 correctInputYN= False
 correctInputV= False
 playEvents = []
-
+noteValuesList=[]
+noteListTimes=[]
+mf = MIDIFile(1)
 
 hat = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/hihat.wav")
 kick = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/kick.wav")
@@ -18,7 +20,6 @@ snare = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/
 chord = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/chord.wav")
 jit = sa.WaveObject.from_wave_file("/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/jit.wav")
 perc= sa.WaveObject.from_wave_file('/Users/rubenbos/Documents/HKU/jaar_2/CSD2/audio_files/perc.wav')
-
 
 instruments = {
     "hat": hat,
@@ -28,6 +29,8 @@ instruments = {
     "jit":jit,
     "perc":perc
 }
+
+
 
 #altered code based on jochem practicum lesson we made toghether 
 def askQuestion(type: str, questionString: str, options: dict = {}):
@@ -97,7 +100,8 @@ def askQuestion(type: str, questionString: str, options: dict = {}):
     # Return the result
     return result
 
-def markovSampleGen(notes):
+
+def markovSampleGen(notes):#here the note generation is generated using a markov chain
     #choose the starting sample!
     noteNow = "kick"
     #allways start on a kick!
@@ -193,8 +197,8 @@ def markovSampleGen(notes):
 
 
 def noteValueGen():#this function generates a list of notevalues 
-    probValue = [0.15,0.3,0.55] #these are the probalilities a notevalue can be chosen
-    noteValue = [0.25,0.5,1]#these are the possible note values
+    probValue = [0.15,0.25,0.1,0.15,0.15,0.2] #these are the probalilities a notevalue can be chosen
+    noteValue = [0.25,0.3,0.4,0.5,0.75,1]#these are the possible note values
     noteVList = np.random.choice(noteValue,replace=True,p=probValue)
     return(noteVList)#returns the list of notevalues
 
@@ -213,25 +217,21 @@ def tStamps(noteValues):    #converts timeList into time stamps to be played
     return(list)
 
 
-
-noteValuesList=[]
-
 def TimeStampGen(bpmInput):#this function combines the process of all the functions and generates from the samplelist a timestamp list 
     
     for samples in sampleList:#here the List of values is created depending on the number of notes 
         noteValue = noteValueGen()
         noteValuesList.append(noteValue)#its appends it to one list of noteValues
-    print(noteValuesList)
+    
     noteList =[]
     for dur in noteValuesList:#here the noteValueList is adjusted with the function depeding on bpnm
         noteList.append(bpmAdjusted(bpmInput) * dur)#appends it to a list for the next function
-    print(noteList)
+    
     for values in noteList: #here the adjusted notevalues are converted to timestamps 
         tStampsArr =tStamps(noteList)
     return(tStampsArr) #the timestamps are returned to the function 
 
 
-noteListTimes=[]
 def createEvent(name,timestamp,noteDuration):#this function creates the events for the given samples and timestamps 
     global intruments
     newEvent = {}
@@ -242,19 +242,18 @@ def createEvent(name,timestamp,noteDuration):#this function creates the events f
     noteListTimes.append(newEvent)
 
 
-
-
 def createEvents(tStampsArr):#this function creates the event per timestamp and sample and makes one big event out of it
     i=0
     for samples in sampleList:
         createEvent(samples,tStampsArr[i],noteValuesList[i])
         i += 1
 
+
 def eventPlay(noteListTimes,i):# this function makes the note play and also print it when played
     noteListTimes[i]['instrument'].play()
     print(noteListTimes[i]['name'],noteListTimes[i]['timeS'])
+   
     
-
 def Playing():#handles the note palying part and handles de def eventPlay
     current = time.time()
     i = 0
@@ -284,7 +283,7 @@ def Playing():#handles the note palying part and handles de def eventPlay
     time.sleep(2)
 
 
-def midiGen():
+def midiGen():#handles the midi generation if you would like to store
     # set the necessary values for MIDI util
     velocity=80
     track = 0
@@ -293,7 +292,7 @@ def midiGen():
 
 
     # create the MIDIfile object, to which we can add notes
-    mf = MIDIFile(1)
+    
     # set name and tempo
     time_beginning = 0
     mf.addTrackName(track, time_beginning, "Beat Sample Track")
@@ -304,55 +303,70 @@ def midiGen():
     instr_midi_pitch = {
         "kick": 35,
         "snare": 38,
-        "hat": 40
+        "hat": 40,
+        "jit": 41,
+        "chord": 42,
+        "perc": 43
     }
 
 
     for event in noteListTimes:
         # transform time (sec) to (qnote)
-        qnote_time = event["times"] / qnote_dur
-        instr_name = event["instrument"]
+        qnote_time = event["timeS"] / qnote_dur
+        instr_name = event["name"]
         mf.addNote(track, channel, instr_midi_pitch[instr_name], qnote_time,
             event['noteDur'], velocity)
-
-    with open("events_lists.midi",'wb') as outf:
+ 
+        
+def saveMidi():#saves it to a files if true
+    
+    with open("events_lists.mid",'wb') as outf:
         mf.writeFile(outf)
 
-answerYN = askQuestion('bool','HI today we are making a irregular beat, would you like to hear one?')
 
-if (answerYN): 
-    customBpm = askQuestion('bool','OKAY GREAT!, I have A default BPM:120. Or would you like to choose a custom one ?')
-    
-    if (customBpm):
-        bpmInput = askQuestion('int','I see, custom Bpm is much beter anyway then the boring 120.. tell me what would you like to replace it with. ',{'min': 50, 'max': 200})
-        print('allright bpm:',bpmInput, 'is a great choise')
-    else:
-        bpmInput=120
-        print('okay default bpm',bpmInput, 'is used')
+# here the program begins
+replay=False
+
+answerYN = askQuestion('bool','HI today we are making a irregular beat using a markov chain, would you like to hear one?')
+
+while not replay:
+    if (answerYN): 
+        customBpm = askQuestion('bool','OKAY GREAT!, I have A default BPM:120. Or would you like to choose a custom one ?')
         
-        
-    if(bpmInput):
-    #noteEvent is generated on requested input
-        while not askQuestion('bool','are you ready to play it?'):
-            print('Okay ill wait...... type: [yes] if you are ready to play!')
-            # notReady = askQuestion('bool','ready?')
-        
-        print('okay, ready? the sequence will play in:', end=''); pyautogui.countdown(3)
-    
-        sampleList = markovSampleGen(31)
-        print(sampleList)
-        timeStamps = TimeStampGen(bpmInput)
-        
-        createEvents(timeStamps)
-        
-        Playing()
-        
-        # storeToMidi = askQuestion('bool','would you like to store this rithm to a midi file?')
-        # if (storeToMidi):
-        #      midiGen()          
-        # else:
-        #       newrithm = askQuestion('bool','would you like to generate a new rithm?')
-                         
-else:           
+        if (customBpm):
+            bpmInput = askQuestion('int','I see, custom Bpm is much beter anyway then the boring 120.. tell me what would you like to replace it with. ',{'min': 50, 'max': 200})
+            print('allright bpm:',bpmInput, 'is a great choise')
+        else:
+            bpmInput=120
+            print('okay default bpm',bpmInput, 'is used')
+            
+            
+        if(bpmInput):
+        #noteEvent is generated on requested input
+            while not askQuestion('bool','are you ready to play it?'):
+                print('Okay ill wait...... type: [yes] if you are ready to play!')
                 
-    print(':(     okay, next time maybe...bye')
+            
+            print('okay, ready? the sequence will play in:', end=''); pyautogui.countdown(3)
+        
+            sampleList = markovSampleGen(15)
+            
+            timeStamps = TimeStampGen(bpmInput)
+            
+            createEvents(timeStamps)
+            midiGen()
+            Playing()
+            
+            storeToMidi = askQuestion('bool','would you like to store this rithm to a midi file?')
+            if askQuestion('bool','would you like to store this rithm to a midi file?') :
+                saveMidi()           
+            
+            
+            newRithm = askQuestion('bool','would you like to generate a new rithm?')
+            
+            if not newRithm:
+                replay= True 
+                print('allright, thank you for listening to ') 
+    else:           
+                    
+        print(':(     okay, next time maybe...bye')
