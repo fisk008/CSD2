@@ -83,7 +83,7 @@ def askQuestion(type: str, questionString: str, options: dict = {}):
     elif type == 'int':
         # Try to parse the answer to an integer. If it fails, ask the question again
         try:
-            result = int(result)
+            result = float(result)
             # Check if the answer is in bounds, throw an error if it is not
             if ('min' in options and result < options['min']):
                 print('Value cannot be smaller than ' +
@@ -108,7 +108,7 @@ def markovSampleGen(notes):#here the note generation is generated using a markov
     sampleList = [noteNow]
     #possible transition of samples that come after the sample 
     transitionName = [["KK","KS","KH","KC"],["SS","SK","SH","SP"],["HH","HS","HK","HJ",]]
-    probSample =     [[0.15,0.6,0.15,0.1],   [0.2,0.3,0.4,0.1],      [0.2,0.6,0.1,0.1]] #chances of the transition happening    
+    probSample =     [[0.15,0.4,0.25,0.2],   [0.2,0.3,0.3,0.2],      [0.2,0.6,0.1,0.1]] #chances of the transition happening    
     
     i = 0
     # To calculate the probability of the sampleList
@@ -137,17 +137,17 @@ def markovSampleGen(notes):#here the note generation is generated using a markov
         elif noteNow == "snare":
             change = np.random.choice(transitionName[1],replace=True,p=probSample[1])
             if change == "SS":
-                prob = prob * 0.1
+                prob = prob * 0.2
                 sampleList.append("snare")
                 
            
             elif change == "SK":
-                prob = prob * 0.55
+                prob = prob * 0.3
                 noteNow = "kick"
                 sampleList.append("kick")
                 
             elif change == "SH":
-                prob = prob * 0.25
+                prob = prob * 0.4
                 noteNow = "hat"
                 sampleList.append("hat")
             else:
@@ -167,12 +167,12 @@ def markovSampleGen(notes):#here the note generation is generated using a markov
                 sampleList.append("snare")
                 
             elif change == "HK":
-                prob = prob * 0.15
+                prob = prob * 0.10
                 noteNow = "kick"
                 sampleList.append("kick")
             
             else:
-                prob= prob  * 0.05
+                prob= prob  * 0.10
                 noteNow = "jit"
                 sampleList.append("jit")
                    
@@ -233,7 +233,6 @@ def TimeStampGen(bpmInput):#this function combines the process of all the functi
 
 
 def createEvent(name,timestamp,noteDuration):#this function creates the events for the given samples and timestamps 
-    global intruments
     newEvent = {}
     newEvent['name'] = name    
     newEvent['instrument'] = instruments[name] 
@@ -280,7 +279,7 @@ def Playing():#handles the note palying part and handles de def eventPlay
 #samples to choose from
 
     #lets the sample play out
-    time.sleep(2)
+    time.sleep(1.5)
 
 
 def midiGen():#handles the midi generation if you would like to store
@@ -340,7 +339,8 @@ while not replay:
             bpmInput=120
             print('okay default bpm',bpmInput, 'is used')
             
-            
+        numberNotes = askQuestion('int','how many notes would you like in the sequence?',{'min':1,'max':128})  
+        print('okay',numberNotes,'notes wil be played')  
         if(bpmInput):
         #noteEvent is generated on requested input
             while not askQuestion('bool','are you ready to play it?'):
@@ -349,15 +349,16 @@ while not replay:
             
             print('okay, ready? the sequence will play in:', end=''); pyautogui.countdown(3)
         
-            sampleList = markovSampleGen(15)
+            sampleList = markovSampleGen(numberNotes-1)
             
             timeStamps = TimeStampGen(bpmInput)
             
             createEvents(timeStamps)
             midiGen()
-            Playing()
             
-            storeToMidi = askQuestion('bool','would you like to store this rithm to a midi file?')
+            Playing()#plays the sequence
+            
+            
             if askQuestion('bool','would you like to store this rithm to a midi file?') :
                 saveMidi()           
             
@@ -366,7 +367,8 @@ while not replay:
             
             if not newRithm:
                 replay= True 
-                print('allright, thank you for listening to ') 
+                print('allright, thank you for listening to this amaazing generator ') 
     else:           
                     
         print(':(     okay, next time maybe...bye')
+        replay = True
