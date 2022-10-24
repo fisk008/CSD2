@@ -1,4 +1,5 @@
 
+from fileinput import filename
 from operator import itemgetter
 from midiutil import MIDIFile
 import simpleaudio as sa
@@ -288,7 +289,7 @@ def midiGen():#handles the midi generation if you would like to store
     track = 0
     channel = 9 # corresponds to channel 10 drums
     bpm = bpmInput
-
+     
 
     # create the MIDIfile object, to which we can add notes
     
@@ -315,11 +316,11 @@ def midiGen():#handles the midi generation if you would like to store
         instr_name = event["name"]
         mf.addNote(track, channel, instr_midi_pitch[instr_name], qnote_time,
             event['noteDur'], velocity)
- 
+    
         
 def saveMidi():#saves it to a files if true
-    
-    with open("events_lists.mid",'wb') as outf:
+    file_name = askQuestion('string', 'Insert file name: ')
+    with open(f'midifiles/{file_name + str(".mid")}','wb') as outf:
         mf.writeFile(outf)
 
 
