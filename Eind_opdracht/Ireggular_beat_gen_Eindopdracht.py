@@ -270,7 +270,7 @@ def Playing():#handles the note palying part and handles de def eventPlay
             
             if noteListTimes:# empty's the list 
                 noteListTimes.pop(0)   
-
+        
         if(i == len(noteListTimes)):
         
             break   
@@ -368,7 +368,7 @@ while not replay:
             
             if not newRithm:
                 replay= True 
-                print('allright, thank you for listening to this amaazing generator ') 
+                print('allright, thank you for listening to this amaazing generator!!') 
     else:           
                     
         print(':(     okay, next time maybe...bye')
