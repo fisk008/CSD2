@@ -1,6 +1,6 @@
 
-from fileinput import filename
-from operator import itemgetter
+
+
 from midiutil import MIDIFile
 import simpleaudio as sa
 import time
@@ -67,7 +67,7 @@ def askQuestion(type: str, questionString: str, options: dict = {}):
         # Check if the answer is an allowed value
         if (result not in [
             'y', 'Y','YES', 'yes', 'ja',  'j', 'true',  'True',  'TRUE',
-            'def','default'
+            'def','default','custom','cus','Custom'
             'n', 'N','NO', 'no',  'nee', 'n', 'false', 'False', 'FALSE'
         ]):
             isError = True
@@ -113,7 +113,7 @@ def markovSampleGen(notes):#here the note generation is generated using a markov
     
     i = 0
     # To calculate the probability of the sampleList
-    prob = 1
+    prob = 1.0
 
     while i != notes:
         if noteNow == "kick":
@@ -136,7 +136,7 @@ def markovSampleGen(notes):#here the note generation is generated using a markov
                 sampleList.append("chord") 
                 
         elif noteNow == "snare":
-            change = np.random.choice(transitionName[1],replace=True,p=probSample[1])
+            change = np.random.choice(transitionName[1],replace=False,p=probSample[1])
             if change == "SS":
                 prob = prob * 0.2
                 sampleList.append("snare")
@@ -178,7 +178,7 @@ def markovSampleGen(notes):#here the note generation is generated using a markov
                 sampleList.append("jit")
                    
         elif noteNow == "chord":        
-                
+            
             noteNow = "kick"
             sampleList.append("kick")
             
@@ -193,7 +193,7 @@ def markovSampleGen(notes):#here the note generation is generated using a markov
             sampleList.append("snare")       
              
         i += 1  
-    print("Probability of the possible seqeunce " + str(prob))        
+    # print("Probability of the possible seqeunce " + str(prob))        
     return(sampleList)
 
 
@@ -349,7 +349,7 @@ while not replay:
                 
             
             print('okay, ready? the sequence will play in:', end=''); pyautogui.countdown(3)
-        
+            #samples are created  from the given number if notes
             sampleList = markovSampleGen(numberNotes-1)
             
             timeStamps = TimeStampGen(bpmInput)
