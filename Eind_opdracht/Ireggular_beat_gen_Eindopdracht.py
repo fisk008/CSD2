@@ -320,7 +320,7 @@ def midiGen():#handles the midi generation if you would like to store
         
 def saveMidi():#saves it to a files if true
     file_name = askQuestion('string', 'Insert file name: ')
-    with open(f'midifiles/{file_name + str(".mid")}','wb') as outf:
+    with open(f'midifiles/{file_name + str(".       mid")}','wb') as outf:
         mf.writeFile(outf)
 
 
