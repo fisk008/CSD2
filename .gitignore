@@ -3,3 +3,4 @@ audio_files
 .mid
 *.o
 *.s
+*.exec
