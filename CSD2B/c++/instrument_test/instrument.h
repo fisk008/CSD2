@@ -7,10 +7,8 @@ class instrument
 public:
     std:: string sound = " sweep ";
     
+    void play();
 
-    void play()
-    {
-    std::cout << "kaas: " << sound << std::endl;
-    }
+
 };
 
