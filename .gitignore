@@ -3,6 +3,7 @@ audio_files
 .mid
 *.o
 *.s
+*.exc
 *.exec  `s
 CSD2B/c++/instrument
 CSD2B/c++/woofer
