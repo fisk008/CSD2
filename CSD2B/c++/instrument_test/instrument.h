@@ -1,9 +1,11 @@
+#pragma once
 #include <iostream>
+
 class instrument
 {
 
 public:
-    std::string sound = " sweep ";
+    std:: string sound = " sweep ";
     
 
     void play()
@@ -12,14 +14,3 @@ public:
     }
 };
 
-
-
-
-
-int main(){
-instrument kaasballen;
-
-kaasballen.play();
-
-return 0;
-}

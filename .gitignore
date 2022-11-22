@@ -6,3 +6,4 @@ audio_files
 *.exec  `s
 CSD2B/c++/instrument
 CSD2B/c++/woofer
+makefile
