@@ -2,12 +2,19 @@
 #include <iostream>
 
 
-class oscillator
+class Oscillator
 {   
 public:
 
-double pitchNote = 50.3467;
-void pitch();
+    void pitch( float pitchNote );
+    void envelope(float attack,float decay, float sustain, float release);
+   
 
 
+protected:
+ float attack;
+ float decay;
+ float sustain;
+ float release;
+ double pitchNote;
 };

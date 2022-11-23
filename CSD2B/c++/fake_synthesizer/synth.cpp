@@ -1,10 +1,20 @@
 #include <iostream>
 #include "synth.h"
 
-void oscillator::pitch()
+
+void Oscillator::pitch(float pitchNote)
 {
-
-std::cout << "pitch: " << pitchNote << std::endl;
-
+    this->pitchNote = pitchNote;
+    std::cout << "Inside Oscillator constructor ()\n";
 
 }
+
+void Oscillator::envelope(float attack,float decay, float sustain, float release)
+{
+    this->attack = attack;
+    this->decay = decay;
+    this->release = release;
+    this->sustain = sustain;
+    std::cout << "inside the Envelope constructor\n";
+}
+

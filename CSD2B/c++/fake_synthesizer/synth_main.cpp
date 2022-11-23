@@ -4,10 +4,13 @@
 
 int main()
 {
-oscillator osc;
+    Oscillator osc;
+    std::cout << "\n in main\n";
+    
 
-osc.pitch();
-
-return 0;
+    osc.pitch(50.33);
+    osc.envelope(3.5,3.6,4.0,2.0);
+    std::cout << "'\npitch:"<< pitch << std::
+    return 0;
 
 }
