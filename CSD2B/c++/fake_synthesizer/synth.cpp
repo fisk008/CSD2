@@ -16,5 +16,6 @@ void Oscillator::envelope(float attack,float decay, float sustain, float release
     this->release = release;
     this->sustain = sustain;
     std::cout << "inside the Envelope constructor\n";
+    
 }
 
