@@ -2,21 +2,23 @@
 #include "math.h"
 
 
+
 Sine::Sine(float frequency, double samplerate) : Oscillator(frequency,samplerate)
 {
-  std::cout << "Sine - constructor\n";
+ 
 }
+
 
 
 
 Sine::~Sine() {
-  std::cout << "Sine - destructor\n";
+
 }
+
 
 float Sine::getSample() {
   return sample;
 }
-
 
 void Sine::tick() {
   // NOTE 1. - frequency / SAMPLERATE can be implemented in a more efficient way
@@ -28,4 +30,3 @@ void Sine::tick() {
   }
 }
 
-//getters and setters

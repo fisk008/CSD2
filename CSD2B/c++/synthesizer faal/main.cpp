@@ -2,8 +2,9 @@
 #include <thread>
 #include "jack_module.h"
 #include "math.h"
+
 #include "sine.h"
-#include "writeToFile.h"
+
 /*
  * NOTE: jack2 needs to be installed
  * jackd invokes the JACK audio server daemon
@@ -16,13 +17,6 @@ class CustomCallback : public AudioCallback {
 public:
   void prepare(int rate) override {
     samplerate = (float) rate;
-
-   WriteToFile fileWriter("output.csv", true);
-  for(int i = 0; i < samplerate; i++) {
-    fileWriter.write(std::to_string(sine.getSample()) + "\n");
-    sine.tick();
-  }
-
   }
 
   void process(AudioBuffer buffer) override {
@@ -33,9 +27,8 @@ public:
     }
   }
   private:
-  float samplerate = 44100;
-  Sine sine = Sine(1, samplerate);
-  Sine harm2 =Sine(2,samplerate);
+  float samplerate = 48000;
+  Oscillator* sine = new Sine(1500, samplerate);
 };
 
 int main(int argc,char **argv)

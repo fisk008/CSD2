@@ -19,8 +19,14 @@ public:
 
    WriteToFile fileWriter("output.csv", true);
   for(int i = 0; i < samplerate; i++) {
-    fileWriter.write(std::to_string(sine.getSample()) + "\n");
-    sine.tick();
+    fileWriter.write(std::to_string((harm1.getSample() + harm2.getSample() + harm3.getSample() + harm4.getSample()+ harm5.getSample() )/5.) + "\n");
+          
+          
+    harm1.tick();
+    harm2.tick();
+    harm3.tick();
+    harm4.tick();
+    harm5.tick();
   }
 
   }
@@ -28,14 +34,23 @@ public:
   void process(AudioBuffer buffer) override {
     for (int i = 0; i < buffer.numFrames; ++i) {
       // write sample to buffer at channel 0, amp = 0.25
-      buffer.outputChannels[0][i] = sine.getSample();
-      sine.tick();
-    }
+      buffer.outputChannels[0][i] =( harm1.getSample() + harm2.getSample() + harm3.getSample() + harm4.getSample()+ harm5.getSample()) /5.;
+      harm1.tick();
+      harm2.tick();
+      harm3.tick();
+      harm4.tick();
+      harm5.tick();
+      }
   }
   private:
   float samplerate = 44100;
-  Sine sine = Sine(1, samplerate);
-  Sine harm2 =Sine(2,samplerate);
+  Sine harm1 = Sine(50, samplerate);
+  Sine harm2 =Sine(150,samplerate);
+  Sine harm3 =Sine(250,samplerate);
+  Sine harm4 =Sine(350,samplerate);
+  Sine harm5 =Sine(450,samplerate);
+
+
 };
 
 int main(int argc,char **argv)

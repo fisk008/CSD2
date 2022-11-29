@@ -63,9 +63,7 @@ public:
 
     /// This function is called when Jack requests new audio data. An instance of `AudioBuffer` is passed as an argument, which
     /// can be used to collect incoming audio and send outgoing sample data.
-   
     virtual void process (AudioBuffer buffer) {}
-
 };
 
 /// Jack Client. Make an instance of this (only one per program) and provide it with a reference to your
