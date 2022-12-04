@@ -35,7 +35,7 @@ public:
   private:
   float samplerate = 44100;
   Sine sine = Sine(1, samplerate);
-  Sine harm2 =Sine(2,samplerate);
+  // Sine harm2 =Sine(300,samplerate);
 };
 
 int main(int argc,char **argv)

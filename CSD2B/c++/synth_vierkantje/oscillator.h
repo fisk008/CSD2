@@ -13,10 +13,11 @@ class Oscillator{
     
     
     protected:
-    const float pi = acos (-1);  //atan(1) * 4; <-- vak van Pieter.
-    float frequency;
-    float amplitude;
-    float phase;
+    const float pi = acos (-1.0f);  //atan(1) * 4; <-- vak van Pieter.
+    float frequency{0};
+    float amplitude{0};
+    float phase{0};
+    
     // sample contains the current sample
     float sample;
     double samplerate;

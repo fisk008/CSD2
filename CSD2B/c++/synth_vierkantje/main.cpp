@@ -3,6 +3,7 @@
 #include "jack_module.h"
 #include "math.h"
 #include "sine.h"
+#include "square.h"
 #include "writeToFile.h"
 /*
  * NOTE: jack2 needs to be installed
@@ -16,17 +17,14 @@ class CustomCallback : public AudioCallback {
 public:
   void prepare(int rate) override {
     samplerate = (float) rate;
-
+    std::cout << samplerate; 
    WriteToFile fileWriter("output.csv", true);
   for(int i = 0; i < samplerate; i++) {
-    fileWriter.write(std::to_string((harm1.getSample() + harm2.getSample() + harm3.getSample() + harm4.getSample()+ harm5.getSample() )/5.) + "\n");
+    fileWriter.write(std::to_string(harm1.getSample())+"\n");
           
           
     harm1.tick();
-    harm2.tick();
-    harm3.tick();
-    harm4.tick();
-    harm5.tick();
+    
   }
 
   }
@@ -34,22 +32,19 @@ public:
   void process(AudioBuffer buffer) override {
     for (int i = 0; i < buffer.numFrames; ++i) {
       // write sample to buffer at channel 0, amp = 0.25
-      buffer.outputChannels[0][i] =( harm1.getSample() + harm2.getSample() + harm3.getSample() + harm4.getSample()+ harm5.getSample()) /5.;
+      buffer.outputChannels[0][i] = harm1.getSample(),sqaure.getSample();
       harm1.tick();
-      harm2.tick();
-      harm3.tick();
-      harm4.tick();
-      harm5.tick();
+      sqaure.tick();
       }
   }
   private:
-  float samplerate = 44100;
+  float samplerate = 48000;
   Sine harm1 = Sine(50, samplerate);
   Sine harm2 =Sine(150,samplerate);
   Sine harm3 =Sine(250,samplerate);
   Sine harm4 =Sine(350,samplerate);
   Sine harm5 =Sine(450,samplerate);
-
+  Sqaure sqaure = Sqaure(400,samplerate);
 
 };
 
