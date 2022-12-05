@@ -15,7 +15,7 @@ Square::Square(float frequency, float samplerate) : Oscillator(frequency,sampler
 
 
 Square::~Square(){
-    std::cout<<"sqaure =deconstruct\n";
+    std::cout<<"sqaure deconstructor \n";
 }
 
 

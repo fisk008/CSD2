@@ -10,7 +10,7 @@ class Saw : public Oscillator
 {
     public:
     Saw();
-    Saw(float frequency, float ampliltude, float phase, float samplerate);
+    
     Saw(float frequency, float amplitude);
     
     ~Saw();

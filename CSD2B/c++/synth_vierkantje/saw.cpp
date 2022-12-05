@@ -16,7 +16,7 @@ samplerate= 44100;
 
 
 Saw::~Saw(){
-    std::cout<<"saw deconstruct\n";
+    std::cout<<"saw deconstructor\n";
 }
 
 
