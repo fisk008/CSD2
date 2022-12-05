@@ -6,12 +6,14 @@
 
 
 
-class Sqaure : public Oscillator
+class Square : public Oscillator
 {
     public:
-    Sqaure(float frequency,double sampelrate);
-    ~Sqaure();
-    float getSample();
+    Square();
+    Square(float frequency, float ampliltude, float phase, float samplerate);
+    Square(float frequency, float amplitude); 
+    ~Square();
+    
 
     void tick();
 };
