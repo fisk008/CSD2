@@ -3,6 +3,7 @@
 #include "jack_module.h"
 #include "math.h"
 #include "sine.h"
+#include "saw.h"
 #include "writeToFile.h"
 /*
  * NOTE: jack2 needs to be installed
@@ -19,8 +20,8 @@ public:
 
    WriteToFile fileWriter("output.csv", true);
   for(int i = 0; i < samplerate; i++) {
-    fileWriter.write(std::to_string(sine.getSample()) + "\n");
-    sine.tick();
+    fileWriter.write(std::to_string(zaag.getSample()) + "\n");
+    zaag.tick();
   }
 
   }
@@ -28,13 +29,14 @@ public:
   void process(AudioBuffer buffer) override {
     for (int i = 0; i < buffer.numFrames; ++i) {
       // write sample to buffer at channel 0, amp = 0.25
-      buffer.outputChannels[0][i] = sine.getSample();
-      sine.tick();
+      buffer.outputChannels[0][i] = zaag.getSample();
+      zaag.tick();
     }
   }
   private:
   float samplerate = 44100;
   Sine sine = Sine(1, samplerate);
+  Saw zaag = Saw(440,samplerate);
   // Sine harm2 =Sine(300,samplerate);
 };
 

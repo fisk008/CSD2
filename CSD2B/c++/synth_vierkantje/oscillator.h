@@ -16,7 +16,8 @@ Oscillator();
   //return the current sample
   float getSample();
   // go to next sample
-
+  float getSamplerate();
+  // float getSamplerate();
   //getters and setters
   void setFrequency(float frequency);
   float getFrequency();
