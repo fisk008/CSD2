@@ -4,24 +4,27 @@
 
 
 Saw::Saw(){
-
+ std::cout<<"saw contrcutor\n";
 }
 
 Saw::Saw(float frequency, float amplitude, float phase, float samplerate) : Oscillator(frequency,amplitude,phase,samplerate)
 {
-    
+  std::cout<<"saw contrcutor\n";  
 }
 
 Saw::Saw(float frequency, float samplerate) : Oscillator(frequency,samplerate){
-
+std::cout<<"saw contrcutor\n";
 }
 
 
 Saw::~Saw(){
-    std::cout<<"sqaure =deconstruct\n";
+    std::cout<<"saw deconstruct\n";
 }
 
 
+float Saw::getSample(){
+    return sample;
+}
 
 void Saw::tick( ){
 

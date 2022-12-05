@@ -4,19 +4,19 @@
 
 
 Oscillator::Oscillator(){
-  std::cout<<"osc constructor";
+  std::cout<<"osc constructor\n";
 }
 
 Oscillator::~Oscillator()
 {
-  std::cout<<"osc destructor";
+  std::cout<<"osc destructor\n";
 }
 
 
 Oscillator::Oscillator(float frequency, float amplitude, float phase, float samplerate)
 :   frequency(frequency), amplitude(amplitude), phase(phase), samplerate(samplerate)
 {
-    
+    std::cout<<"osc constructor\n";
 }
 
 
