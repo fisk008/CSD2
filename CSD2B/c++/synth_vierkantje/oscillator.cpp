@@ -21,6 +21,8 @@ Oscillator::Oscillator(float frequency, float amplitude, float phase, float samp
 
 
 Oscillator::Oscillator(float frequency, float samplerate){
+    phase = 0;
+    samplerate = 44100;
 
 }
 

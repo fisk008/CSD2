@@ -13,7 +13,8 @@ Saw::Saw(float frequency, float amplitude, float phase, float samplerate) : Osci
 }
 
 Saw::Saw(float frequency, float samplerate) : Oscillator(frequency,samplerate){
-std::cout<<"saw contrcutor\n";
+phase=0;
+samplerate= 44100;
 }
 
 
@@ -22,9 +23,8 @@ Saw::~Saw(){
 }
 
 
-float Saw::getSample(){
-    return sample;
-}
+
+
 
 void Saw::tick( ){
 

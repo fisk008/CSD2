@@ -4,6 +4,7 @@
 #include "math.h"
 #include "audioToFile.h"
 #include "oscillator.h"
+#include "sine.h"
 
 /*
  * NOTE: jack2 needs to be installed

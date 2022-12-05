@@ -12,7 +12,7 @@ class Saw : public Oscillator
     Saw();
     Saw(float frequency, float ampliltude, float phase, float samplerate);
     Saw(float frequency, float amplitude);
-    float getSample(); 
+    
     ~Saw();
     
 
