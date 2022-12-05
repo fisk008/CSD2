@@ -1,18 +1,29 @@
 #include <iostream>
 #include "square.h"
 
-Sqaure::Sqaure(float frequency, double samplerate) : Oscillator(frequency,samplerate)
-{
-    std::cout << "sqaure- constructor\n";
+
+
+Square::Square(){
+
 }
 
-Sqaure::~Sqaure(){
+Square::Square(float frequency, float amplitude, float phase, float samplerate) : Oscillator(frequency,amplitude,phase,samplerate)
+{
+    
+}
+
+Square:Sqaure(float frequency, float samplerate){
+    
+}
+
+
+Square::~Square(){
     std::cout<<"sqaure =deconstruct\n";
 }
 
 
 
-void Sqaure::tick( ){
+void Square::tick( ){
 
     phase += frequency / samplerate;
 
