@@ -9,15 +9,15 @@ Sine::Sine(float frequency, float amplitude, float phase, float samplerate) : Os
 {
   
 }
+Sine::Sine(float frequency,float samplerate){
 
+}
 
 Sine::~Sine() {
   std::cout << "Sine - destructor\n";
 }
 
-float Sine::getSample() {
-  return sample;
-}
+
 
 
 void Sine::tick() {

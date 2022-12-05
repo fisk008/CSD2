@@ -7,6 +7,10 @@ Oscillator::Oscillator(){
   std::cout<<"osc constructor";
 }
 
+Oscillator::~Oscillator()
+{
+  std::cout<<"osc destructor";
+}
 
 
 Oscillator::Oscillator(float frequency, float amplitude, float phase, float samplerate)
@@ -17,13 +21,9 @@ Oscillator::Oscillator(float frequency, float amplitude, float phase, float samp
 
 
 Oscillator::Oscillator(float frequency, float samplerate){
-  
+
 }
 
-Oscillator::~Oscillator()
-{
-  std::cout<<"osc destructor";
-}
 
 
 
@@ -36,7 +36,6 @@ float Oscillator::getSample()
 {
     return sample;
 }
-
 
 
 void Oscillator::setFrequency(float frequency)

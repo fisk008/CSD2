@@ -3,9 +3,12 @@
 
 void CustomCallback::prepare(int rate) {
     samplerate = (float) rate;
-    oscillator.setSamplerate(samplerate);
+    sinus.setSamplerate(samplerate);
     std::cout << "\nsamplerate: " << samplerate << "\n";
 }
+
+
+
 
 void CustomCallback::process(AudioBuffer buffer) {
   for (int i = 0; i < buffer.numFrames; ++i) {

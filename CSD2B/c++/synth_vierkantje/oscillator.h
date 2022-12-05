@@ -16,7 +16,7 @@ public:
   //return the current sample
   float getSample();
   // go to next sample
-  float getSample
+
   //getters and setters
   void setFrequency(float frequency);
   float getFrequency();
@@ -27,7 +27,7 @@ protected:
   float phase;
   // sample contains the current sample
   float sample;
-  float samplerate;
+  float samplerate{44100};
 };
 
 
