@@ -1,25 +1,33 @@
 #include <iostream>
 #include <cmath>
 #pragma once
-class Oscillator{
-    public:
 
-    Oscillator(float frequency, double samplerate);
-    ~Oscillator();
+class Oscillator
+{
+public:
+  Oscillator();
+  Oscillator(float frequency, float amplitude, float phase, float samplerate);
+  Oscillator(float frequency, float samplerate);
+  ~Oscillator();
 
+  // allow to set samplerate after initialization
+  void setSamplerate(float samplerate);
+  
+  //return the current sample
+  float getSample();
+  // go to next sample
+  float getSample
   //getters and setters
-    void setFrequency(float frequency);
-    float getFrequency();
-    
-    
-    protected:
-    const float pi = acos (-1.0f);  //atan(1) * 4; <-- vak van Pieter.
-    float frequency{0};
-    float amplitude{0};
-    float phase{0};
-    
-    // sample contains the current sample
-    float sample;
-    double samplerate;
+  void setFrequency(float frequency);
+  float getFrequency();
 
+protected:
+  float frequency;
+  float amplitude;
+  float phase;
+  // sample contains the current sample
+  float sample;
+  float samplerate;
 };
+
+
