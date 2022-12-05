@@ -7,14 +7,11 @@ Square::Square(){
 
 }
 
-Square::Square(float frequency, float amplitude, float phase, float samplerate) : Oscillator(frequency,amplitude,phase,samplerate)
+Square::Square(float frequency, float samplerate) : Oscillator(frequency,samplerate)
 {
     
 }
 
-Square::Square(float frequency, float samplerate) : Oscillator(frequency,samplerate){
-
-}
 
 
 Square::~Square(){

@@ -7,10 +7,7 @@ Saw::Saw(){
  std::cout<<"saw contrcutor\n";
 }
 
-Saw::Saw(float frequency, float amplitude, float phase, float samplerate) : Oscillator(frequency,amplitude,phase,samplerate)
-{
-  std::cout<<"saw contrcutor\n";  
-}
+
 
 Saw::Saw(float frequency, float samplerate) : Oscillator(frequency,samplerate){
 phase=0;

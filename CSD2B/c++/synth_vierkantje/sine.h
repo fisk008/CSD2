@@ -9,12 +9,11 @@ class Sine : public Oscillator
 {
 public:
   //Constructor and destructor
-  Sine();
-    Sine(float frequency, float ampliltude, float phase, float samplerate);
-    Sine(float frequency, float amplitude);
+  Sine(float frequency,float samplerate);
   ~Sine();
 
-
+  //return the current sample
+  float getSample();
   // go to next sample
   void tick();
 

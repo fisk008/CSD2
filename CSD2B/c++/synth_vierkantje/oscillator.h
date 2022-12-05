@@ -6,7 +6,7 @@ class Oscillator
 {
 public:
 Oscillator();
-  Oscillator(float frequency, float amplitude, float phase, float samplerate);
+  // Oscillator(float frequency, float amplitude, float phase, float samplerate);
   Oscillator(float frequency, float samplerate);
 ~Oscillator();
 
