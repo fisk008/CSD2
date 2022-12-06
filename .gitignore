@@ -8,5 +8,4 @@ audio_files
 *.csv
 CSD2B/c++/instrument
 CSD2B/c++/woofer
-makefile
 CSD2B/c++/instrument_test/instrument
