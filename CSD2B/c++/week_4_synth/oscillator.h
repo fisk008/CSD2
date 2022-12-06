@@ -21,6 +21,7 @@ Oscillator();
   // float getSamplerate();
   //getters and setters
   void setFrequency(float frequency);
+  void tick();
   float getFrequency();
 
 protected:
