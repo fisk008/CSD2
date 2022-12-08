@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cmath>
-#include "synth.h"
 #pragma once
 
 class Oscillator
@@ -21,7 +20,6 @@ Oscillator();
   // float getSamplerate();
   //getters and setters
   void setFrequency(float frequency);
-  void tick();
   float getFrequency();
 
 protected:
