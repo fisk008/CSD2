@@ -48,3 +48,12 @@ float Oscillator::getFrequency()
     return frequency;
 }
 
+void Oscillator::tick(){
+  phase += frequency / samplerate;
+  
+  if(phase > 1.0f){
+    phase -=1.0f;
+  }
+
+  calculate();
+}

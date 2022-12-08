@@ -14,6 +14,6 @@ class Saw : public Oscillator
     ~Saw();
     
 
-    void tick();
+    void calculate();
 };
 #endif

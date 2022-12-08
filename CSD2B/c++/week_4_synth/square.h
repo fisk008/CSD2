@@ -15,6 +15,6 @@ class Square : public Oscillator
     ~Square();
     
 
-    void tick();
+    void calculate();
 };
 #endif

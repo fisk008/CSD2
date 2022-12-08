@@ -15,7 +15,7 @@ public:
   //return the current sample
   float getSample();
   // go to next sample
-  void tick();
+  void calculate();
 
 };
 

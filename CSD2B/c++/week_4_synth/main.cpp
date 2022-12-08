@@ -14,7 +14,7 @@
  * jackd -d coreaudio
  */
 
-#define WRITE_TO_FILE 0
+#define WRITE_TO_FILE 1
 
 
 

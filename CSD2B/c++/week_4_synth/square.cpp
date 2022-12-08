@@ -20,14 +20,7 @@ Square::~Square(){
 
 
 
-void Square::tick( ){
-
-    phase += frequency / samplerate;
-
-    if(phase >= 1.0f){
-        phase -= 1.0f;
-    }
-    
+void Square::calculate( ){
     if(phase > 0.5)
     {
         sample = amplitude;

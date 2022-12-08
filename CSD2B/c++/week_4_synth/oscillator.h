@@ -21,7 +21,8 @@ Oscillator();
   //getters and setters
   void setFrequency(float frequency);
   float getFrequency();
-
+  virtual void tick();
+  
 protected:
   float frequency;
   float amplitude;
@@ -29,6 +30,7 @@ protected:
   // sample contains the current sample
   float sample;
   float samplerate;
+  virtual void calculate()=0;
 };
 
 

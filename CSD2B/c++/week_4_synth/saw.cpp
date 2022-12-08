@@ -21,13 +21,6 @@ Saw::~Saw(){
 
 
 
-void Saw::tick( ){
-
-    if(phase > 1.0f)
-    {
-        phase -= 1.0f;
-    }
-    phase += frequency / samplerate;
-
+void Saw::calculate( ){
     sample = amplitude*2 * phase - amplitude;
 }
