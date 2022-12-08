@@ -28,6 +28,7 @@ protected:
   float amplitude;
   float phase;
   // sample contains the current sample
+  
   float sample;
   float samplerate;
   virtual void calculate()=0;

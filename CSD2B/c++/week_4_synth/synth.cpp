@@ -1,13 +1,21 @@
 #include "synth.h"
 #include <iostream>
+#include <math.h>
 
-Synth::Synth(){
-
+Synth::Synth()
+{
+  std::cout << "sine constructor\n";
 }
 
 Synth::~Synth(){
 
 }
-float Synth::calculate(){
-    
+void Synth::tick(){
+  phase += frequency / samplerate;
+  
+  if(phase > 1.0f){
+    phase -=1.0f;
+  }
+
+  calculate();  
 }
