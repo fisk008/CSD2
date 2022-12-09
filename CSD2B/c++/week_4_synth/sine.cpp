@@ -13,9 +13,6 @@ Sine::~Sine() {
   std::cout << "sine destructor\n";
 }
 
-float Sine::getSample() {
-  return sample;
-}
 
 
 void Sine::calculate() {

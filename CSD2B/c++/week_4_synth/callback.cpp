@@ -3,7 +3,7 @@
 
 void CustomCallback::prepare(int rate) {
     samplerate = (float) rate;
-    square.setSamplerate(samplerate);
+    blokje.setSamplerate(samplerate);
     std::cout << "\nsamplerate: " << samplerate << "\n";
 }
 
@@ -13,8 +13,8 @@ void CustomCallback::prepare(int rate) {
 void CustomCallback::process(AudioBuffer buffer) {
   for (int i = 0; i < buffer.numFrames; ++i) {
     // write sample to buffer at channel 0, amp = 0.25
-    buffer.outputChannels[0][i] = square.getSample();
-    square.tick();
+    blokje.tick();
+    buffer.outputChannels[0][i] = blokje.getSample();
     
   }
 }

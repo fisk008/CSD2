@@ -6,7 +6,9 @@ class Synth{
     public:
     Synth();
     ~Synth();
-    virtual void calculate();
+    void calculate();
+    
+    
     protected:
     float amplitude;
     float phase;
@@ -15,5 +17,5 @@ class Synth{
     float frequency;
     float sample;
     
-    virtual void tick();
+    void tick();
 };
