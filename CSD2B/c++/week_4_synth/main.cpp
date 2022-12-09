@@ -14,13 +14,15 @@
  * jackd -d coreaudio
  */
 
-#define WRITE_TO_FILE 1
+#define WRITE_TO_FILE 0
 
 
 
 int main(int argc, char **argv) {
   auto callback = CustomCallback{};
   auto jackModule = JackModule{callback};
+ Synth synth = Synth();
+ synth.note();
 
 #if WRITE_TO_FILE
   AudioToFile audioToFile;

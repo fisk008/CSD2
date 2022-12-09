@@ -7,6 +7,7 @@
 #include "saw.h"
 #include "oscillator.h"
 #include "synth.h"
+
 class CustomCallback : public AudioCallback {
 public:
   void prepare(int rate) override;
@@ -15,10 +16,7 @@ public:
 
 private:
   float samplerate = 44100;
-  Sine sinus = Sine(1, samplerate);
-  Square blokje =Square(1, samplerate);
-  Saw zaagje = Saw(1, samplerate);
-  
+  Synth synth = Synth();
 };
 
 #endif //CALLBACK_H
