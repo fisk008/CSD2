@@ -5,23 +5,21 @@
 
 Synth::Synth()
 {
-  std::cout << "sine constructor\n";
+  
 }
 
 Synth::~Synth(){
 
 }
+
 void Synth::tick(){
 sinusje.tick();  
 blokje.tick();
 zaag.tick();
 
-
 }
-void Synth::calculate(){
 
-}
-float Synth::getSample(){
+float Synth::combineSamples(){
 
   float allFreqs = (sinusje.getSample()+zaag.getSample()+blokje.getSample())/3;
   return allFreqs;
@@ -34,14 +32,13 @@ float Synth::mtof(int note){
   
   return frequency;
 }
-float Synth::note(){
 
-  float frequency = mtof();
-  std::cout<<frequency << "\n";
-  return frequency;
+float Synth::getSample(){
+  return samplerate;
 }
-float Synth::input(){
-  std::cout<<"insert midi note"<<"\n";
-  int note;
-  std::cin >> note;
+
+void Synth::setSamplerate(float samplerate) 
+{
+    this->samplerate = samplerate;
 }
+

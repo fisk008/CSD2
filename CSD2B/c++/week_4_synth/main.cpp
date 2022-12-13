@@ -5,7 +5,7 @@
 #include "audioToFile.h"
 #include "oscillator.h"
 #include "sine.h"
-
+#include "synth.h"
 /*
  * NOTE: jack2 needs to be installed
  * jackd invokes the JACK audio server daemon
@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
   auto callback = CustomCallback{};
   auto jackModule = JackModule{callback};
  Synth synth = Synth();
- synth.note();
+ 
 
 #if WRITE_TO_FILE
   AudioToFile audioToFile;

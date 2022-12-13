@@ -6,29 +6,27 @@
 
 // #include "oscillator.h"
 
-class Synth : public Sine{
+class Synth{
   public:
   Synth();
   ~Synth();
-  void calculate();
-  float getSample();
-  void tick();
-  float mtof(int note);
-  float note();
   
+  virtual void tick();
+  virtual void setSamplerate(float samplerate);
+  virtual float getSample();
+
   protected:
+  float mtof(int note);
+  float note=440;
   
+  private:
   float samplerate= 44100;
   
-  float amplitude;
-  float phase;
-
-  float frequency;
-  float sample;
+  float combineSamples();
   
-  Sine sinusje= Sine(note(),samplerate);
-  Square blokje= Square(note(),samplerate);
-  Saw zaag=Saw(note(),samplerate);
+  Sine sinusje= Sine(note,samplerate);
+  Square blokje= Square(note,samplerate);
+  Saw zaag=Saw(note,samplerate);
 
    
 };

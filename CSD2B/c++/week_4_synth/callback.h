@@ -17,6 +17,7 @@ public:
 private:
   float samplerate = 44100;
   Synth synth = Synth();
+  
 };
 
 #endif //CALLBACK_H
