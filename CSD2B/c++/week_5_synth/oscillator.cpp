@@ -17,9 +17,9 @@ Oscillator::Oscillator(float frequency, float samplerate)
 :   frequency(frequency), amplitude(1.0), phase(0), samplerate(samplerate)
 {
     std::cout<<"osc constructor\n";
-    std::cout << "phase:"<< phase << "\n";
-    std::cout << "frequency: " << this->frequency << "\n";
-    std::cout << "samplerate: " << this->samplerate << "\n";
+    // std::cout << "phase:"<< phase << "\n";
+    // std::cout << "frequency: " << this->frequency << "\n";
+    // std::cout << "samplerate: " << this->samplerate << "\n";
 }
 
 
