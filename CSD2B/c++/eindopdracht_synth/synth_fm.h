@@ -12,5 +12,10 @@ FM();
 
 protected:
 float carrierFreq;
+float ratio;
+
+
+float sample;
+float frequency;
 
 };
