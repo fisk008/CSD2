@@ -12,19 +12,6 @@ Synth::~Synth(){
 
 }
 
-void Synth::tick(){
-sinusje.tick();  
-blokje.tick();
-zaag.tick();
-
-}
-
-float Synth::combineSamples(){
-
-  float allFreqs = (sinusje.getSample()+zaag.getSample()+blokje.getSample())/3;
-  return allFreqs;
-
-}
 
 float Synth::mtof(int note){
   double frequency = 440.0 * std::pow(2.0, (note - 69.0) / 12.0);
@@ -34,7 +21,7 @@ float Synth::mtof(int note){
 }
 
 float Synth::getSample(){
-  return samplerate;
+  return sample;
 }
 
 void Synth::setSamplerate(float samplerate) 
@@ -42,6 +29,6 @@ void Synth::setSamplerate(float samplerate)
     this->samplerate = samplerate;
 }
 
-float Synth::getSamplerate(){
-return samplerate;
-}
+// float Synth::getSamplerate(){
+// return samplerate;
+// }

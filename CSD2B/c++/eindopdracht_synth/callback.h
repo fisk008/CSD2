@@ -2,11 +2,10 @@
 #define CALLBACK_H
 
 #include "jack_module.h"
-#include "sine.h"
-#include "square.h"
-#include "saw.h"
-#include "oscillator.h"
+
+
 #include "synth.h"
+#include "add_synth.h"
 
 class CustomCallback : public AudioCallback {
 public:
@@ -16,7 +15,8 @@ public:
 
 private:
   float samplerate = 44100;
-  Synth synth = Synth();
+  
+  Additive ad = Additive();
   
 };
 

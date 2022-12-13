@@ -21,7 +21,7 @@
 int main(int argc, char **argv) {
   auto callback = CustomCallback{};
   auto jackModule = JackModule{callback};
- Synth synth = Synth();
+
  
 
 #if WRITE_TO_FILE
