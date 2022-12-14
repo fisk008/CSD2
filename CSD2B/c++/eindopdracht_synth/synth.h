@@ -3,7 +3,7 @@
 #include "sine.h"
 #include "square.h"
 #include "saw.h"
-
+#include "oscillator.h"
 // #include "oscillator.h"
 
 class Synth{
@@ -13,11 +13,15 @@ class Synth{
 
   // virtual void tick();
   void setSamplerate(float samplerate);
+  void getSamplerate();
   // float getSamplerate();
-  virtual float getSample()=0;
+  float getSamples();
   float mtof(int note);
+  void tickAll();
 
+  Oscillator* myOscillators[3];
   protected:
+
   float note=440;
   
   private:

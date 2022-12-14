@@ -7,16 +7,21 @@
 #include "saw.h"
 
 class Additive:public Synth{
-public:
-Additive();
-~Additive();
-void tickAll();
-float getSample()override;
-float combinedSamples();
+    public:
+    Additive();
+    ~Additive();
+
+
+
+    float combinedSamples();
+
+    void setFrequency(double frequency);
+    double getFrequency();
+    void additiveOscillators();
+
 protected:
+
+    double frequency;
     float sample;
     float samplerate= 44100;
-    Sine sinusje= Sine(note,samplerate);
-    Square blokje= Square(note,samplerate);
-    Saw zaag=Saw(note,samplerate);
 };

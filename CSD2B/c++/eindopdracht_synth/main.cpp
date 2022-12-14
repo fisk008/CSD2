@@ -2,10 +2,11 @@
 #include <thread>
 #include "jack_module.h"
 #include "math.h"
-#include "audioToFile.h"
-#include "oscillator.h"
-#include "sine.h"
+#include "writeToFile.h"
+#include "square.h"
+#include "melody.h"
 #include "synth.h"
+
 /*
  * NOTE: jack2 needs to be installed
  * jackd invokes the JACK audio server daemon
@@ -17,29 +18,99 @@
 #define WRITE_TO_FILE 0
 
 
+double mtof(float mPitch)
+{
+  // source of the mtof calculation:
+  // https://www.musicdsp.org/en/latest/Other/125-midi-note-frequency-conversion.html
+  return 440.0 * pow(2.0, (mPitch - 57.0f)/12.0f);
+}
 
-int main(int argc, char **argv) {
-  auto callback = CustomCallback{};
-  auto jackModule = JackModule{callback};
+void updatePitch(Melody* melody, Square* square) {
+  float pitch = melody->getPitch();
+  double freq = mtof(pitch);
+  std::cout << "next pitch: " << pitch << ", freq is: " << freq << std::endl;
+  square->setFrequency(freq);
+}
 
- 
+
+
+int main(int argc,char **argv)
+{
+  // create a JackModule instance
+  JackModule jack;
+
+  // init the jack, use program name as JACK client name
+  jack.init(argv[0]);
+  const double samplerate = jack.getSamplerate();
+
+  Square square(220, samplerate);
+  Synth synth;
+  Melody melody;
 
 #if WRITE_TO_FILE
-  AudioToFile audioToFile;
-  audioToFile.write(callback);
+  WriteToFile fileWriter("output.csv", true);
+
+  for(int i = 0; i < 5000; i++) {
+    fileWriter.write(std::to_string(square.getSample()) + "\n");
+    square.tick();
+  }
+  std::cout << "\nWROTE TO FILE = DONE." << std::endl;
 #else
 
-  jackModule.init(0, 1);
+  float amplitude = 0.025;
 
+  // keep track of the frameIndex, to play notes at a given frame interval
+  int frameIndex = 0;
+  const int frameInterval = 0.05 * samplerate;
+  // start with the first pitch
+  updatePitch(&melody, &square);
+
+
+  //assign a function to the JackModule::onProces
+  jack.onProcess = [&square, &amplitude, &melody, &frameIndex, frameInterval](jack_default_audio_sample_t *inBuf,
+    jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
+
+    // fill output buffer
+    for(unsigned int i = 0; i < nframes; i++) {
+
+      // check if we need to set the frequency to the next note
+      if(frameIndex >= frameInterval) {
+        // reset frameIndex
+        frameIndex = 0;
+        updatePitch(&melody, &square);
+      } else {
+        // increment frameindex
+        frameIndex++;
+      }
+
+      // write sample to output
+      outBuf[i] = square.getSample() * amplitude;
+
+      // calculate next sample
+      square.tick();
+
+    }
+
+    return 0;
+  };
+
+  jack.autoConnect();
+
+  //keep the program running and listen for user input, q = quit
+  std::cout << "\n\nPress 'q' when you want to quit the program.\n";
   bool running = true;
-  while (running) {
-    switch (std::cin.get()) {
+  while (running)
+  {
+    switch (std::cin.get())
+    {
       case 'q':
         running = false;
+        jack.end();
+        break;
     }
   }
 #endif
   //end the program
   return 0;
-} // main()
 
+} // main()

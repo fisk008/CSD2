@@ -10,20 +10,20 @@ Additive::~Additive(){
 }
 
 
-void Additive::tickAll(){
-sinusje.tick();  
-blokje.tick();
-zaag.tick();
 
+void Additive::setFrequency(double frequency)
+{
+  // TODO add check to see if parameter is valid
+  this->frequency = frequency;
 }
 
-float Additive::combinedSamples(){
-
-  float allFreqs = (sinusje.getSample()+zaag.getSample()+blokje.getSample())/3;
-  return allFreqs;
-
+double Additive::getFrequency()
+{
+  return frequency;
 }
 
-float Additive::getSample(){
-return sample;
+void Additive::additiveOscillators(){
+myOscillators[0]= new Sine(440,samplerate);
+myOscillators[1]= new Sine(540,samplerate);
+myOscillators[2]= new Sine(640,samplerate);
 }
