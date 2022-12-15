@@ -21,7 +21,7 @@ float Synth::mtof(int note){
 }
 
 float Synth::getSamples(){
-  sample = myOscillators[0]->getSample(),myOscillators[1]->getSample(),myOscillators[2]->getSample();
+  sample = (myOscillators[0]->getSample()+myOscillators[1]->getSample()+myOscillators[2]->getSample())/3;
   
   
   return sample;
@@ -33,7 +33,7 @@ void Synth::setSamplerate(float samplerate)
 }
 
 void Synth::getSamplerate(){
-  
+
 }
 
 

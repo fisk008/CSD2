@@ -39,15 +39,16 @@ int main(int argc,char **argv)
 {
   // create a JackModule instance
   JackModule jack;
-
+  
   // init the jack, use program name as JACK client name
   jack.init(argv[0]);
   const double samplerate = jack.getSamplerate();
 
   Square square(220, samplerate);
-  Synth synth;
+  
   Melody melody;
   Additive add;
+  // add.additiveOscillators();
 #if WRITE_TO_FILE
   WriteToFile fileWriter("output.csv", true);
 
@@ -68,10 +69,11 @@ int main(int argc,char **argv)
 
 
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&add, &amplitude, &melody, &frameIndex, frameInterval](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&add,&amplitude, &melody, &frameIndex, frameInterval](jack_default_audio_sample_t *inBuf,
     jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     // fill output buffer
+        
     for(unsigned int i = 0; i < nframes; i++) {
 
       // check if we need to set the frequency to the next note
