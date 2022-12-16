@@ -15,17 +15,17 @@ class Synth{
   void setSamplerate(float samplerate);
   void getSamplerate();
   // float getSamplerate();
-  float getSamples();
   float mtof(int note);
-  void tickAll();
+  virtual float getSamples()=0;
+  virtual void tickAll()= 0;
 
-  Oscillator* myOscillators[3];
+  
   protected:
 
   float note=440;
   
-  private:
   float samplerate= 44100;
-  float sample;
+  private:
+  
  
 };

@@ -20,12 +20,7 @@ float Synth::mtof(int note){
   return frequency;
 }
 
-float Synth::getSamples(){
-  sample = (myOscillators[0]->getSample()+myOscillators[1]->getSample()+myOscillators[2]->getSample())/3;
-  
-  
-  return sample;
-}
+
 
 void Synth::setSamplerate(float samplerate) 
 {
@@ -37,11 +32,7 @@ void Synth::getSamplerate(){
 }
 
 
-void Synth::tickAll(){
-  myOscillators[0]->tick();
-  myOscillators[1]->tick();
-  myOscillators[2]->tick();
-}
+
 // float Synth::getSamplerate(){
 // return samplerate;
 // }

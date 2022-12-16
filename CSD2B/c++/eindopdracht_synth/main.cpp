@@ -48,7 +48,7 @@ int main(int argc,char **argv)
   
   Melody melody;
   Additive add;
-  // add.additiveOscillators();
+
 #if WRITE_TO_FILE
   WriteToFile fileWriter("output.csv", true);
 
@@ -63,7 +63,7 @@ int main(int argc,char **argv)
 
   // keep track of the frameIndex, to play notes at a given frame interval
   int frameIndex = 0;
-  const int frameInterval = 0.05 * samplerate;
+  const int frameInterval = 0.20 * samplerate;
   // start with the first pitch
   updatePitch(&melody, &add);
 
