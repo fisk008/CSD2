@@ -11,11 +11,15 @@ FM();
 ~FM();
 void tickAll();
 float getSamples();
+void setFrequency(double frequency);
+double getFrequency();
 protected:
 
 Sine carrier = Sine(440,samplerate);
 Square modulator =Square(100,samplerate);
-float modulator;
+
+Oscillator* myOscillators[2];
+
 float ratio;
 
 

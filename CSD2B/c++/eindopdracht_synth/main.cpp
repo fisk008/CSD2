@@ -7,6 +7,7 @@
 #include "melody.h"
 #include "synth.h"
 #include "add_synth.h"
+#include "synth_fm.h"
 
 /*
  * NOTE: jack2 needs to be installed
@@ -26,11 +27,11 @@ double mtof(float mPitch)
   return 440.0 * pow(2.0, (mPitch - 57.0f)/12.0f);
 }
 
-void updatePitch(Melody* melody, Additive* add) {
+void updatePitch(Melody* melody, FM* fm) {
   float pitch = melody->getPitch();
   double freq = mtof(pitch);
   std::cout << "next pitch: " << pitch << ", freq is: " << freq << std::endl;
-  add->setFrequency(freq);
+  fm->setFrequency(freq);
 }
 
 
@@ -48,6 +49,7 @@ int main(int argc,char **argv)
   
   Melody melody;
   Additive add;
+  FM fm;
 
 #if WRITE_TO_FILE
   WriteToFile fileWriter("output.csv", true);
@@ -65,11 +67,11 @@ int main(int argc,char **argv)
   int frameIndex = 0;
   const int frameInterval = 0.20 * samplerate;
   // start with the first pitch
-  updatePitch(&melody, &add);
+  updatePitch(&melody, &fm);
 
 
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&add,&amplitude, &melody, &frameIndex, frameInterval](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&fm,&amplitude, &melody, &frameIndex, frameInterval](jack_default_audio_sample_t *inBuf,
     jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     // fill output buffer
@@ -80,17 +82,17 @@ int main(int argc,char **argv)
       if(frameIndex >= frameInterval) {
         // reset frameIndex
         frameIndex = 0;
-        updatePitch(&melody, &add);
+        updatePitch(&melody, &fm);
       } else {
         // increment frameindex
         frameIndex++;
       }
 
       // write sample to output
-      outBuf[i] = add.getSamples() * amplitude;
+      outBuf[i] = fm.getSamples() * amplitude;
 
       // calculate next sample
-      add.tickAll();
+      fm.tickAll();
 
     }
 
