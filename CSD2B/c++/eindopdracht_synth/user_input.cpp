@@ -1,7 +1,15 @@
 #include <iostream>
+#include "user_input.h"
+
+UserInput::UserInput(){
+
+}
+UserInput::~UserInput(){
+
+}
 
 
-bool validateSelection(std::string selection, std::string selectionOptions[],
+bool UserInput::validateSelection(std::string selection, std::string selectionOptions[],
     int numOptions)
 {
     // check if the selection occurs inside the options, if so, return true
@@ -15,7 +23,7 @@ bool validateSelection(std::string selection, std::string selectionOptions[],
 }
 
 
-std::string retrieveUserInput(std::string selectionOptions[], int numOptions)
+std::string UserInput::retrieveUserInput(std::string selectionOptions[], int numOptions)
 {
     // show user the allowed options
     std::cout << "Please enter your selection. You can choice between: ";
@@ -30,7 +38,7 @@ std::string retrieveUserInput(std::string selectionOptions[], int numOptions)
     return selection;
 }
 
-std::string retrieveUserSelection(std::string selectionOptions[], int numOptions)
+std::string UserInput::retrieveUserSelection(std::string selectionOptions[], int numOptions)
 {
     bool noCorrectSelection = true;
     std::string userSelection = "";

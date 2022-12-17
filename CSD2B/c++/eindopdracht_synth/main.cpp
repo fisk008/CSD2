@@ -8,7 +8,7 @@
 #include "synth.h"
 #include "add_synth.h"
 #include "synth_fm.h"
-
+#include "user_input.h"
 /*
  * NOTE: jack2 needs to be installed
  * jackd invokes the JACK audio server daemon
@@ -17,7 +17,8 @@
  * jackd -d coreaudio
  */
 
-#define WRITE_TO_FILE 0
+#define WRITE_TO_FILE 1
+#define sound 1
 
 
 double mtof(float mPitch)
@@ -38,28 +39,42 @@ void updatePitch(Melody* melody, FM* fm) {
 
 int main(int argc,char **argv)
 {
-  // create a JackModule instance
+  // create the modules
   JackModule jack;
-  
+  Melody melody;
+  Additive add;
+  FM fm;
+  UserInput ui;
   // init the jack, use program name as JACK client name
   jack.init(argv[0]);
   const double samplerate = jack.getSamplerate();
 
-  Square square(220, samplerate);
+
   
-  Melody melody;
-  Additive add;
-  FM fm;
+  std::string waveFormOptions[4] = {"sine", "saw", "square", "triangle"};
+  int numWaveFormOptions = 4;
+
+  std::string waveTypeSelection = ui.retrieveUserSelection(waveFormOptions,
+      numWaveFormOptions);
+
+  std::cout << "You selected: " << waveTypeSelection << std::endl;
+
+
+  float value =  ui.retrieveValueInRange(20, 20499);
+  std::cout << "You chose the following value: " << value << std::endl;
 
 #if WRITE_TO_FILE
   WriteToFile fileWriter("output.csv", true);
 
   for(int i = 0; i < 5000; i++) {
-    fileWriter.write(std::to_string(square.getSample()) + "\n");
-    square.tick();
+    fileWriter.write(std::to_string(fm.getSamples()) + "\n");
+    fm.tickAll();
   }
   std::cout << "\nWROTE TO FILE = DONE." << std::endl;
-#else
+#endif
+
+
+#if sound
 
   float amplitude = 0.025;
 
