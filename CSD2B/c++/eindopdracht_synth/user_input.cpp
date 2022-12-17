@@ -58,7 +58,7 @@ std::string UserInput::retrieveUserSelection(std::string selectionOptions[], int
 }
 
 
-float retrieveValueInRange(float min, float max) {
+float UserInput::retrieveValueInRange(float min, float max) {
   std::string input;
   float value = 0;
   bool notInRange = true;

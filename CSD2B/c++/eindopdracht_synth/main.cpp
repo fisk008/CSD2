@@ -39,15 +39,8 @@ void updatePitch(Melody* melody, FM* fm) {
 
 int main(int argc,char **argv)
 {
-  // create the modules
-  JackModule jack;
-  Melody melody;
-  Additive add;
-  FM fm;
   UserInput ui;
-  // init the jack, use program name as JACK client name
-  jack.init(argv[0]);
-  const double samplerate = jack.getSamplerate();
+  // create the modules
 
 
   
@@ -62,6 +55,14 @@ int main(int argc,char **argv)
 
   float value =  ui.retrieveValueInRange(20, 20499);
   std::cout << "You chose the following value: " << value << std::endl;
+  
+  JackModule jack;
+  Melody melody;
+  Additive add;
+  FM fm;
+  // init the jack, use program name as JACK client name
+  jack.init(argv[0]);
+  const double samplerate = jack.getSamplerate();
 
 #if WRITE_TO_FILE
   WriteToFile fileWriter("output.csv", true);
