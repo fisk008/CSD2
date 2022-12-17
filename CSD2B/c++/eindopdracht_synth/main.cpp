@@ -39,28 +39,28 @@ void updatePitch(Melody* melody, FM* fm) {
 
 int main(int argc,char **argv)
 {
-  UserInput ui;
   // create the modules
+  UserInput ui;
+  JackModule jack;
+  Melody melody;
+  Additive add;
+  FM fm;
 
 
   
-  std::string waveFormOptions[4] = {"sine", "saw", "square", "triangle"};
-  int numWaveFormOptions = 4;
+  std::string synthOptions[2] = {"FM", "Additive synth"};
+  int numWaveFormOptions = 2;
 
-  std::string waveTypeSelection = ui.retrieveUserSelection(waveFormOptions,
+  std::string waveTypeSelection = ui.retrieveUserSelection(synthOptions,
       numWaveFormOptions);
 
   std::cout << "You selected: " << waveTypeSelection << std::endl;
 
 
-  float value =  ui.retrieveValueInRange(20, 20499);
-  std::cout << "You chose the following value: " << value << std::endl;
+  // float value =  ui.retrieveValueInRange(20, 20499);
+  // std::cout << "You chose the following value: " << value << std::endl;
   
-  JackModule jack;
-  Melody melody;
-  Additive add;
-  FM fm;
-  // init the jack, use program name as JACK client name
+  // // init the jack, use program name as JACK client name
   jack.init(argv[0]);
   const double samplerate = jack.getSamplerate();
 
