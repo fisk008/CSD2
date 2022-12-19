@@ -5,7 +5,7 @@
 
 FM::FM(){
 myOscillators[0]=new Sine(440,samplerate);
-myOscillators[1]=new Saw(20,samplerate);
+myOscillators[1]=new Sine(1,samplerate);
 }
 
 FM::~FM(){

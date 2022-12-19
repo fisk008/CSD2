@@ -84,6 +84,37 @@ float UserInput::retrieveValueInRange(float min, float max) {
         << std::endl;
     }
   }
-
   return value;
 }
+
+float UserInput::retrieveBPMInRange(float min, float max) {
+  std::string input;
+  float value = 0;
+  bool notInRange = true;
+
+  while(notInRange) {
+    std::cout << "Please enter a BPM value between " << min << " and " << max
+      << std::endl;
+    // first capture input in input string
+    std::cin >> input;
+    // validate if input string can be transformed into a float
+    try {
+      value = std::stof(input);
+      // validate range
+      if(value >= min && value <= max) {
+        notInRange = false;
+      } else {
+        // value not in range
+        std::cout << "Incorrect range, please try again." << std::endl;
+      }
+    } catch (const std::exception& e) {
+      // no float as input
+      std::cout << "Invalid input, this was not a number, please try again"
+        << std::endl;
+    }
+  }
+
+  return value;
+
+}
+

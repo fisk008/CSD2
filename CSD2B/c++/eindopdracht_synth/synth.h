@@ -14,11 +14,12 @@ class Synth{
   // virtual void tick();
   void setSamplerate(float samplerate);
   void getSamplerate();
+
   // float getSamplerate();
   float mtof(int note);
   virtual float getSamples()=0;
   virtual void tickAll()= 0;
-
+  virtual void setFrequency(double frequency)=0;
   
   protected:
 

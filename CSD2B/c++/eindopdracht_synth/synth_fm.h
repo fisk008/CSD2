@@ -15,8 +15,7 @@ void setFrequency(double frequency);
 double getFrequency();
 protected:
 
-Sine carrier = Sine(440,samplerate);
-Square modulator =Square(100,samplerate);
+
 
 Oscillator* myOscillators[2];
 
