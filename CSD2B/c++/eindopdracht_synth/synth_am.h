@@ -5,25 +5,37 @@
 
 
 class AM : public Synth{
+
 public:
 
-AM();
-~AM();
-void tickAll();
-float getSamples();
-void setFrequency(double frequency);
-double getFrequency();
-protected:
+
+    enum waveForm{
+        sine =0,
+        square,
+        saw,
+        Size
+    };
+
+    AM();
+    AM(float modulatorFrequency,int modulator,int carrier);
+    ~AM();
+
+    void tickAll();
+    float getSamples();
+    void setFrequency(double frequency);
+    double getFrequency();
+
+    void setWaveform(waveForm type);
+    
+    protected:
 
 
 
-Oscillator* myOscillators[3];
+    Oscillator* myOscillators[3];
 
-float carrierFrequency;
-float modulatorFrequency;
-
-
-float sample;
-float frequency;
-
+    float carrierFrequency;
+    float sample;
+    float frequency;
+    
+    
 };

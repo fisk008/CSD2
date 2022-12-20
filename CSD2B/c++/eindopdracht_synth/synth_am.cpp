@@ -2,10 +2,35 @@
 #include <cmath>
 #include "synth_am.h"
 
-
 AM::AM(){
-myOscillators[0]=new Sine(440,samplerate);
-myOscillators[1]=new Sine(1,samplerate);
+
+}
+
+AM::AM(float modulatorFrequency,int modulator,int carrier){
+// myOscillators[0]=new Sine(frequency,samplerate);
+// myOscillators[1]=new Sine(modulatorfrequency,samplerate);
+
+if(carrier==1){
+  myOscillators[0]=new Sine(frequency,samplerate);
+}
+else if(carrier==2){
+myOscillators[0]=new Square(frequency,samplerate);
+}
+else{
+  myOscillators[0]=new Saw(frequency,samplerate);
+
+
+}
+if(modulator==1){
+  myOscillators[1]=new Sine(modulatorFrequency,samplerate);
+}
+else if(modulator==2){
+myOscillators[1]=new Square(modulatorFrequency,samplerate);
+}
+else{
+  myOscillators[1]=new Saw(modulatorFrequency,samplerate);
+}
+
 
 }
 
@@ -19,10 +44,10 @@ void AM::setFrequency(double frequency){
  
 }
 
-double AM::getFrequency()
-{
+double AM::getFrequency(){
   return frequency;
 }
+
 void AM::tickAll(){
 myOscillators[0]->tick();
 myOscillators[1]->tick();
@@ -34,3 +59,4 @@ sample = myOscillators[0]->getSample()*myOscillators[1]->getSample();
 
 return sample;
 }
+

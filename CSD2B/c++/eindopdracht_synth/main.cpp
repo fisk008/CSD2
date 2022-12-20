@@ -2,14 +2,14 @@
 #include <thread>
 #include "jack_module.h"
 #include "math.h"
-#include "writeToFile.h"
+
 #include "melody.h"
 #include "synth.h"
 #include "add_synth.h"
 #include "synth_am.h"
 #include "user_input.h"
 #include "callback.h"
-
+#include "audioToFile.h"
 /*
  * NOTE: jack2 needs to be installed
  * jackd invokes the JACK audio server daemon
@@ -19,7 +19,7 @@
  */
 
 #define WRITE_TO_FILE 1
-#define sound 0
+#define sound 1
 
 
 int main(int argc,char **argv)
@@ -29,27 +29,35 @@ int main(int argc,char **argv)
   UserInput ui;
   Melody melody;
   Additive add;
+
   auto callback = Callback {};
 
   std::string synthOptions[2] = {"AM", "additive"};
   int numSynthOptions = 2;
-  std::string userSynthChoise = ui.retrieveUserSelection(synthOptions,numSynthOptions);  
+  std::string userSynthChoise = ui.retrieveUserInput(synthOptions,numSynthOptions);  
 
   if (userSynthChoise == synthOptions[0]){
-    synth = new AM;
   std::cout << "You chose the following synth: " << synthOptions[0] << std::endl; 
     
-    callback.setSynthChoise(((AM*)synth));
 
     //carrier choise ui
+    std::cout << "You can choose the following carrier wave types: " << std::endl; 
     std::string carrierOptions[3]= {"sine","square","saw"};
     int numCarrierOptions=3;
-    std::string carrierChoise = ui.retrieveUserSelection(carrierOptions,numCarrierOptions);
+    int carrierChoise = ui.retrieveUserSelection(carrierOptions,numCarrierOptions);
     
-    if(carrierChoise== carrierOptions[0]){
+    std::cout << "You can choose the following modulator wave types: " << std::endl;
+    std::string modulatorOptions[3]= {"sine","square","saw"};
+    int numModulatorOptions=3;
+    int modulatorChoise = ui.retrieveUserSelection(modulatorOptions,numModulatorOptions);
+
+    std::cout << "What would you like for the modulator frequency?"<<std::endl;
+    float modulatorFrequency = ui.retrieveValueInRange(0.1,15000);
+    std::cout << "You chose the following modulator frequency: " << modulatorFrequency << std::endl;
     
-    }
     
+    synth = new AM(modulatorFrequency,modulatorChoise,carrierChoise);
+    callback.setSynthChoise(((AM*)synth));
   }
 
   else if(userSynthChoise == synthOptions[1]) {
@@ -62,15 +70,6 @@ int main(int argc,char **argv)
   float bpm = ui.retrieveBPMInRange(30, 250);
   callback.setBPM(bpm);
 
-#if WRITE_TO_FILE
-  WriteToFile fileWriter("output.csv", true);
-
-  for(int i = 0; i < 5000; i++) {
-    fileWriter.write(std::to_string(synth->getSamples()) + "\n");
-    synth->tickAll();
-  }
-  std::cout << "\nWROTE TO FILE = DONE." << std::endl;
-#endif
 
 #if sound
 
@@ -89,6 +88,8 @@ int main(int argc,char **argv)
     }
   } // while
 
+AudioToFile audioFile=AudioToFile();
+audioFile.write(callback);
   return 0;
 #endif
 } // main()

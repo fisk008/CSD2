@@ -1,3 +1,5 @@
+
+
 #include <iostream>
 #include "user_input.h"
 
@@ -7,26 +9,10 @@ UserInput::UserInput(){
 UserInput::~UserInput(){
 
 }
-
-
-bool UserInput::validateSelection(std::string selection, std::string selectionOptions[],
-    int numOptions)
-{
-    // check if the selection occurs inside the options, if so, return true
-    for (int i = 0; i < numOptions; ++i) {
-        if(selection == selectionOptions[i]) {
-            return true;
-        }
-    }
-    // selection does not occur in options --> return false
-    return false;
-}
-
-
 std::string UserInput::retrieveUserInput(std::string selectionOptions[], int numOptions)
 {
     // show user the allowed options
-    std::cout << "Please enter your selection. You can choice between: ";
+    std::cout << "Please enter your selection. You can choose from: ";
     for(int i = 0; i < numOptions - 1; i++) {
         std::cout << selectionOptions[i] << ", ";
     }
@@ -38,27 +24,29 @@ std::string UserInput::retrieveUserInput(std::string selectionOptions[], int num
     return selection;
 }
 
-std::string UserInput::retrieveUserSelection(std::string selectionOptions[], int numOptions)
+int UserInput::retrieveUserSelection(std::string selectionOptions[], int numOptions)
 {
-    bool noCorrectSelection = true;
-    std::string userSelection = "";
-    while(noCorrectSelection) {
-        // let user choice between the allowed options
-        userSelection = retrieveUserInput(selectionOptions,
-            numOptions);
-        // check if the selection is correct
-        noCorrectSelection = !validateSelection(userSelection, selectionOptions,
-            numOptions);
-        // if selection is not correct, log message to user to try again
-        if(noCorrectSelection) {
-            std::cout << "Incorrect selection, please try again";
-        }
-    }
-    return userSelection;
-}
+    std::string selection = "";
+    while(true) {
+        // let user choose from the allowed options
+        selection = retrieveUserInput(selectionOptions, numOptions);
+
+        // check if the selection is among the available option
+	for(int i=0; i<numOptions; ++i) {
+	    if(selection == selectionOptions[i]) {
+		return i;
+	    }
+	}
+        // if we end up here, this means the selection is not correct,
+	// so log a message to user to try again
+        std::cout << "Incorrect selection, please try again";
+    } // while
+    return -1; // should never be reached
+} // retrieveUserSelection()
 
 
-float UserInput::retrieveValueInRange(float min, float max) {
+float UserInput::retrieveValueInRange(float min, float max)
+{
   std::string input;
   float value = 0;
   bool notInRange = true;
@@ -76,16 +64,18 @@ float UserInput::retrieveValueInRange(float min, float max) {
         notInRange = false;
       } else {
         // value not in range
-        std::cout << "Incorrect range, please try again." << std::endl;
+        std::cout << "Value out of range, please try again." << std::endl;
       }
-    } catch (const std::exception& e) {
+    }
+    catch (const std::exception& e) {
       // no float as input
-      std::cout << "Invalid input, this was not a number, please try again"
+      std::cout << "Invalid input, expecting a number."
         << std::endl;
     }
-  }
+  } // while not in range
+
   return value;
-}
+} // retrieveValueInRange()
 
 float UserInput::retrieveBPMInRange(float min, float max) {
   std::string input;
@@ -113,8 +103,6 @@ float UserInput::retrieveBPMInRange(float min, float max) {
         << std::endl;
     }
   }
-
-  return value;
-
+   return value;
 }
 
