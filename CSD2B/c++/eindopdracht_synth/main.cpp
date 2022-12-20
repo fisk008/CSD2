@@ -3,13 +3,12 @@
 #include "jack_module.h"
 #include "math.h"
 #include "writeToFile.h"
-#include "square.h"
 #include "melody.h"
 #include "synth.h"
 #include "add_synth.h"
 #include "synth_fm.h"
 #include "user_input.h"
-#include "callback.cpp"
+#include "callback.h"
 
 /*
  * NOTE: jack2 needs to be installed
@@ -35,24 +34,20 @@ int main(int argc,char **argv)
   std::string synthOptions[2] = {"FM", "additive"};
   int numWaveFormOptions = 2;
   std::string waveTypeSelection = ui.retrieveUserSelection(synthOptions,numWaveFormOptions);  
-  
+
   if (synthOptions[0] == "FM"){
     synth = new FM;
+  std::cout << "You chose the following synth: " << synthOptions[0] << std::endl; 
     
     callback.setSynthChoise(((FM*)synth));
   }
 
- if (synthOptions[1] == "additive"){
+  else {
     synth = new Additive;
-    
+    std::cout << "You chose the following synth: " << synthOptions[1] << std::endl;  
     callback.setSynthChoise(((Additive*)synth));
   }
 
-  // std::cout << "You selected: " << waveTypeSelection << std::endl;
-
-  // float value =  ui.retrieveValueInRange(20, 20499);
-  // std::cout << "You chose the following value: " << value << std::endl;
-  
 
   float bpm = ui.retrieveBPMInRange(30, 250);
   callback.setBPM(bpm);
