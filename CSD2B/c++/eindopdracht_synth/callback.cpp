@@ -32,7 +32,7 @@ void Callback::prepare(double sampleRate)  {
 void Callback::setSynthChoise(Synth* synth){
 this->synth = synth;
     
-}
+} //setSynthChoise()
 
 
 /*

@@ -6,7 +6,7 @@
 #include "melody.h"
 #include "synth.h"
 #include "add_synth.h"
-#include "synth_fm.h"
+#include "synth_am.h"
 #include "user_input.h"
 #include "callback.h"
 
@@ -19,30 +19,40 @@
  */
 
 #define WRITE_TO_FILE 1
-#define sound 1
+#define sound 0
 
 
 int main(int argc,char **argv)
 {
   Synth* synth= nullptr;
-  FM fm;
+  AM am;
   UserInput ui;
   Melody melody;
   Additive add;
-  
   auto callback = Callback {};
-  std::string synthOptions[2] = {"FM", "additive"};
-  int numWaveFormOptions = 2;
-  std::string waveTypeSelection = ui.retrieveUserSelection(synthOptions,numWaveFormOptions);  
 
-  if (synthOptions[0] == "FM"){
-    synth = new FM;
+  std::string synthOptions[2] = {"AM", "additive"};
+  int numSynthOptions = 2;
+  std::string userSynthChoise = ui.retrieveUserSelection(synthOptions,numSynthOptions);  
+
+  if (userSynthChoise == synthOptions[0]){
+    synth = new AM;
   std::cout << "You chose the following synth: " << synthOptions[0] << std::endl; 
     
-    callback.setSynthChoise(((FM*)synth));
+    callback.setSynthChoise(((AM*)synth));
+
+    //carrier choise ui
+    std::string carrierOptions[3]= {"sine","square","saw"};
+    int numCarrierOptions=3;
+    std::string carrierChoise = ui.retrieveUserSelection(carrierOptions,numCarrierOptions);
+    
+    if(carrierChoise== carrierOptions[0]){
+    
+    }
+    
   }
 
-  else {
+  else if(userSynthChoise == synthOptions[1]) {
     synth = new Additive;
     std::cout << "You chose the following synth: " << synthOptions[1] << std::endl;  
     callback.setSynthChoise(((Additive*)synth));

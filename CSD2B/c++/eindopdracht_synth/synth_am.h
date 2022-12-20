@@ -1,14 +1,14 @@
 #include <iostream>
 #include <cmath>
-#pragma once
 #include "synth.h"
+#pragma once
 
 
-class FM : public Synth{
+class AM : public Synth{
 public:
 
-FM();
-~FM();
+AM();
+~AM();
 void tickAll();
 float getSamples();
 void setFrequency(double frequency);
@@ -17,9 +17,10 @@ protected:
 
 
 
-Oscillator* myOscillators[2];
+Oscillator* myOscillators[3];
 
-float ratio;
+float carrierFrequency;
+float modulatorFrequency;
 
 
 float sample;

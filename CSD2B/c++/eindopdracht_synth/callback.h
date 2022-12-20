@@ -2,7 +2,7 @@
 #include "math.h"
 #include "square.h"
 #include "melody.h"
-#include "synth_fm.h"
+#include "synth_am.h"
 #include "user_input.h"
 #pragma once
 
@@ -22,9 +22,7 @@ void setBPM(float bpm);
 private:
   double sampleRate;
   UserInput ui;
-  Square square;
   Synth* synth;
-  FM fm;
   float amplitude = 0.025;
   Melody melody;
   int frameIndex = 0;
