@@ -61,12 +61,14 @@ int main(int argc,char **argv)
   }
 
   else if(userSynthChoise == synthOptions[1]) {
-    synth = new Additive;
     std::cout << "You chose the following synth: " << synthOptions[1] << std::endl;  
+    std::cout << "How many oscillators do you want in the additive synth? " << std::endl; 
+    float numOsc = ui.retrieveValueInRange(1,5);
+    
+    synth = new Additive(numOsc);
     callback.setSynthChoise(((Additive*)synth));
   }
-
-
+  std::cout << "What would you like as bpm for tempo?"<<std::endl;
   float bpm = ui.retrieveBPMInRange(30, 250);
   callback.setBPM(bpm);
 

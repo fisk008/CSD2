@@ -17,6 +17,7 @@ void prepare(double sampleRate) override;
 void setSynthChoise(Synth* synth);
 void process (AudioBuffer buffer) override;
 void setBPM(float bpm);
+float numOsc =4;
 
 
 private:
@@ -27,5 +28,4 @@ private:
   Melody melody;
   int frameIndex = 0;
   float AdjustedBpm;
-
 };

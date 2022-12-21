@@ -20,8 +20,8 @@ public:
     AM(float modulatorFrequency,int modulator,int carrier);
     ~AM();
 
-    void tickAll();
-    float getSamples();
+    void tickAll(float numOsc);
+    float getSamples(float numOsc);
     void setFrequency(double frequency);
     double getFrequency();
 
