@@ -43,13 +43,13 @@ double AM::getFrequency(){
   return frequency;
 }
 
-void AM::tickAll(float numOsc){
+void AM::tickAll(){
 myOscillators[0]->tick();
 myOscillators[1]->tick();
 }
 
 
-float AM::getSamples(float numOsc){
+float AM::getSamples(){
 sample = myOscillators[0]->getSample()*myOscillators[1]->getSample();
 
 return sample;

@@ -8,22 +8,9 @@ Additive::Additive(){
 
 Additive::Additive(float numOsc){
   
-  numAddOsc(numOsc);
+  this->numOsc= numOsc;
+   numAddOsc();
 
-
-  // if(additiveOsc==1){
-  //   myOscillators[0]=new Sine(frequency,samplerate);
-  //   myOscillators[1]=new Sine(frequency,samplerate);
-  //   myOscillators[3]=new Sine(frequency,samplerate);
-  //   myOscillators[4]=new Sine(frequency,samplerate);
-  // }
-  // else if(additiveOsc==2){
-
-  // }
-  // // else{
-
-
-  // }
 }
 
 Additive::~Additive(){
@@ -36,11 +23,16 @@ void Additive::setFrequency(double frequency)
 {
   // TODO add check to see if parameter is valid
   this->frequency = frequency;
-  myOscillators[0]->setFrequency(frequency);
-  myOscillators[1]->setFrequency(frequency * 3);
-  myOscillators[2]->setFrequency(frequency * 2);
-  myOscillators[3]->setFrequency(frequency * 1);
-  // std::cout<<frequency;
+
+
+  for(int i=0;i<numOsc;i++){
+    myOscillators[i]->setFrequency(frequency+frequency*i);
+  }
+  // myOscillators[0]->setFrequency(frequency);
+  // myOscillators[1]->setFrequency(frequency * 3);
+  // myOscillators[2]->setFrequency(frequency * 2);
+  // myOscillators[3]->setFrequency(frequency * 1);
+  // // std::cout<<frequency;
 }
 
 double Additive::getFrequency()
@@ -49,36 +41,30 @@ double Additive::getFrequency()
 }
 
 
-void Additive::tickAll(float numOsc){
-tickAdditiveOsc(numOsc);
+void Additive::tickAll(){
+tickAdditiveOsc();
 }
 
-void Additive::numAddOsc(float numOsc){
-  
+void Additive::numAddOsc(){ 
   for(int i=0;i!=numOsc;i++){
-  ;
   myOscillators[i] = new Sine(0,samplerate);
+  std::cout<<myOscillators[i];
   }
 }
-float Additive::getSamples(float numOsc){
-  sample = (getOscSamples(numOsc))/numOsc;
-  
-  
+
+float Additive::getSamples(){
+  sample=0;
+      for(int i=0;i!=numOsc;i++){
+  sample += myOscillators[i]->getSample(); 
+  }
   return sample;
 }
 
 
-void Additive::tickAdditiveOsc(float numOsc){
+void Additive::tickAdditiveOsc(){
     for(int i=0;i!=numOsc;i++){
   myOscillators[i]->tick();;
   }
 }
 
 
-float Additive::getOscSamples(float numOsc){
-      for(int i=0;i!=numOsc;i++){
-  sample = myOscillators[i]->getSample();
-  return sample;
-  }
-  std::cout << sample ;
-}

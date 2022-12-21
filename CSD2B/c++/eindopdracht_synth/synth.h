@@ -17,8 +17,8 @@ class Synth{
 
   // float getSamplerate();
   float mtof(int note);
-  virtual float getSamples(float numOsc)=0;
-  virtual void tickAll(float numOsc)= 0;
+  virtual float getSamples()=0;
+  virtual void tickAll()= 0;
   virtual void setFrequency(double frequency)=0;
   
   protected:

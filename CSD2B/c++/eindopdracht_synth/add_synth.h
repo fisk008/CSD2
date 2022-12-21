@@ -18,15 +18,16 @@ class Additive:public Synth{
 
     void setFrequency(double frequency);
     double getFrequency();
-    float getSamples(float numOsc);
-    void tickAll(float numOsc);
+    float getSamples();
+    void tickAll();
     void initAddOsc();
-    void numAddOsc(float numOsc);
-    void tickAdditiveOsc(float numOsc);
-    float getOscSamples(float numOsc);
+    void numAddOsc();
+    void tickAdditiveOsc();
+    float getOscSamples();
 protected:
     
     Oscillator* myOscillators[5];
+    int numOsc;
     float phase;
     float amplitude;
     double frequency;

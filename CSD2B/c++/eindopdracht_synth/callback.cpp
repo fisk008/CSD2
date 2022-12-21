@@ -46,8 +46,8 @@ void Callback::process (AudioBuffer buffer){
 
 for (int channel = 0; channel < numOutputChannels; ++channel) {
     for (int sample = 0; sample < numFrames; ++sample) {
-    outputChannels[channel][sample] = synth->getSamples(numOsc) * amplitude;
-    synth->tickAll(numOsc); // rather mixed up functionality
+    outputChannels[channel][sample] = synth->getSamples() * amplitude;
+    synth->tickAll(); // rather mixed up functionality
 
     /* After every sample, check if we need to advance to the next note
         * This is a bit awkward in this scheme of buffers per channel
