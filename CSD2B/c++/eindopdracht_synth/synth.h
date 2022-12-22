@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <math.h>
 #include "sine.h"
 #include "square.h"
 #include "saw.h"
@@ -8,25 +9,20 @@
 
 class Synth{
   public:
+  //def construct/destructors
   Synth();
   ~Synth();
 
-  // virtual void tick();
+  //setters and getters samplerate
   void setSamplerate(float samplerate);
-  void getSamplerate();
-
-  // float getSamplerate();
-  float mtof(int note);
+  float getSamplerate();
+  //virtual functions for subclas synths
+  
   virtual float getSamples()=0;
   virtual void tickAll()= 0;
   virtual void setFrequency(double frequency)=0;
-  
-  protected:
 
-  float note=440;
   
   float samplerate= 44100;
-  private:
   
- 
 };

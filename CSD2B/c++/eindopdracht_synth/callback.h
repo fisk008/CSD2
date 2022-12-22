@@ -5,7 +5,8 @@
 #include "synth_am.h"
 #include "user_input.h"
 #pragma once
-
+//this code is given to me by my teacher Cyska to make buffers from synthesizer wich gives samples to jack audio 
+//added some small changes
 class Callback : public AudioCallback
 {
 

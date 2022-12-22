@@ -2,44 +2,36 @@
 #include <cmath>
 #include "oscillator.h"
 
-
+//def constructor
 Oscillator::Oscillator(){
-  std::cout<<"osc constructor\n";
+
+}
+//def descructor
+Oscillator::~Oscillator(){
+
 }
 
-Oscillator::~Oscillator()
-{
-  std::cout<<"osc destructor\n";
-}
-
-
+//construct with given arguments
 Oscillator::Oscillator(float frequency, float samplerate)
-:   frequency(frequency), amplitude(1.0), phase(0), samplerate(samplerate)
-{
-    std::cout<<"osc constructor\n";
-    // std::cout << "phase:"<< phase << "\n";
-    // std::cout << "frequency: " << this->frequency << "\n";
-    // std::cout << "samplerate: " << this->samplerate << "\n";
+:   frequency(frequency), amplitude(1.0), phase(0), samplerate(samplerate){
+
 }
 
 
-
-float Oscillator::getSample()
-{
+//returns sample
+float Oscillator::getSample(){
     return sample;
 }
 
-
-void Oscillator::setFrequency(float frequency)
-{
+//setters getters frequency
+void Oscillator::setFrequency(float frequency){
     this->frequency = frequency;
 }
 
-float Oscillator::getFrequency()
-{
+float Oscillator::getFrequency(){
     return frequency;
 }
-
+//tick given oscillator and flips phase
 void Oscillator::tick(){
   phase += frequency / samplerate;
   

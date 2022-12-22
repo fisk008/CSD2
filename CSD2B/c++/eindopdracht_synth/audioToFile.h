@@ -3,7 +3,7 @@
 #include <iostream>
 #include<memory>
 #include <sys/stat.h>
-
+//this code was given to me by my teachers Cyska and marc and belongs to them, to write samples to a .csv file to see the waveform
 class WriteToFile {
 public:
   WriteToFile (std::string fileName, bool overwrite = false);

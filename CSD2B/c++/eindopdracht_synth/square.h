@@ -1,8 +1,7 @@
-#ifndef _SQAURE_H_
-#define _SQAURE_H_
 #include <iostream>
 #include <cmath>
 #include "oscillator.h"
+#pragma once
 
 
 
@@ -10,11 +9,9 @@ class Square : public Oscillator
 {
     public:
     Square();
-    Square(float frequency, float ampliltude, float phase, float samplerate);
-    Square(float frequency, float amplitude); 
+    Square(float frequency, float samplerate);
     ~Square();
     
-
+    //function of calculation of a square waveform with aliasing
     void calculate();
 };
-#endif

@@ -1,7 +1,6 @@
-#ifndef _SAW_H_
-#define _SAW_H_
 #include <iostream>
 #include <cmath>
+#pragma once
 #include "oscillator.h"
 
 
@@ -13,7 +12,6 @@ class Saw : public Oscillator
     Saw(float frequency, float amplitude);
     ~Saw();
     
-
+    //function of calculation of a Saw waveform with aliasing
     void calculate();
 };
-#endif

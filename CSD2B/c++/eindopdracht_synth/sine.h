@@ -1,24 +1,19 @@
-#ifndef _SINE_H_
-#define _SINE_H_
 #include <iostream>
 #include <cmath>
 #include "oscillator.h"
+#pragma once
 
 
 class Sine : public Oscillator
 {
 public:
   //Constructor and destructor
-
   Sine();
   Sine(float frequency,float samplerate);
   ~Sine();
 
-  //return the current sample
-
-  // go to next sample
+  //function of calculation of a Sine waveform with aliasing
   void calculate();
-
 };
 
-#endif
+

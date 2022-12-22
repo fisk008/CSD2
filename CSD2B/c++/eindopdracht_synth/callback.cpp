@@ -1,13 +1,9 @@
-/*
-  Example program that plays a simple hard coded melody using a square wave oscillator
-*/
-
 #include <iostream>
 #include <thread>
 #include "callback.h"
 
 
-
+//this code was given to me by my teachers Cyska and marc and belongs to them, to make buffers from synthesizer wich gives samples to jack audio 
 double Callback::mtof(float mPitch)
 {
     // source of the mtof calculation:

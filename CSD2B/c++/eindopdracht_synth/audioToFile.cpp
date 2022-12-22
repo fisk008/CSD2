@@ -1,5 +1,6 @@
 #include "audioToFile.h"
 
+//this code was given to me by my teachers Cyska and marc and belongs to them. to write samples to a .csv file to see the waveform
 WriteToFile::WriteToFile (std::string fileName, bool overwrite) {
   // check if we are allowed to overwrite file
   if (! overwrite) {

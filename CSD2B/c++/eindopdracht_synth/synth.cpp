@@ -1,38 +1,20 @@
 #include "synth.h"
-#include <iostream>
-#include <math.h>
 
 
-Synth::Synth()
-{
-  
+//def constructor
+Synth::Synth(){
 }
-
+//def desctructor
 Synth::~Synth(){
-
 }
-
-
-float Synth::mtof(int note){
-  double frequency = 440.0 * std::pow(2.0, (note - 69.0) / 12.0);
-  
-  
-  return frequency;
-}
-
-
-
-void Synth::setSamplerate(float samplerate) 
-{
+//setters and getters samplerate
+void Synth::setSamplerate(float samplerate) {
     this->samplerate = samplerate;
 }
 
-void Synth::getSamplerate(){
-
+float Synth::getSamplerate(){
+return samplerate;
 }
 
 
 
-// float Synth::getSamplerate(){
-// return samplerate;
-// }

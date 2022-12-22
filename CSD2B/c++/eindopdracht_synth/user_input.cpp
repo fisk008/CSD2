@@ -1,8 +1,5 @@
-
-
-#include <iostream>
 #include "user_input.h"
-
+//this code was given to me by my teachers Cyska and marc and belongs to them, i added some functionalities 
 UserInput::UserInput(){
 
 }
@@ -77,6 +74,7 @@ float UserInput::retrieveValueInRange(float min, float max)
   return value;
 } // retrieveValueInRange()
 
+//retrieves bpm in range
 float UserInput::retrieveBPMInRange(float min, float max) {
   std::string input;
   float value = 0;

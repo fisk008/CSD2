@@ -1,27 +1,17 @@
 #include "sine.h"
-#include "math.h"
 
+//def contructors/desctructors 
 Sine::Sine(){
-  
 }
-
-
-
-Sine::Sine(float frequency, float samplerate) : Oscillator(frequency,samplerate)
-{
-  std::cout << "sine constructor\n";
-}
-
-
 
 Sine::~Sine() {
-  std::cout << "sine destructor\n";
 }
 
+Sine::Sine(float frequency, float samplerate) : Oscillator(frequency,samplerate){
+}
 
-
-void Sine::calculate() {
-
+//function of calculation of a Sine waveform with aliasing
+void Sine::calculate(){
   sample = sin(M_PI * 2.0f * phase) * amplitude;
 }
 

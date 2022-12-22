@@ -7,30 +7,33 @@
 #include "saw.h"
 
 class Additive:public Synth{
+    //here is my sublass of Synth: Additive synth 
     public:
+    //def construct/destructor
     Additive();
     Additive(float numOsc);
     ~Additive();
 
-
-
-    float combinedSamples();
-
+    //setters and getters frequency
     void setFrequency(double frequency);
     double getFrequency();
+    //gets samples for given oscillators
     float getSamples();
+    //ticks samples for given oscillators
     void tickAll();
-    void initAddOsc();
+    //assigns new sine wave to myOscillator for given oscillators
     void numAddOsc();
+    //this functions is used in tickAll to tick given oscillators
     void tickAdditiveOsc();
-    float getOscSamples();
+
 protected:
-    
+    //creates 5 oscillators objects in a list
     Oscillator* myOscillators[5];
     int numOsc;
-    float phase;
-    float amplitude;
     double frequency;
+    
+    //holds current sample
     float sample;
+    
     float samplerate= 44100;
 };

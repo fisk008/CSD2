@@ -31,7 +31,7 @@ int main(int argc,char **argv)
   Additive add;
 
   auto callback = Callback {};
-
+  //here my UI line program begins and asks the question for what synth you would like to hear
   std::string synthOptions[2] = {"AM", "additive"};
   int numSynthOptions = 2;
   std::string userSynthChoise = ui.retrieveUserInput(synthOptions,numSynthOptions);  
@@ -40,22 +40,22 @@ int main(int argc,char **argv)
   std::cout << "You chose the following synth: " << synthOptions[0] << std::endl; 
     
 
-    //carrier choise ui
+    //carrier choice ui
     std::cout << "You can choose the following carrier wave types: " << std::endl; 
     std::string carrierOptions[3]= {"sine","square","saw"};
     int numCarrierOptions=3;
     int carrierChoise = ui.retrieveUserSelection(carrierOptions,numCarrierOptions);
-    
+    //modulator choice
     std::cout << "You can choose the following modulator wave types: " << std::endl;
     std::string modulatorOptions[3]= {"sine","square","saw"};
     int numModulatorOptions=3;
     int modulatorChoise = ui.retrieveUserSelection(modulatorOptions,numModulatorOptions);
-
+    //modulator frequency choice
     std::cout << "What would you like for the modulator frequency?"<<std::endl;
     float modulatorFrequency = ui.retrieveValueInRange(0.1,15000);
     std::cout << "You chose the following modulator frequency: " << modulatorFrequency << std::endl;
     
-    
+    // initialise constructor synth with given options from user 
     synth = new AM(modulatorFrequency,modulatorChoise,carrierChoise);
     callback.setSynthChoise(((AM*)synth));
   }
@@ -64,10 +64,11 @@ int main(int argc,char **argv)
     std::cout << "You chose the following synth: " << synthOptions[1] << std::endl;  
     std::cout << "How many oscillators do you want in the additive synth? " << std::endl; 
     float numOsc = ui.retrieveValueInRange(1,5);
-    
+    // initialise constructor with given options from user 
     synth = new Additive(numOsc);
     callback.setSynthChoise(((Additive*)synth));
   }
+  // bpm question
   std::cout << "What would you like as bpm for tempo?"<<std::endl;
   float bpm = ui.retrieveBPMInRange(30, 250);
   callback.setBPM(bpm);

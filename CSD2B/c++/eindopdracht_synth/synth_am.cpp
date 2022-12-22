@@ -1,11 +1,12 @@
-#include <iostream>
-#include <cmath>
 #include "synth_am.h"
 
+
+//def Constructor and destructor
 AM::AM(){
-
 }
-
+AM::~AM(){
+}
+//contructor used in main to pass on arguments to choose modulator carrier and modulator frequency
 AM::AM(float modulatorFrequency,int modulator,int carrier){
   if(carrier==1){
     myOscillators[0]=new Sine(frequency,samplerate);
@@ -29,26 +30,23 @@ AM::AM(float modulatorFrequency,int modulator,int carrier){
   }
 }
 
-AM::~AM(){
-
-}
-
+//sets and gets frequency for carrier 
 void AM::setFrequency(double frequency){
     this->frequency = frequency;
     myOscillators[0]->setFrequency(frequency);
- 
 }
 
 double AM::getFrequency(){
   return frequency;
 }
 
+//ticks both carrier and modulator
 void AM::tickAll(){
 myOscillators[0]->tick();
 myOscillators[1]->tick();
 }
 
-
+// multiplies to carrier with the modulator and returns sample
 float AM::getSamples(){
 sample = myOscillators[0]->getSample()*myOscillators[1]->getSample();
 
