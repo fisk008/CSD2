@@ -62,8 +62,11 @@ int main(int argc,char **argv)
 
   else if(userSynthChoise == synthOptions[1]) {
     std::cout << "You chose the following synth: " << synthOptions[1] << std::endl;  
+    
+    // how many oscillators in additive synth question?
     std::cout << "How many oscillators do you want in the additive synth? " << std::endl; 
     float numOsc = ui.retrieveValueInRange(1,5);
+
     // initialise constructor with given options from user 
     synth = new Additive(numOsc);
     callback.setSynthChoise(((Additive*)synth));
@@ -75,7 +78,6 @@ int main(int argc,char **argv)
 
 
 #if sound
-
   auto jack_module = JackModule(callback);
 
   jack_module.init(1,1);
