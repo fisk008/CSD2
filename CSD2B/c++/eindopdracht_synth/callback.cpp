@@ -15,7 +15,7 @@ double Callback::mtof(float mPitch)
 void Callback::updatePitch(Melody& melody, Synth& synth) {
     float pitch = melody.getPitch();
     double freq = mtof(pitch);
-    std::cout << "next pitch: " << pitch << ", freq is: " << freq << std::endl;
+    //std::cout << "next pitch: " << pitch << ", freq is: " << freq << std::endl;
     synth.setFrequency(freq);
 } // updatePitch()
 
