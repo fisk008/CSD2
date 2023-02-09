@@ -2,50 +2,58 @@
 
 
 
+CircBuffer::CircBuffer (uint size) : buffer (new float[currentSize]) , currentSize (size) {
+
+}
+CircBuffer::~CircBuffer() {
+    deleteBuffer();
+}
 
 
-    CircBuffer::CircBuffer (uint size) : currentSize (size), buffer (new float[currentSize]) {
+void CircBuffer::input (float value) {
+    buffer[writeHead]= value;
+}
 
+
+float CircBuffer::output() {
+    std::cout<<buffer[readHead]<<std::endl;
+    return buffer[readHead];
+}
+
+
+
+void CircBuffer::setDistance (uint distance) {
+
+}
+
+void CircBuffer::incrementHeads() {
+    incrementWrite();
+    incrementRead();
+
+    wrapHeader(writeHead);
+    wrapHeader(readHead);
+}
+
+
+
+inline void CircBuffer::wrapHeader (uint& head) {
+    if(head >= currentSize){
+        head -= currentSize;
     }
-    CircBuffer::~CircBuffer() {
-        deleteBuffer();
-    }
+}
 
 
-    void CircBuffer::input (float value) {
-
-    }
-    
-
-    float CircBuffer::output() {
-
-    }
-
-    void CircBuffer::setDistance (uint distance) {
-
-    }
-
-    void CircBuffer::incrementHeads() {
-
-    }
+inline void CircBuffer::incrementWrite() {
+    writeHead++;
+}
 
 
-
-    inline void CircBuffer::wrapHeader (uint& head) {
-
-    }
-
-
-    inline void CircBuffer::incrementWrite() {
-
-    }
+inline void CircBuffer::incrementRead() {
+    readHead++;
+    std::cout<<buffer[readHead]<<std::endl;
+}
 
 
-    inline void CircBuffer::incrementRead() {
-
-    }
-
-
-    void CircBuffer::deleteBuffer() {
-
-    }
+void CircBuffer::deleteBuffer() {
+    delete[] buffer;
+}

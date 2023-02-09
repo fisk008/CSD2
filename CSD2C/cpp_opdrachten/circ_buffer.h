@@ -7,41 +7,27 @@ class CircBuffer {
     using uint = unsigned int;
 
 public:
-    CircBuffer (uint size) : currentSize (size), buffer (new float[currentSize]){};
-
+    CircBuffer();
+    CircBuffer (uint size);
     ~CircBuffer();
-    
+    void setBufferSize();
     void input (float value);
     float output();
-
-    void setDistance (uint distance) {
-
-    }
-
-    void incrementHeads() {
-
-    }
+    //distance between the write and readhead
+    void setDistance (uint distance);
+    //increments the write and readhead
+    void incrementHeads();
 
 private:
-
-    inline void wrapHeader (uint& head) {
-
-    }
-
-
-    inline void incrementWrite() {
-
-    }
-
-
-    inline void incrementRead() {
-
-    }
-
-
-    void deleteBuffer() {
-
-    }
+    //makes the buffer round and circular
+    inline void wrapHeader (uint& head);
+    //makes that the writehead moves position
+    inline void incrementWrite();
+    //makes the readhead moves position
+    inline void incrementRead();
+    //deletes the buffer at the end of the program
+    void deleteBuffer();
+    
 
     float* buffer;
     uint currentSize { 0 };
