@@ -18,6 +18,7 @@ void CircBuffer::input (float value) {
 float CircBuffer::output() {
     std::cout<<buffer[readHead]<<std::endl;
     return buffer[readHead];
+    
 }
 
 
