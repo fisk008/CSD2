@@ -1,6 +1,3 @@
-//
-// Created by Dean on 27/10/2022.
-//
 #pragma once
 
 #include "effect.h"

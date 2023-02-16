@@ -1,8 +1,8 @@
 #include "jack_module.h"
-#include "tremolo.h"
-#include <array>
-#include <iostream>
 #include "sine.h"
+#include "tremolo.h"   
+
+#pragma once
 
 class Callback : public AudioCallback {
 
@@ -21,7 +21,7 @@ public:
 
         for (int channel = 0u; channel < numOutputChannels; ++channel) {
             for (int sample = 0u; sample < numFrames; ++sample) {
-                outputChannels[channel][sample] = sines[channel].output();
+                outputChannels[channel][sample] = (tremolos[channel].output(inputChannels[0][sample]));
                 // if (sample % 44100 == 0)std::cout << sines[channel].output();
             }
         }
@@ -33,24 +33,3 @@ private:
   
 
 };
-
-
-int main() {
-
-    auto callback = Callback {};
-    auto jack = JackModule (callback);
-
-    // start jack client with 2 inputs and 2 outputs
-    jack.init (2, 2);
-
-    bool running = true;
-    while (running) {
-        switch (std::cin.get()) {
-            case 'q':
-                running = false;
-                break;
-        }
-    }
-
-    return 0;
-}

@@ -6,4 +6,11 @@
 struct Effect {
     virtual void prepareToPlay (double sampleRate) = 0;
     virtual float output (float input) = 0;
+    
+    void setDryWet(int set){
+
+    }
+
+    float dry;
+    float wet;
 };

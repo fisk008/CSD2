@@ -131,7 +131,7 @@ private:
     std::vector<float*> inputBuffers;
     std::vector<float*> outputBuffers;
 
-    int numInputChannels = 2;
+    int numInputChannels = 1;
     int numOutputChannels = 2;
     static constexpr auto MAX_INPUT_CHANNELS = 2;
     static constexpr auto MAX_OUTPUT_CHANNELS = 2;

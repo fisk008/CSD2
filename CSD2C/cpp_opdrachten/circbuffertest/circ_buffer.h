@@ -32,4 +32,5 @@ private:
     float* buffer;
     uint currentSize { 0 };
     uint writeHead { 0 }, readHead { 0 };
+    int distance = {0};
 };
