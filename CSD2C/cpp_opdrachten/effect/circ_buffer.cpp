@@ -1,7 +1,5 @@
 #include "circ_buffer.h"
 
-
-
 CircBuffer::CircBuffer (uint size) : buffer (new float[currentSize]) , currentSize (size) {
     std::cout<<"buffersize"<<currentSize<<std::endl;
 }
@@ -19,7 +17,9 @@ float CircBuffer::output() {
     return buffer[readHead];
 }
 
-
+void CircBuffer::setBufferSize(float size){
+    currentSize = size;
+}
 
 void CircBuffer::setDistance (uint distance) {
     this->distance=distance;
@@ -35,21 +35,20 @@ void CircBuffer::incrementHeads() {
     
     wrapHeader(writeHead);
     wrapHeader(readHead);
-    // std::cout<<"writehead:"<<writeHead<<std::endl<<"readHead:"<<readHead<<std::endl;
+
     std::cout<<"incrementing heads"<<std::endl;
 }
 
 
 
 inline void CircBuffer::wrapHeader (uint& head) {
-    // this->currentSize = currentSize;
-    // std::cout<<"headTime"<<head<<std::endl;
+
     if(head >= currentSize){
         std::cout<<"wrapped:"<<head<<std::endl;
         head -= currentSize;
     }
 
-    // std::cout<<"wrapped"<<std::endl;
+
 }
 
 

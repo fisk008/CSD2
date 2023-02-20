@@ -1,7 +1,7 @@
 CXX= g++
 CXXFLAGS = -I/usr/local/include -Wall -g -std=c++20
 LDFLAGS= -ljack
-SOURCE= main.o  circ_buffer.o
+SOURCE= circ_buffer.o main.o  
 TARGET= app
 
 

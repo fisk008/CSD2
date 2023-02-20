@@ -1,8 +1,6 @@
 #include <iostream>
 #pragma once
 
-
-
 class CircBuffer {
     using uint = unsigned int;
 
@@ -10,7 +8,7 @@ public:
     CircBuffer();
     CircBuffer (uint size);
     ~CircBuffer();
-    void setBufferSize();
+    void setBufferSize(float size);
     void input (float value);
     float output();
     //distance between the write and readhead
