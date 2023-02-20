@@ -19,6 +19,7 @@ public:
         }
         for (Delay& delay :delays){
             delay.prepareToPlay(static_cast<double>(sampleRate));
+             delay.setDryWet(0.5);
         }
     }
 
@@ -46,7 +47,7 @@ int main() {
     auto callback = Callback {};
     auto jack = JackModule (callback);
     Amp amp;
-    CircBuffer buf(44100);
+    
     // start jack client with 2 inputs and 2 outputs
     jack.init (1, 2);
     amp.setAmpValue(0.3);
