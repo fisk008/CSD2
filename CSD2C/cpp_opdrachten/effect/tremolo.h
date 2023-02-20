@@ -4,6 +4,7 @@
 #include "sine.h"
 
 struct Tremolo : Effect {
+   
     void prepareToPlay (double sampleRate) override {
         osc.prepareToPlay (sampleRate);
     }
@@ -12,7 +13,8 @@ struct Tremolo : Effect {
         auto modSignal = osc.output();
         modSignal *= amp;
         modSignal += 1.0f - amp;
-        return input * modSignal;
+        float output=input * modSignal;
+        return (output*wet)+(input*dry);
     }
 
     void setAmplitude (float amplitude) {

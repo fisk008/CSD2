@@ -1,3 +1,4 @@
+#include <iostream>
 #pragma once
 
 struct Effect {
@@ -5,12 +6,11 @@ struct Effect {
     virtual float output (float input) = 0;
     
     void setDryWet(float wet){
-        if(wet >= 1.0){
-            wet=1.0;
+        this->wet=wet;
+        if(wet){
+            dry = 1-wet; 
         }
-       dry -= 1-wet;
     }
-
     float dry{0};
     float wet{0};
 };

@@ -13,13 +13,15 @@ public:
             }
         for (Tremolo& tremolo : tremolos){
             tremolo.prepareToPlay(static_cast<double> (sampleRate));
+            tremolo.setDryWet(0.5);
         }
         for (Amp& amp : amps){
             amp.prepareToPlay(static_cast<double>(sampleRate));
         }
         for (Delay& delay :delays){
+            delay.setDryWet(1);
             delay.prepareToPlay(static_cast<double>(sampleRate));
-             delay.setDryWet(0.5);
+            delay.setFeedback(0.3);
         }
     }
 
