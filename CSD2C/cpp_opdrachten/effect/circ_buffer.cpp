@@ -27,7 +27,6 @@ void CircBuffer::setBufferSize(float size){
 
 void CircBuffer::setDistance (uint distance) {
     this->distance=distance;
-    // distance *= -1;
     readHead = (writeHead - distance + currentSize) % currentSize;
   
 }
