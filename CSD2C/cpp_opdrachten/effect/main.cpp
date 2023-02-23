@@ -4,10 +4,11 @@
 #include "tremolo.h"   
 #include "amp.h"
 #include "delay.h"
-// #include "waveshaper.h"
+#include "waveshaper.h"
 #include "chorus.h"
 #include <array>
 #include <iostream>
+
 class Callback : public AudioCallback {
 
 public:
@@ -30,10 +31,10 @@ public:
         for (Chorus& chorus :choruses){
             chorus.setDryWet(0.5);
             chorus.prepareToPlay(static_cast<double>(sampleRate));
+        } 
+        for (Waveshaper& Waveshaper:waveshapers){
+            Waveshaper.prepareToPlay(static_cast<double>(sampleRate));
         }
-        // for (Waveshaper& Waveshaper:waveshapers){
-        //     Waveshaper.prepareToPlay(static_cast<double>(sampleRate));
-        // }
         
     }
 
@@ -54,7 +55,7 @@ private:
     std::array<Sine,2> sines;
     std::array<Amp,2> amps;
     std::array<Delay,2> delays;
-    //std::array<Waveshaper,2>waveshapers;
+    std::array<Waveshaper,2>waveshapers;
     std::array<Chorus,2>choruses;
 
 };
