@@ -2,14 +2,14 @@
 #pragma once
 #include "sine.h"
 #include "circ_buffer.h"
-struct StereoChorus : Effect
+struct Chorus : Effect
 {
 
 
-    StereoChorus(){
+    Chorus(){
         buf= new CircBuffer(44100*4);
     }
-    ~StereoChorus(){
+    ~Chorus(){
         delete buf;
     }
 
@@ -21,20 +21,25 @@ struct StereoChorus : Effect
 
     float output(float input) override{
         auto modSignal = osc.output();
+        buf->setDistance(22050*2*modSignal);
         buf->incrementHeads(); 
         buf->input(input);
-        buf->setDistance(44100*modSignal);
         float outputBuf = buf->output();
         
-        //return;
+        return (outputBuf*wet) + (input*dry); 
     }
 
     void offset(float offset){
         // this->offset=offset;
 
     }
+
+
+    void setRate(float rate=2000){
+        osc.setDelta(rate);
+    }
     
-    float offset{0};
+    // float offset{0};
     Sine osc;
     CircBuffer* buf;
     };

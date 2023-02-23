@@ -5,6 +5,7 @@
 #include "amp.h"
 #include "delay.h"
 // #include "waveshaper.h"
+#include "chorus.h"
 #include <array>
 #include <iostream>
 class Callback : public AudioCallback {
@@ -26,6 +27,10 @@ public:
             delay.prepareToPlay(static_cast<double>(sampleRate));
             delay.setFeedback(0.3);
         }
+        for (Chorus& chorus :choruses){
+            chorus.setDryWet(0.5);
+            chorus.prepareToPlay(static_cast<double>(sampleRate));
+        }
         // for (Waveshaper& Waveshaper:waveshapers){
         //     Waveshaper.prepareToPlay(static_cast<double>(sampleRate));
         // }
@@ -37,9 +42,9 @@ public:
 
         for (int channel = 0u; channel < numOutputChannels; ++channel) {
             for (int sample = 0u; sample < numFrames; ++sample) {
-                outputChannels[channel][sample] = tremolos[channel].output((delays[channel].output(inputChannels[0][sample])));
+                //outputChannels[channel][sample] = tremolos[channel].output((delays[channel].output(inputChannels[0][sample])));
                 //outputChannels[channel][sample] = (tremolos[channel].output(inputChannels[0][sample]));
-            
+                outputChannels[channel][sample] = (choruses[channel].output(inputChannels[0][sample]));
             }
         }
     }
@@ -50,6 +55,7 @@ private:
     std::array<Amp,2> amps;
     std::array<Delay,2> delays;
     //std::array<Waveshaper,2>waveshapers;
+    std::array<Chorus,2>choruses;
 
 };
 int main() {
