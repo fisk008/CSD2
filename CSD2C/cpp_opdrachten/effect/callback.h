@@ -4,6 +4,7 @@
 #include "tremolo.h"   
 #include "amp.h"
 #include "delay.h"
+#include "waveshaper.h"
 #include <array>
 #include <iostream>
 class Callback : public AudioCallback {
@@ -24,6 +25,9 @@ public:
             delay.setDryWet(1);
             delay.prepareToPlay(static_cast<double>(sampleRate));
             delay.setFeedback(0.3);
+        // }
+        // for (Waveshaper& Waveshaper:waveshapers){
+        //     Waveshaper.prepareToPlay(static_cast<double>(sampleRate));
         }
     }
 
@@ -42,6 +46,6 @@ private:
     std::array<Sine,2> sines;
     std::array<Amp,2> amps;
     std::array<Delay,2> delays;
-    
+    //std::array<Waveshaper,2>waveshapers;
 
 };

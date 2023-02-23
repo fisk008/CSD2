@@ -47,7 +47,7 @@ void CircBuffer::incrementHeads() {
 inline void CircBuffer::wrapHeader (uint& head) {
 
     if(head >= currentSize){
-        std::cout<<"wrapped:"<<head<<std::endl;
+        // std::cout<<"wrapped:"<<head<<std::endl;
         head -= currentSize;
     }
 

@@ -19,17 +19,13 @@ struct Delay : Effect{
 
     }
 
-    void calculate(float signalInput){//sending samples into buffer and incrementing the heads
-        //std::cout<<"1"<<outputBuf<<std::endl;
-    }
     float output(float input) override{
        
         float outputBuf = buf->output();
-
         buf->input(input+(outputBuf*feedback));//writing into the buffer and adding feedback amount also to the buffer 
         buf->incrementHeads(); 
         
-         //std::cout<<"2"<<outputBuf*wet<<std::endl;
+
         return (outputBuf*wet) + (input*dry);//dry wet 
     }
 
@@ -38,12 +34,12 @@ struct Delay : Effect{
 
         if(feedback<0&&feedback>0.99){
             feedback=0;
+            std::cout<<"feedback cant be higher then 0.99 to protect ears and speakers"<<std::endl;
         }
     }
 
     
     CircBuffer* buf;
     float buffersize= {0};
-    //float outputBuf {0};
     float feedback {0};
 };
