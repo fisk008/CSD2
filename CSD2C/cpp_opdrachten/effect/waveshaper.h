@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include "effect.h"
+#include "circ_buffer.h"
 #include "Utilities.h"
 
 struct Waveshaper:Effect{
@@ -18,7 +19,7 @@ struct Waveshaper:Effect{
 
     }
 
-    float output(float input){
+    float output(float input)override{
         // Push the index from -1 - 1 to 0 - 2. Then multiply by half the bufferSize to find its nearest position
         float index = (input + 1.0f) * (bufferSize * 0.5f);
         // truncate index (remove everything after the decimal point)
@@ -40,4 +41,5 @@ struct Waveshaper:Effect{
 
     uint bufferSize { 0 };
     float* buffer;
+
     };
