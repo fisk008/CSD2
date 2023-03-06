@@ -4,8 +4,9 @@
 #include "tremolo.h"   
 #include "amp.h"
 #include "delay.h"
-#include "waveshaper.h"
+// #include "waveshaper.h"
 #include "chorus.h"
+#include "one_pole.h"
 #include <array>
 #include <iostream>
 
@@ -32,8 +33,12 @@ public:
             chorus.setDryWet(0.5);
             chorus.prepareToPlay(static_cast<double>(sampleRate));
         } 
-        for (Waveshaper& Waveshaper:waveshapers){
-            Waveshaper.prepareToPlay(static_cast<double>(sampleRate));
+        // for (Waveshaper& Waveshaper:waveshapers){
+        //     Waveshaper.prepareToPlay(static_cast<double>(sampleRate));
+        // }
+        for (OnePole& onePole:onePoles){
+            onePole.setCoefficient(0.99);
+            onePole.prepareToPlay(static_cast<double>(sampleRate));
         }
         
     }
@@ -45,7 +50,8 @@ public:
             for (int sample = 0u; sample < numFrames; ++sample) {
                 //outputChannels[channel][sample] = tremolos[channel].output((delays[channel].output(inputChannels[0][sample])));
                 //outputChannels[channel][sample] = (tremolos[channel].output(inputChannels[0][sample]));
-                outputChannels[channel][sample] = (choruses[channel].output(inputChannels[0][sample]));
+                // outputChannels[channel][sample] = (choruses[channel].output(inputChannels[0][sample]));
+                outputChannels[channel][sample] = (onePoles[channel].output(inputChannels[0][sample]));
             }
         }
     }
@@ -55,8 +61,9 @@ private:
     std::array<Sine,2> sines;
     std::array<Amp,2> amps;
     std::array<Delay,2> delays;
-    std::array<Waveshaper,2>waveshapers;
+    // std::array<Waveshaper,2>waveshapers;
     std::array<Chorus,2>choruses;
+    std::array<OnePole,2>onePoles;
 
 };
 int main() {

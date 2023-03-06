@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <iostream>
+#pragma once
 
 namespace Util{
 

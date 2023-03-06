@@ -6,21 +6,24 @@
 #include "Utilities.h"
 
 struct Waveshaper:Effect{
+    
+    Waveshaper() {
 
-    Waveshaper(int size) : bufferSize (size), buffer (new float[bufferSize]) {
-        
-    }
+    }     
 
     ~Waveshaper() {
         delete[] buffer;
     }
 
     void prepareToPlay(double sampleRate) override{
-
+        bufferSize=sampleRate;
+        buffer=new float[bufferSize];
+        setDrive(1);
+         
     }
 
     float output(float input)override{
-        // Push the index from -1 - 1 to 0 - 2. Then multiply by half the bufferSize to find its nearest position
+        // Push the index from -1 till 1 to 0 - 2. Then multiply by half the bufferSize to find its nearest position
         float index = (input + 1.0f) * (bufferSize * 0.5f);
         // truncate index (remove everything after the decimal point)
         int i = (int) trunc (index);
