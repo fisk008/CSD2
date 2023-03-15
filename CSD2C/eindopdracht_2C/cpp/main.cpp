@@ -2,8 +2,6 @@
 #include "effect.h"
 #include "sine.h"
 #include "delay.h"
-#include "chorus.h"
-
 #include <array>
 #include <iostream>
 
@@ -15,7 +13,7 @@ public:
             sine.prepareToPlay(static_cast<double> (sampleRate));
             }
         for (Delay& delay :delays){
-            delay.setDryWet(1);
+            delay.setDryWet(0.5);
             delay.prepareToPlay(static_cast<double>(sampleRate));
             delay.setFeedback(0.3);
         }

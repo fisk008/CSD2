@@ -3,10 +3,10 @@
 #include "effect.h"
 #include "circ_buffer.h"
 
-class Delay : Effect{
+class Flanger : Effect{
     public:
-    Delay(){};
-    ~Delay(){};  
+    Flanger(){};
+    ~Flanger(){};  
     void prepareToPlay (double sampleRate) override {};//set buffersize and delay distance
     float output(float input) override{};
     void setFeedback(float feedback){};

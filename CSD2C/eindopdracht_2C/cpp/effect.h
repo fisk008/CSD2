@@ -1,16 +1,11 @@
 #include <iostream>
 #pragma once
 
-struct Effect {
+class Effect {
+    public:
     virtual void prepareToPlay (double sampleRate) = 0;
     virtual float output (float input) = 0;
-    
-    void setDryWet(float wet){
-        this->wet=wet;
-        if(wet){
-            dry = 1-wet; 
-        }
-    }
+    virtual void setDryWet(float wet)=0;
     float dry{0};
     float wet{0};
 };

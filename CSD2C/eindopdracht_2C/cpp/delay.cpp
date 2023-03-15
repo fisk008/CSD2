@@ -40,4 +40,10 @@ void Delay::setFeedback(float feedback){
     }
 }
 
+void Delay::setDryWet(float wet){
+    this->wet=wet;
+    if(wet){
+        dry = 1-wet; 
+    }
+}
 
