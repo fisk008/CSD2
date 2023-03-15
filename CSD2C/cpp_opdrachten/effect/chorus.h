@@ -32,10 +32,10 @@ struct Chorus : Effect
     void offset(float offset){
         // this->offset=offset;
 
-    }
+    }  
 
 
-    void setRate(float rate=2000){
+    void setRate(float rate=2){
         osc.setDelta(rate);
     }
     

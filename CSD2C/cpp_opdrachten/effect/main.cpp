@@ -36,10 +36,10 @@ public:
         // for (Waveshaper& Waveshaper:waveshapers){
         //     Waveshaper.prepareToPlay(static_cast<double>(sampleRate));
         // }
-        for (OnePole& onePole:onePoles){
-            onePole.setCoefficient(0.99);
-            onePole.prepareToPlay(static_cast<double>(sampleRate));
-        }
+        // for (OnePole& onePole:onePoles){
+        //     onePole.setCoefficient(0.99);
+        //     onePole.prepareToPlay(static_cast<double>(sampleRate));
+        // }
         
     }
 
@@ -50,8 +50,8 @@ public:
             for (int sample = 0u; sample < numFrames; ++sample) {
                 //outputChannels[channel][sample] = tremolos[channel].output((delays[channel].output(inputChannels[0][sample])));
                 //outputChannels[channel][sample] = (tremolos[channel].output(inputChannels[0][sample]));
-                // outputChannels[channel][sample] = (choruses[channel].output(inputChannels[0][sample]));
-                outputChannels[channel][sample] = (onePoles[channel].output(inputChannels[0][sample]));
+                outputChannels[channel][sample] = (choruses[channel].output(inputChannels[0][sample]));
+                //outputChannels[channel][sample] = (onePoles[channel].output(inputChannels[0][sample]));
             }
         }
     }

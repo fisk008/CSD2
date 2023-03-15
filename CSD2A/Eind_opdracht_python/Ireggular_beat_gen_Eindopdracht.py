@@ -251,7 +251,7 @@ def createEvents(tStampsArr):#this function creates the event per timestamp and 
 
 def eventPlay(noteListTimes,i):# this function makes the note play and also print it when played
     noteListTimes[i]['instrument'].play()
-    print(noteListTimes[i]['name'],noteListTimes[i]['timeS'])
+    print(noteListTimes[i]['name'])
    
     
 def Playing():#handles the note palying part and handles de def eventPlay
