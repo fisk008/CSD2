@@ -9,6 +9,7 @@
 #include "one_pole.h"
 #include <array>
 #include <iostream>
+#include "osc.h"
 
 class Callback : public AudioCallback {
 
@@ -50,7 +51,7 @@ public:
             for (int sample = 0u; sample < numFrames; ++sample) {
                 //outputChannels[channel][sample] = tremolos[channel].output((delays[channel].output(inputChannels[0][sample])));
                 //outputChannels[channel][sample] = (tremolos[channel].output(inputChannels[0][sample]));
-                outputChannels[channel][sample] = (choruses[channel].output(inputChannels[0][sample]));
+                outputChannels[channel][sample] = (delays[channel].output(inputChannels[0][sample]));
                 //outputChannels[channel][sample] = (onePoles[channel].output(inputChannels[0][sample]));
             }
         }
@@ -66,11 +67,17 @@ private:
     std::array<OnePole,2>onePoles;
 
 };
+
+
+
 int main() {
     
     auto callback = Callback{};
     auto jack = JackModule (callback);
     Amp amp;
+
+ 
+
     
     // start jack client with 2 inputs and 2 outputs
     jack.init (1, 2);

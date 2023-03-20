@@ -4,7 +4,7 @@
 #include "delay.h"
 #include <array>
 #include <iostream>
-
+#include "osc.h"
 class Callback : public AudioCallback {
 
 public:
@@ -36,12 +36,32 @@ private:
 
 
 };
+
+int gyroX; 
+// subclass OSC into a local class so we can provide our own callback
+class localOSC : public OSC{
+  int realcallback(const char *path,const char *types,lo_arg **argv,int argc){
+  string msgpath=path;
+    if(!msgpath.compare("/gyroX")){
+      int int1 = argv[0]->i;
+        gyroX = int1;  
+    }
+    return 0;
+  } // realcallback()
+};
+
 int main() {
     
     auto callback = Callback{};
     auto jack = JackModule (callback);
 
-    
+    localOSC osc;
+    string serverport="7777";
+    osc.init(serverport);
+    osc.set_callback("/gyroX","i");
+    cout << "Listening on port " << serverport << endl;
+    osc.start();
+
     // start jack client with 2 inputs and 2 outputs
     jack.init (1, 2);
 

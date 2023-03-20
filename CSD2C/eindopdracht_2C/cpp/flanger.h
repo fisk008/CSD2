@@ -5,12 +5,12 @@
 
 class Flanger : Effect{
     public:
-    Flanger(){};
-    ~Flanger(){};  
-    void prepareToPlay (double sampleRate) override {};//set buffersize and delay distance
-    float output(float input) override{};
-    void setFeedback(float feedback){};
-    void setDryWet(float wet) override{};
+    Flanger();
+    ~Flanger();  
+    void prepareToPlay (double sampleRate) override ;//set buffersize and delay distance
+    float output(float input) override;
+    void setFeedback(float feedback);
+    void setDryWet(float wet) override;
     
     CircBuffer* buf;
     float buffersize= {0};

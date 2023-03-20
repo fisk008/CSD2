@@ -24,5 +24,11 @@ void Flanger::setFeedback(float feedback) {
 }
 
 float Flanger::output(float input) {
-return;
+return input;
+}
+
+void Flanger::setDryWet(float wet) {
+    this->wet = wet;
+    dry = 1 - wet;
+    
 }

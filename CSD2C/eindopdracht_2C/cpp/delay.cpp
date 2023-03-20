@@ -1,7 +1,5 @@
 #include "delay.h"
 
-#pragma once
-
 #include "effect.h"
 #include "circ_buffer.h"
 
@@ -42,8 +40,6 @@ void Delay::setFeedback(float feedback){
 
 void Delay::setDryWet(float wet){
     this->wet=wet;
-    if(wet){
-        dry = 1-wet; 
-    }
+    dry = 1-wet;
 }
 
