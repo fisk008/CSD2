@@ -4,12 +4,11 @@
 #include "tremolo.h"   
 #include "amp.h"
 #include "delay.h"
-// #include "waveshaper.h"
 #include "chorus.h"
-#include "one_pole.h"
 #include <array>
 #include <iostream>
 #include "osc.h"
+#include "onepole.h"
 
 class Callback : public AudioCallback {
 
@@ -34,14 +33,6 @@ public:
             chorus.setDryWet(0.5);
             chorus.prepareToPlay(static_cast<double>(sampleRate));
         } 
-        // for (Waveshaper& Waveshaper:waveshapers){
-        //     Waveshaper.prepareToPlay(static_cast<double>(sampleRate));
-        // }
-        // for (OnePole& onePole:onePoles){
-        //     onePole.setCoefficient(0.99);
-        //     onePole.prepareToPlay(static_cast<double>(sampleRate));
-        // }
-        
     }
 
     void process (AudioBuffer buffer) override {
@@ -75,7 +66,13 @@ int main() {
     auto callback = Callback{};
     auto jack = JackModule (callback);
     Amp amp;
-
+    int done = 0;
+    localOSC osc;
+    string serverport="7776";
+    osc.init(serverport);
+    osc.set_callback("/compass","i");
+    cout << "Listening on port " << serverport << endl;
+    osc.start();
  
 
     

@@ -37,14 +37,16 @@ private:
 
 };
 
-int gyroX; 
-// subclass OSC into a local class so we can provide our own callback
-class localOSC : public OSC{
-  int realcallback(const char *path,const char *types,lo_arg **argv,int argc){
+int compass;
+class localOSC : public OSC
+{
+  int realcallback(const char *path,const char *types,lo_arg **argv,int argc)
+  {
   string msgpath=path;
-    if(!msgpath.compare("/gyroX")){
+    if(!msgpath.compare("/compass")){
       int int1 = argv[0]->i;
-        gyroX = int1;  
+      compass = int1;
+      cout << "Message: " << compass << endl;
     }
     return 0;
   } // realcallback()
@@ -54,11 +56,13 @@ int main() {
     
     auto callback = Callback{};
     auto jack = JackModule (callback);
-
+   
+    //osc messages
+    
     localOSC osc;
-    string serverport="7777";
+    string serverport="7776";
     osc.init(serverport);
-    osc.set_callback("/gyroX","i");
+    osc.set_callback("/compass","i");
     cout << "Listening on port " << serverport << endl;
     osc.start();
 
