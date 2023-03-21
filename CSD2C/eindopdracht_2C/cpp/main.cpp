@@ -58,7 +58,7 @@ int main() {
     auto jack = JackModule (callback);
    
     //osc messages
-    
+                
     localOSC osc;
     string serverport="7776";
     osc.init(serverport);

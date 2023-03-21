@@ -1,7 +1,7 @@
-CXX= g++
-CXXFLAGS = -I/usr/local/include -Wall -g -std=c++20
-LDFLAGS= -ljack
-SOURCE= circ_buffer.o delay.o flanger.o  main.o
+CXX= g++ -g
+CXXFLAGS = -I/usr/local/include -Wall -g -std=c++20 
+LDFLAGS= -ljack -llo
+SOURCE= circ_buffer.o delay.o flanger.o  main.o osc.o
 TARGET= galgje
 
 
