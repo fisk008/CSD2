@@ -17,9 +17,3 @@ namespace Util{
 
 
 } // Util
-
-namespace Jens {
-    void cout(std::string input){
-        std::cout << "Jens new Cout function! " << input << std::endl;
-    }
-}
