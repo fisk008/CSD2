@@ -5,7 +5,7 @@
 #include <array>
 #include <iostream>
 #include "osc.h"
-
+#include "filter.h"
 #include <map>
 
 int compass;
@@ -17,7 +17,6 @@ class localOSC : public OSC
     if(!msgpath.compare("/compass")){
       int int1 = argv[0]->i;
       compass = int1;
-      float mapped=compass /360.0;
     //   cout << "Message: " << compass << endl;
 
     }
@@ -26,7 +25,8 @@ class localOSC : public OSC
 };
 
 float mapComp(float compass){
-    float mapped=compass /360.0;
+    float mapped=(compass /360.0)*20000;
+    std::cout<<mapped<<std::endl;
     return mapped;
 }
 
@@ -40,10 +40,15 @@ public:
             sine.prepareToPlay(static_cast<double> (sampleRate));
             }
         for (Delay& delay :delays){
-            std::cout<<"compass: "<<mapComp(compass)<<std::endl;
             delay.prepareToPlay(static_cast<double>(sampleRate));
             delay.setFeedback(0.3);
-            delay.setDryWet(mapComp(compass));
+            delay.setDryWet(0);
+        }
+        for (Filter& filter : filters){
+            filter.setCutOff(20000);
+            filter.setResonance(10);
+            filter.prepareToPlay(static_cast<double>(sampleRate));
+            filter.setDryWet(1);
         }
 
     }
@@ -53,14 +58,20 @@ public:
 
         for (int channel = 0u; channel < numOutputChannels; ++channel) {
             for (int sample = 0u; sample < numFrames; ++sample) {
-                outputChannels[channel][sample] = (delays[channel].output(inputChannels[0][sample]));
+                // outputChannels[channel][sample] = filters[channel].output((delays[channel].output(inputChannels[0][sample])));
+                outputChannels[channel][sample] = filters[channel].output(inputChannels[0][sample]);
             }
+                delays[channel].setDryWet(mapComp(compass));
+                filters[channel].setCutOff(mapComp(compass));
+                
         }
     }
 
 private:
     std::array<Sine,2> sines;
     std::array<Delay,2> delays;
+    std::array<Filter,2> filters;
+    std
 };
 
 
@@ -81,7 +92,6 @@ int main() {
     osc.set_callback("/compass","i");
     cout << "Listening on port " << serverport << endl;
     osc.start();
-    delay.setDryWet(mapComp(compass));
     // start jack client with 2 inputs and 2 outputs
     jack.init (1, 2);
 
