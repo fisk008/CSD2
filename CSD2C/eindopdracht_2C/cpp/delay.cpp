@@ -41,7 +41,7 @@ void Delay::setFeedback(float feedback){
 void Delay::setDryWet(float wet){
     this->wet=wet;
     dry = 1.0-wet;
-    std::cout<<"wet: "<<wet<<std::endl;
-    std::cout<<"dry: "<<dry<<std::endl;
+    // std::cout<<"wet: "<<wet<<std::endl;
+   
 }
 

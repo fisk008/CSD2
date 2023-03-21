@@ -14,4 +14,7 @@ class Filter : Effect{
     void setResonance(float resonance);
     float cutOff {0};
     float resonance {0};
+    double alpha_ {0};
+    float prevOutput_ {0};
+    float prevInput_ {0};
 };
