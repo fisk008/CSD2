@@ -25,8 +25,7 @@ class localOSC : public OSC
 };
 
 float mapComp(float compass){
-    float mapped=(compass /360.0)*20000;
-    std::cout<<mapped<<std::endl;
+    float mapped=compass /360.0;
     return mapped;
 }
 
@@ -44,10 +43,9 @@ public:
             delay.setFeedback(0.3);
             delay.setDryWet(0);
         }
-        for (Filter& filter : filters){
-            filter.setCutOff(20000);
-            filter.setResonance(10);
+        for(Filter& filter : filters){
             filter.prepareToPlay(static_cast<double>(sampleRate));
+            filter.setCoefficient(1000,0.7);
             filter.setDryWet(1);
         }
 
@@ -58,12 +56,10 @@ public:
 
         for (int channel = 0u; channel < numOutputChannels; ++channel) {
             for (int sample = 0u; sample < numFrames; ++sample) {
-                // outputChannels[channel][sample] = filters[channel].output((delays[channel].output(inputChannels[0][sample])));
-                outputChannels[channel][sample] = filters[channel].output(inputChannels[0][sample]);
+                // outputChannels[channel][sample] = (delays[channel].output(inputChannels[0][sample]));
+                outputChannels[channel][sample] = (filters[channel].output(inputChannels[0][sample]));
             }
                 delays[channel].setDryWet(mapComp(compass));
-                filters[channel].setCutOff(mapComp(compass));
-                
         }
     }
 
@@ -71,7 +67,6 @@ private:
     std::array<Sine,2> sines;
     std::array<Delay,2> delays;
     std::array<Filter,2> filters;
-    std
 };
 
 
@@ -82,8 +77,7 @@ int main() {
     auto callback = Callback{};
     auto jack = JackModule (callback);
    
-    //osc messages
-    Delay delay;          
+    //osc messages         
     localOSC osc;
     
     string serverport="7776";

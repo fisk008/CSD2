@@ -24,13 +24,8 @@ void Flanger::setFeedback(float feedback) {
 }
 
 float Flanger::output(float input) {
-    float delayedInput = buf->output();
-    buf->input(input + delayedInput * feedback);
-    float output = dry * input + wet * delayedInput;
-    std::cout << "Flanger output: " << output << std::endl;
-    return output;
+return input;
 }
-
 
 void Flanger::setDryWet(float wet) {
     this->wet = wet;
