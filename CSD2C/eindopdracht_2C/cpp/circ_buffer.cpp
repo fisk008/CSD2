@@ -5,7 +5,7 @@ CircBuffer::CircBuffer(){
 }
 
 CircBuffer::CircBuffer (uint size) : buffer (new float[size]) , currentSize (size) {
-    std::cout<<"buffersize"<<currentSize<<std::endl;
+
 }
 CircBuffer::~CircBuffer() {
     deleteBuffer();

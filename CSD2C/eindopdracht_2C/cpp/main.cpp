@@ -25,7 +25,7 @@ class localOSC : public OSC
 };
 
 float mapComp(float compass){
-    float mapped=compass /360.0;
+    float mapped=(compass /360.0)/2;
     return mapped;
 }
 
@@ -82,9 +82,9 @@ int main() {
     
     string serverport="7776";
     osc.init(serverport);
-    ///ZIGSIM/1/deviceinfo "\"unknown device (iPhone13,2)\"" \"1\" \"ios\" \"16.3.1\" 1125 2001
     osc.set_callback("/compass","i");
-    cout << "Listening on port " << serverport << endl;
+    // cout << "Listening on port " << serverport << endl;
+    cout<< "aan!";
     osc.start();
     // start jack client with 2 inputs and 2 outputs
     jack.init (1, 2);
@@ -93,6 +93,7 @@ int main() {
     while (running) {
         switch (std::cin.get()) {
             case 'q':
+                std::cout<<"uit!"<<endl;
                 running = false;
                 break;
         }

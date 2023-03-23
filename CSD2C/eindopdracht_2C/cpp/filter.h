@@ -10,21 +10,8 @@ class Filter : Effect{
     float output(float input) override;
     void setDryWet(float wet) override;   
     void setCoefficient(float cutOff, float resonance);
-    void setCutOff(float cutOff);
-    void setResonance(float resonance);
-
-    // //buffer
-    // double inputBuffer[3*2]={0};
-    // unsigned int readIndexInput = 0;
-    // unsigned int writeIndexInput = 0;
-    // //output
-    // double outputBuffer[3*2]={0};
-    // unsigned int readIndexOutput = 0;
-    // unsigned int writeIndexOutput = 0;
 
     //filter variables
-    float cutOff;
-
    
     double sampleRate {0};
     double beta {0};
