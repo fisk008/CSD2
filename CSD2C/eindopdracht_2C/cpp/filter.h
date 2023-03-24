@@ -9,8 +9,8 @@ class Filter : Effect{
     void prepareToPlay (double sampleRate) override;
     float output(float input) override;
     void setDryWet(float wet) override;   
-    void setCoefficient(float cutOff, float resonance);
-
+    void setCoefficientHi(float cutOff, float resonance);
+    void setCoefficientLo(float cutOff, float resonance);
     //filter variables
    
     double sampleRate {0};

@@ -11,6 +11,7 @@ class Delay : Effect{
     float output(float input) override;
     void setFeedback(float feedback);
     void setDryWet(float wet) override;
+    void setDelaytime(float delayTime);
     
     CircBuffer* buf;
     float buffersize= {0};

@@ -45,3 +45,6 @@ void Delay::setDryWet(float wet){
    
 }
 
+void Delay::setDelaytime(float delayTime){
+    buf->setDistance(delayTime*44100.0);
+}

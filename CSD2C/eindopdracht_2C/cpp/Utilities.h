@@ -6,8 +6,11 @@
 #include <iostream>
 #pragma once
 
-namespace Util{
-
+class Utils{
+    public:
+    Utils();
+    ~Utils();
+    
     float mapInRange (float factor, float xLow, float xHigh, float yLow, float yHigh) {
         return (yLow * (xHigh - factor) + yHigh * (factor - xLow)) / (xHigh - xLow);
     }
@@ -16,4 +19,4 @@ namespace Util{
     }
 
 
-} // Util
+} ;// Util
