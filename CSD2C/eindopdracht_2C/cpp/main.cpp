@@ -1,6 +1,5 @@
 #include "jack_module.h"
 #include "effect.h"
-#include "sine.h"
 #include "delay.h"
 #include <array>
 #include <iostream>
@@ -14,7 +13,7 @@ float quaX;
 float quaY{0};
 float quaZ{0};
 
-
+//osc class for receiving messages based on code from my teacher marc
 class localOSC : public OSC
 {
   int realcallback(const char *path,const char *types,lo_arg **argv,int argc)
@@ -46,23 +45,20 @@ class localOSC : public OSC
     } // realcallback()
 };
 
-
+//functions for smooth mapping
 float mapInRange (float factor, float xLow, float xHigh, float yLow, float yHigh) {
-        return (yLow * (xHigh - factor) + yHigh * (factor - xLow)) / (xHigh - xLow);
+    return (yLow * (xHigh - factor) + yHigh * (factor - xLow)) / (xHigh - xLow);
 }
 
-    float linearMap (float factor, float low, float high) {
-        return mapInRange (factor, 0, 1, low, high);
+float linearMap (float factor, float low, float high) { 
+    return mapInRange (factor, 0, 1, low, high);
     }
 
 class Callback : public AudioCallback {
 
 
-public:
+public://initilize the effects
     void prepare (int sampleRate) override {    
-        for (Sine& sine : sines){
-            sine.prepareToPlay(static_cast<double> (sampleRate));
-            }
         for (Delay& delay :delays){
             delay.prepareToPlay(static_cast<double>(sampleRate));
             delay.setFeedback(0.3);
@@ -82,24 +78,18 @@ public:
 
         for (int channel = 0u; channel < numOutputChannels; ++channel) {
             for (int sample = 0u; sample < numFrames; ++sample) {
-                
                 outputChannels[channel][sample] = filters[channel].output((delays[channel].output(inputChannels[0][sample])));
-
-            }
-                
+            }//parameters are set in the for loop so they can be changed in real time
                 delays[channel].setDryWet(mapInRange(compass,0,360,0,0.3));
                 delays[channel].setDelaytime(mapInRange(quaY,0,100,0.5,0.1));
-                filters[channel].setCoefficientLo(mapInRange(quaX,0,180,40,16000),5);
-                 std::cout << "filterValue: " << mapInRange(quaY,0,100,0.5,0.1) << std::endl;
+                filters[channel].setCoefficientLo(mapInRange(quaX,0,180,40,16000),8);
 
         }
     }
 
 private:
-    std::array<Sine,2> sines;
     std::array<Delay,2> delays;
-    std::array<Filter,2> filters;
-   
+    std::array<Filter,2> filters; 
 };
 
 
@@ -117,13 +107,11 @@ int main() {
     osc.set_callback("/compass","i");
     osc.set_callback("/qua","i");
     osc.set_callback("/qua/y","i");
-    osc.set_callback("/qua/z","f");
-    // cout << "Listening on port " << serverport << endl;
     cout<< "aan!";
     osc.start();
+
     // start jack client with 2 inputs and 2 outputs
     jack.init (1, 2);
-
     bool running = true;
     while (running) {
         switch (std::cin.get()) {

@@ -1,6 +1,6 @@
 #include <iostream>
 #pragma once
-
+//this is the base class for all effects
 class Effect {
     public:
     virtual void prepareToPlay (double sampleRate) = 0;

@@ -2,8 +2,8 @@
 
 #include "effect.h"
 #include "circ_buffer.h"
-
-
+#include "Utilities.h"
+Utils utils;
 
 Delay::Delay(){      
     buf= new CircBuffer(44100*4);
@@ -25,8 +25,8 @@ float Delay::output(float input){
     buf->input(input+(outputBuf*feedback));//writing into the buffer and adding feedback amount also to the buffer 
     buf->incrementHeads(); 
     
-
-    return (outputBuf*wet) + (input*dry);//dry wet 
+    
+    return (utils.linearMap(outputBuf,-1,1)*wet) + (input*dry);//dry wet 
 }
 
 void Delay::setFeedback(float feedback){

@@ -1,5 +1,6 @@
 //
 // Created by Dean on 14/02/2023.
+// edited by ruben
 //
 
 #include <cmath>
@@ -10,13 +11,8 @@ class Utils{
     public:
     Utils();
     ~Utils();
-    
-    float mapInRange (float factor, float xLow, float xHigh, float yLow, float yHigh) {
-        return (yLow * (xHigh - factor) + yHigh * (factor - xLow)) / (xHigh - xLow);
-    }
-    float linearMap (float factor, float low, float high) {
-        return mapInRange (factor, 0, 1, low, high);
-    }
+    float mapInRange (float factor, float xLow, float xHigh, float yLow, float yHigh);
+    float linearMap (float factor, float low, float high);
 
 
 } ;// Util

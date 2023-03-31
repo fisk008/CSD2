@@ -11,7 +11,7 @@ class Filter : Effect{
     void setDryWet(float wet) override;   
     void setCoefficientHi(float cutOff, float resonance);
     void setCoefficientLo(float cutOff, float resonance);
-    //filter variables
+    //filter variables initialisation
    
     double sampleRate {0};
     double beta {0};
